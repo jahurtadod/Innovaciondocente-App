@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/pages/home.dart';
+import 'package:innovaciondocente_app/pages/observatorio-edutendencias/noticias.dart';
 
 class Router {
   static Map<String, WidgetBuilder> appRoutes() {
     return {
       '/': (BuildContext context) => Home(),
+      '/noticas': (BuildContext context) => Noticias(),
     };
   }
 

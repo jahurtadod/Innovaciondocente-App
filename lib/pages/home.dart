@@ -5,10 +5,16 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      body: Container(
-        child: Center(
-          child: Text("Home"),
-        ),
+      body: ListView(
+        children: <Widget>[
+          Text("Hello u"),
+          RaisedButton(
+            child: Text("go to news"),
+            onPressed: () {
+              Navigator.pushNamed(context, '/noticas');
+            },
+          ),
+        ],
       ),
     );
   }

@@ -8,22 +8,26 @@ ThemeData id_buildTheme() {
     primaryColor: ID_blue,
     buttonColor: ID_yellow,
     scaffoldBackgroundColor: Colors.white,
-    cardColor: ID_blue,
+    cardColor: Colors.white,
     errorColor: Colors.red,
-
     // text theme
-    textTheme: _buildTextTheme(base.textTheme),
-    primaryTextTheme: _buildTextTheme(base.primaryTextTheme),
-    accentTextTheme: _buildTextTheme(base.accentTextTheme),
+    textTheme: _buildTextTheme(base: base.textTheme),
+    primaryTextTheme: _buildTextTheme(base: base.primaryTextTheme, color: Colors.white),
+    accentTextTheme: _buildTextTheme(base: base.accentTextTheme),
 
+    // icon theme
     primaryIconTheme: base.iconTheme.copyWith(color: ID_blue),
+    accentIconTheme: base.iconTheme.copyWith(color: Colors.black),
     inputDecorationTheme: InputDecorationTheme(
         // border: CutCornersBorder(), // Replace code
         ),
   );
 }
 
-TextTheme _buildTextTheme(TextTheme base) {
+TextTheme _buildTextTheme({
+  TextTheme base,
+  Color color = Colors.black,
+}) {
   return base
       .copyWith(
         headline: base.headline.copyWith(
@@ -34,9 +38,10 @@ TextTheme _buildTextTheme(TextTheme base) {
           fontWeight: FontWeight.w400,
           fontSize: 14.0,
         ),
+        button: base.button.copyWith(color: color),
       )
       .apply(
-        displayColor: Colors.white,
-        bodyColor: Colors.black,
+        displayColor: color,
+        bodyColor: color,
       );
 }

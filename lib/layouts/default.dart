@@ -12,30 +12,25 @@ class DefaultLayout extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
         child: Row(
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            FlatButton(
-              child: Text("Hola"),
-              textColor: Colors.grey,
+            IconButton(
+              icon: Icon(Icons.more_vert),
               padding: EdgeInsets.all(0.0),
               onPressed: () {},
-            ),
-            FlatButton(
-              child: Text("Hola"),
-              textColor: Colors.white,
-              padding: EdgeInsets.all(0.0),
-              onPressed: () {},
+              color: Colors.white,
             )
           ],
         ),
         notchMargin: 10.0,
         color: Theme.of(context).primaryColor,
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.ac_unit),
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: () {},
+        icon: Icon(Icons.computer),
+        label: Text("Do something"),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: this.body,
     );
   }
