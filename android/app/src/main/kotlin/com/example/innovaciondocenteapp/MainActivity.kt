@@ -1,4 +1,4 @@
-package com.example.innovaciondocenteapp
+package com.indev.innovaciondocenteapp
 
 import android.os.Bundle
 
