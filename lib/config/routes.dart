@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/pages/home.dart';
 import 'package:innovaciondocente_app/pages/observatorio-edutendencias/noticias.dart';
+import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion-database.dart';
 
 class Router {
   static Map<String, WidgetBuilder> appRoutes() {
+    Database database = new AppFirestore();
+
     return {
       '/': (BuildContext context) => Home(),
-      '/noticas': (BuildContext context) => Noticias(),
+      '/noticas': (BuildContext context) => Noticias(
+            database: database,
+            stream: database.tipsStream(),
+          ),
     };
   }
 
