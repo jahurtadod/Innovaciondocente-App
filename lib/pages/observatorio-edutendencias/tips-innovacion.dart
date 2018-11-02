@@ -8,6 +8,7 @@ import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-i
 class TipsInnovacionPage extends StatefulWidget {
   final Database database;
   final Stream<List> stream;
+  String tag = '';
 
   TipsInnovacionPage({this.database, this.stream});
 
@@ -80,7 +81,7 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
 
     // add card items
     for (TipInnovacion tip in this._tips) {
-      res.add(this._buidItemCard(tip));
+      if (tip.tag == widget.tag || widget.tag == '') res.add(this._buidItemCard(tip));
     }
     return res;
   }
@@ -90,34 +91,52 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
       height: 110.0,
       child: ListView(
         children: <Widget>[
-          _ButtomQuery(
+          _buildButtonQuery(
             image:
                 'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Fpod.jpg?alt=media&token=d791889c-15cc-403c-9cf2-a5dc74f20505',
-            onTap: () {},
             title: 'TODOS',
+            tag: '',
           ),
-          _ButtomQuery(
+          _buildButtonQuery(
             image:
                 'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Ffun.jpg?alt=media&token=36c1f88d-e4fa-4636-a562-a32a85e1c9c9',
-            onTap: () {},
             title: 'AULA DIVERTIDA',
+            tag: 'aula-divertida',
           ),
-          _ButtomQuery(
+          _buildButtonQuery(
             image:
                 "https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Fdocfut.jpg?alt=media&token=5733d1a3-1249-40f5-a705-970c4d1df82f",
-            onTap: () {},
             title: 'DOCENTES DEL FUTURO',
+            tag: 'docentes-futuro',
           ),
-          _ButtomQuery(
+          _buildButtonQuery(
             image:
                 'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Fvideo.jpg?alt=media&token=00090cf4-7470-4c49-8fb9-99c95cae2ade',
-            onTap: () {},
             title: 'VIDEOS',
+            tag: 'videos',
           ),
         ],
         scrollDirection: Axis.horizontal,
       ),
     );
+  }
+
+  StatelessWidget _buildButtonQuery({
+    @required String tag,
+    @required String title,
+    @required String image,
+  }) {
+    return (tag == this.widget.tag)
+        ? Container()
+        : _ButtomQuery(
+            image: image,
+            onTap: () {
+              setState(() {
+                this.widget.tag = tag;
+              });
+            },
+            title: title,
+          );
   }
 
   Widget _buidItemCard(TipInnovacion tip) {

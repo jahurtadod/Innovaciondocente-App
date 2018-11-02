@@ -55,7 +55,13 @@ class FirestoreTipsParser extends FirestoreNodeParser<List<TipInnovacion>> {
 class _FirestoreStream<T> {
   _FirestoreStream({String apiPath, FirestoreNodeParser<T> parser}) {
     CollectionReference collectionReference = Firestore.instance.collection(apiPath);
-    Stream<QuerySnapshot> snapshots = collectionReference.snapshots();
+    Stream<QuerySnapshot> snapshots = collectionReference
+        .orderBy(
+          'edited',
+          descending: true,
+        )
+        .limit(20)
+        .snapshots();
     stream = snapshots.map((snapshot) => parser.parse(snapshot));
   }
 
