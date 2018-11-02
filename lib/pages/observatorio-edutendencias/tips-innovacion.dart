@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion-database.dart';
@@ -8,7 +7,6 @@ import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-i
 class TipsInnovacionPage extends StatefulWidget {
   final Database database;
   final Stream<List> stream;
-  String tag = '';
 
   TipsInnovacionPage({this.database, this.stream});
 
@@ -19,10 +17,12 @@ class TipsInnovacionPage extends StatefulWidget {
 class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
   List<TipInnovacion> _tips;
   StreamSubscription _subs;
+  String tag;
 
   @override
   void initState() {
     super.initState();
+    this.tag = 'all';
     this._subs = widget.stream.listen((tips) {
       setState(() {
         this._tips = tips;
@@ -41,6 +41,7 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
+          // header
           SliverAppBar(
             flexibleSpace: FlexibleSpaceBar(
               title: Text("Tips de Innovación"),
@@ -48,6 +49,18 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
             floating: true,
             snap: true,
           ),
+
+          // queries sections
+          SliverAppBar(
+            flexibleSpace: _buildFilters(context),
+            expandedHeight: 100.0,
+            pinned: true,
+            automaticallyImplyLeading: false,
+            titleSpacing: 0.0,
+            backgroundColor: Colors.white,
+          ),
+
+          // items
           SliverList(delegate: SliverChildListDelegate(this._buildListTips()))
         ],
       ),
@@ -76,101 +89,66 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
 
     // list has items return list view
     List<Widget> res = [];
-    // add otions
-    res.add(_buildFilters());
 
     // add card items
     for (TipInnovacion tip in this._tips) {
-      if (tip.tag == widget.tag || widget.tag == '') res.add(this._buidItemCard(tip));
+      if (tip.tag == this.tag || this.tag == 'all')
+        res.add(new _TipCard(context: context, tip: tip));
     }
     return res;
   }
 
-  Container _buildFilters() {
-    return Container(
-      height: 110.0,
-      child: ListView(
-        children: <Widget>[
-          _buildButtonQuery(
-            image:
-                'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Fpod.jpg?alt=media&token=d791889c-15cc-403c-9cf2-a5dc74f20505',
-            title: 'TODOS',
-            tag: '',
-          ),
-          _buildButtonQuery(
-            image:
-                'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Ffun.jpg?alt=media&token=36c1f88d-e4fa-4636-a562-a32a85e1c9c9',
-            title: 'AULA DIVERTIDA',
-            tag: 'aula-divertida',
-          ),
-          _buildButtonQuery(
-            image:
-                "https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Fdocfut.jpg?alt=media&token=5733d1a3-1249-40f5-a705-970c4d1df82f",
-            title: 'DOCENTES DEL FUTURO',
-            tag: 'docentes-futuro',
-          ),
-          _buildButtonQuery(
-            image:
-                'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Fvideo.jpg?alt=media&token=00090cf4-7470-4c49-8fb9-99c95cae2ade',
-            title: 'VIDEOS',
-            tag: 'videos',
-          ),
-        ],
-        scrollDirection: Axis.horizontal,
-      ),
+  Widget _buildFilters(BuildContext context) {
+    return ListView(
+      children: <Widget>[
+        _buildQueryButtom(
+          context,
+          image:
+              'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Fpod.jpg?alt=media&token=d791889c-15cc-403c-9cf2-a5dc74f20505',
+          title: 'TODOS',
+          tag: 'all',
+        ),
+        _buildQueryButtom(
+          context,
+          image:
+              'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Ffun.jpg?alt=media&token=36c1f88d-e4fa-4636-a562-a32a85e1c9c9',
+          title: 'AULA DIVERTIDA',
+          tag: 'aula-divertida',
+        ),
+        _buildQueryButtom(
+          context,
+          image:
+              "https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Fdocfut.jpg?alt=media&token=5733d1a3-1249-40f5-a705-970c4d1df82f",
+          title: 'DOCENTES DEL FUTURO',
+          tag: 'docentes-futuro',
+        ),
+        _buildQueryButtom(
+          context,
+          image:
+              'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Fvideo.jpg?alt=media&token=00090cf4-7470-4c49-8fb9-99c95cae2ade',
+          title: 'VIDEOS',
+          tag: 'videos',
+        ),
+      ],
+      scrollDirection: Axis.horizontal,
     );
   }
 
-  StatelessWidget _buildButtonQuery({
-    @required String tag,
+  Widget _buildQueryButtom(
+    BuildContext context, {
     @required String title,
     @required String image,
+    @required String tag,
   }) {
-    return (tag == this.widget.tag)
-        ? Container()
-        : _ButtomQuery(
-            image: image,
-            onTap: () {
-              setState(() {
-                this.widget.tag = tag;
-              });
-            },
-            title: title,
-          );
-  }
-
-  Widget _buidItemCard(TipInnovacion tip) {
-    return Card(
-      child: Column(
-        children: <Widget>[
-          Image.network(tip.img),
-          Text(
-            tip.name,
-            style: Theme.of(context).textTheme.title,
-          ),
-          Text(tip.description),
-        ],
-      ),
-    );
-  }
-}
-
-class _ButtomQuery extends StatelessWidget {
-  const _ButtomQuery({
-    Key key,
-    @required this.title,
-    @required this.image,
-    @required this.onTap,
-  }) : super(key: key);
-
-  final String title;
-  final String image;
-  final Function onTap;
-
-  @override
-  Widget build(BuildContext context) {
+    if (tag == this.tag) return Container();
     return GestureDetector(
-      onTap: this.onTap,
+      // update list filter
+      onTap: () {
+        setState(() {
+          this.tag = tag;
+        });
+      },
+      // main btn desing
       child: Container(
         margin: EdgeInsets.symmetric(
           vertical: 10.0,
@@ -181,14 +159,15 @@ class _ButtomQuery extends StatelessWidget {
         ),
         child: Center(
           child: Text(
-            this.title,
+            title,
             style: Theme.of(context).textTheme.title.copyWith(color: Colors.white),
           ),
         ),
         decoration: BoxDecoration(
+          color: Theme.of(context).primaryColor,
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
           image: DecorationImage(
-            image: NetworkImage(this.image),
+            image: NetworkImage(image),
             colorFilter: ColorFilter.mode(
               Theme.of(context).primaryColor,
               BlendMode.softLight,
@@ -196,6 +175,33 @@ class _ButtomQuery extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _TipCard extends StatelessWidget {
+  const _TipCard({
+    Key key,
+    @required this.context,
+    @required this.tip,
+  }) : super(key: key);
+
+  final BuildContext context;
+  final TipInnovacion tip;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Column(
+        children: <Widget>[
+          // Image.network(tip.img),
+          Text(
+            tip.name,
+            style: Theme.of(context).textTheme.title,
+          ),
+          Text(tip.description),
+        ],
       ),
     );
   }
