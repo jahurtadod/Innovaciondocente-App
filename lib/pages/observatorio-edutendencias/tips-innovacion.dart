@@ -92,8 +92,7 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
 
     // add card items
     for (TipInnovacion tip in this._tips) {
-      if (tip.tag == this.tag || this.tag == 'all')
-        res.add(new _TipCard(context: context, tip: tip));
+      if (tip.tag == this.tag || this.tag == 'all') res.add(_TipCard(tip: tip));
     }
     return res;
   }
@@ -183,26 +182,61 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
 class _TipCard extends StatelessWidget {
   const _TipCard({
     Key key,
-    @required this.context,
     @required this.tip,
   }) : super(key: key);
 
-  final BuildContext context;
   final TipInnovacion tip;
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      margin: EdgeInsets.only(
+        bottom: 20.0,
+        left: 10.0,
+        right: 10.0,
+      ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          // Image.network(tip.img),
-          Text(
-            tip.name,
-            style: Theme.of(context).textTheme.title,
+          Stack(
+            children: <Widget>[
+              Container(
+                height: 150.0,
+                width: double.infinity,
+                child: Image.network(
+                  tip.img,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Positioned(
+                bottom: 0.0,
+                left: 0.0,
+                child: Container(
+                  padding: EdgeInsets.all(5.0),
+                  color: Theme.of(context).primaryColor,
+                  child: Text(
+                    tip.tag.toUpperCase(),
+                    style: Theme.of(context).primaryTextTheme.caption,
+                  ),
+                ),
+              ),
+            ],
           ),
-          Text(tip.description),
+          Container(
+            padding: EdgeInsets.all(10.0),
+            child: Column(
+              children: <Widget>[
+                Text(
+                  tip.name,
+                  style: Theme.of(context).textTheme.title,
+                ),
+                Text(tip.description.trim()),
+              ],
+            ),
+          )
         ],
       ),
+      elevation: 5.0,
     );
   }
 }
