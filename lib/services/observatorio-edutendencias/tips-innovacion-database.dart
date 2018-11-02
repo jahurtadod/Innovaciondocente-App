@@ -16,6 +16,7 @@ class AppFirestore implements Database {
       parser: FirestoreTipsParser(),
     ).stream;
   }
+
   /// Tip document
   DocumentReference _documentReference(TipInnovacion tip) {
     return Firestore.instance.collection(rootPath).document(tip.id);
@@ -35,6 +36,14 @@ class FirestoreTipsParser extends FirestoreNodeParser<List<TipInnovacion>> {
       return TipInnovacion(
         id: documentSnapshot.documentID,
         name: documentSnapshot['name'],
+        img: documentSnapshot['img'],
+        created: documentSnapshot['created'],
+        description: documentSnapshot['description'],
+        creator: documentSnapshot['creator'],
+        edited: documentSnapshot['edited'],
+        editor: documentSnapshot['editor'],
+        link: documentSnapshot['link'],
+        tag: documentSnapshot['tag'],
       );
     }).toList();
     tips.sort((a, b) => b.id.compareTo(a.id));
@@ -45,8 +54,7 @@ class FirestoreTipsParser extends FirestoreNodeParser<List<TipInnovacion>> {
 /// stream from firestore
 class _FirestoreStream<T> {
   _FirestoreStream({String apiPath, FirestoreNodeParser<T> parser}) {
-    CollectionReference collectionReference =
-        Firestore.instance.collection(apiPath);
+    CollectionReference collectionReference = Firestore.instance.collection(apiPath);
     Stream<QuerySnapshot> snapshots = collectionReference.snapshots();
     stream = snapshots.map((snapshot) => parser.parse(snapshot));
   }

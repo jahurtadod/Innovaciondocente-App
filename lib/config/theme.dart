@@ -16,7 +16,7 @@ ThemeData id_buildTheme() {
     accentTextTheme: _buildTextTheme(base: base.accentTextTheme),
 
     // icon theme
-    primaryIconTheme: base.iconTheme.copyWith(color: ID_blue),
+    primaryIconTheme: base.iconTheme.copyWith(color: Colors.white),
     accentIconTheme: base.iconTheme.copyWith(color: Colors.black),
     inputDecorationTheme: InputDecorationTheme(
         // border: CutCornersBorder(), // Replace code

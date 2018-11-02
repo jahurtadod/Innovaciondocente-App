@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/pages/home.dart';
-import 'package:innovaciondocente_app/pages/observatorio-edutendencias/noticias.dart';
+import 'package:innovaciondocente_app/pages/observatorio-edutendencias/tips-innovacion.dart';
 import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion-database.dart';
 
 class Router {
@@ -9,7 +9,7 @@ class Router {
 
     return {
       '/': (BuildContext context) => Home(),
-      '/noticas': (BuildContext context) => Noticias(
+      '/noticas': (BuildContext context) => TipsInnovacionPage(
             database: database,
             stream: database.tipsStream(),
           ),

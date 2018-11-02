@@ -1,10 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TipInnovacion {
-  Timestamp created;
+  var created;
   String creator;
   String description;
-  Timestamp edited;
+  var edited;
   String editor;
   String img;
   String link;

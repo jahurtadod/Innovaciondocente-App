@@ -5,6 +5,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
+      title: "Home",
       body: ListView(
         children: <Widget>[
           Text("Hello u"),
