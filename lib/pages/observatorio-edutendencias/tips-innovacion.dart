@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion-database.dart';
 import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion.dart';
@@ -53,7 +54,7 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
             pinned: true,
             automaticallyImplyLeading: false,
             titleSpacing: 0.0,
-            // backgroundColor: Colors.white,
+            backgroundColor: Colors.white,
           ),
 
           // items
@@ -211,9 +212,12 @@ class _TipCard extends StatelessWidget {
               ButtonTheme.bar(
                 child: ButtonBar(
                   children: <Widget>[
-                    FlatButton(
-                      child: Text('Leer más'),
-                      onPressed: () {/* ... */},
+                    RaisedButton(
+                      child: Text(
+                        'Leer más',
+                        style: Theme.of(context).accentTextTheme.button,
+                      ),
+                      onPressed: _launchURL,
                     ),
                   ],
                 ),
@@ -223,6 +227,14 @@ class _TipCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  _launchURL() async {
+    if (await canLaunch(tip.link)) {
+      await launch(tip.link);
+    } else {
+      throw 'Could not launch ${tip.link}';
+    }
   }
 
   Stack _buildCardHeader(BuildContext context) {
