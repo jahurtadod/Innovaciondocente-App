@@ -43,21 +43,17 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
         slivers: <Widget>[
           // header
           SliverAppBar(
-            flexibleSpace: FlexibleSpaceBar(
-              title: Text("Tips de Innovación"),
-            ),
-            floating: true,
-            snap: true,
+            title: Text("Tips de Innovación"),
+            pinned: true,
           ),
 
-          // queries sections
           SliverAppBar(
             flexibleSpace: _buildFilters(context),
             expandedHeight: 100.0,
             pinned: true,
             automaticallyImplyLeading: false,
             titleSpacing: 0.0,
-            backgroundColor: Colors.white,
+            // backgroundColor: Colors.white,
           ),
 
           // items
@@ -139,7 +135,7 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
     @required String image,
     @required String tag,
   }) {
-    if (tag == this.tag) return Container();
+    // if (tag == this.tag) return Container();
     return GestureDetector(
       // update list filter
       onTap: () {
@@ -191,52 +187,77 @@ class _TipCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       margin: EdgeInsets.only(
-        bottom: 20.0,
+        top: 10.0,
+        bottom: 5.0,
         left: 10.0,
         right: 10.0,
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Stack(
+          _buildCardHeader(context),
+          ExpansionTile(
+            title: Text(
+              tip.name,
+              style: Theme.of(context).textTheme.subhead,
+            ),
             children: <Widget>[
-              Container(
-                height: 150.0,
-                width: double.infinity,
-                child: Image.network(
-                  tip.img,
-                  fit: BoxFit.cover,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Text(
+                  tip.description.trim(),
+                  style: Theme.of(context).textTheme.subhead,
                 ),
               ),
-              Positioned(
-                bottom: 0.0,
-                left: 0.0,
-                child: Container(
-                  padding: EdgeInsets.all(5.0),
-                  color: Theme.of(context).primaryColor,
-                  child: Text(
-                    tip.tag.toUpperCase(),
-                    style: Theme.of(context).primaryTextTheme.caption,
-                  ),
+              ButtonTheme.bar(
+                child: ButtonBar(
+                  children: <Widget>[
+                    FlatButton(
+                      child: Text('Leer más'),
+                      onPressed: () {/* ... */},
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
-          Container(
-            padding: EdgeInsets.all(10.0),
-            child: Column(
-              children: <Widget>[
-                Text(
-                  tip.name,
-                  style: Theme.of(context).textTheme.title,
-                ),
-                Text(tip.description.trim()),
-              ],
-            ),
-          )
         ],
       ),
-      elevation: 5.0,
+    );
+  }
+
+  Stack _buildCardHeader(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        Container(
+          height: 150.0,
+          width: double.infinity,
+          child: Image.network(
+            tip.img,
+            fit: BoxFit.cover,
+          ),
+          color: Theme.of(context).primaryColor,
+        ),
+        Positioned(
+          bottom: 0.0,
+          right: 0.0,
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              vertical: 5.0,
+              horizontal: 20.0,
+            ),
+            child: Text(
+              tip.tag.toUpperCase(),
+              style: Theme.of(context).primaryTextTheme.caption,
+            ),
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15.0),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
