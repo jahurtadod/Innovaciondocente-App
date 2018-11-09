@@ -17,9 +17,10 @@ class TipsInnovacionPage extends StatefulWidget {
 
 class _TipsInnovacionPageState extends State<TipsInnovacionPage>
     with SingleTickerProviderStateMixin {
-  List<TipInnovacion> _aulaDivertida = [], _docenteFuturo= [], _videos= [];
+  List<TipInnovacion> _aulaDivertida = [], _docenteFuturo = [], _videos = [];
   StreamSubscription _subs;
   TabController _tabController;
+  bool _loaded = false;
 
   @override
   void initState() {
@@ -27,6 +28,7 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage>
     this._tabController = TabController(length: 3, vsync: this);
     this._subs = widget.stream.listen((tips) {
       setState(() {
+        this._loaded = true;
         // turn data into slitted lists
         for (TipInnovacion tip in tips)
           if (tip.tag == "videos")
@@ -51,76 +53,64 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage>
       appBar: AppBar(
         title: Text('Tips de Innovación'),
       ),
-      body: TabBarView(
-        controller: this._tabController,
-        children: _buildListTips(),
-      ),
-      bottomNavigationBar:
-          // this._tips == null
-          //     ? Text("Loading")
-          //     :
-          TabBar(
+      body: !_loaded
+          ? Text("Loading")
+          : TabBarView(
+              controller: this._tabController,
+              children: [
+                ListView.builder(
+                  itemBuilder: (BuildContext context, int index) {
+                    return _TipCard(
+                      tip: this._aulaDivertida[index],
+                    );
+                  },
+                  itemCount: this._aulaDivertida.length,
+                ),
+                ListView.builder(
+                  itemBuilder: (BuildContext context, int index) {
+                    return _TipCard(
+                      tip: this._docenteFuturo[index],
+                    );
+                  },
+                  itemCount: this._docenteFuturo.length,
+                ),
+                ListView.builder(
+                  itemBuilder: (BuildContext context, int index) {
+                    return _TipCard(
+                      tip: this._videos[index],
+                    );
+                  },
+                  itemCount: this._videos.length,
+                ),
+              ],
+            ),
+      bottomNavigationBar: TabBar(
         indicatorColor: Colors.transparent,
         labelPadding: EdgeInsets.all(0.0),
         controller: this._tabController,
         isScrollable: true,
-        tabs: _buildFilters(context),
+        tabs: [
+          _buildQueryButtom(
+            context,
+            image:
+                'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Ffun.jpg?alt=media&token=36c1f88d-e4fa-4636-a562-a32a85e1c9c9',
+            title: 'AULA DIVERTIDA',
+          ),
+          _buildQueryButtom(
+            context,
+            image:
+                "https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Fdocfut.jpg?alt=media&token=5733d1a3-1249-40f5-a705-970c4d1df82f",
+            title: 'DOCENTES DEL FUTURO',
+          ),
+          _buildQueryButtom(
+            context,
+            image:
+                'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Fvideo.jpg?alt=media&token=00090cf4-7470-4c49-8fb9-99c95cae2ade',
+            title: 'VIDEOS',
+          ),
+        ],
       ),
     );
-  }
-
-  List<Widget> _buildListTips() {
-    List<Widget> res = [
-      ListView.builder(
-        itemBuilder: (BuildContext context, int index) {
-          return _TipCard(
-            tip: this._aulaDivertida[index],
-          );
-        },
-        itemCount: this._aulaDivertida.length,
-      ),
-      ListView.builder(
-        itemBuilder: (BuildContext context, int index) {
-          return _TipCard(
-            tip: this._docenteFuturo[index],
-          );
-        },
-        itemCount: this._docenteFuturo.length,
-      ),
-      ListView.builder(
-        itemBuilder: (BuildContext context, int index) {
-          return _TipCard(
-            tip: this._videos[index],
-          );
-        },
-        itemCount: this._videos.length,
-      ),
-    ];
-
-    return res;
-  }
-
-  List<Widget> _buildFilters(BuildContext context) {
-    return [
-      _buildQueryButtom(
-        context,
-        image:
-            'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Ffun.jpg?alt=media&token=36c1f88d-e4fa-4636-a562-a32a85e1c9c9',
-        title: 'AULA DIVERTIDA',
-      ),
-      _buildQueryButtom(
-        context,
-        image:
-            "https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Fdocfut.jpg?alt=media&token=5733d1a3-1249-40f5-a705-970c4d1df82f",
-        title: 'DOCENTES DEL FUTURO',
-      ),
-      _buildQueryButtom(
-        context,
-        image:
-            'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Fvideo.jpg?alt=media&token=00090cf4-7470-4c49-8fb9-99c95cae2ade',
-        title: 'VIDEOS',
-      ),
-    ];
   }
 
   Widget _buildQueryButtom(
