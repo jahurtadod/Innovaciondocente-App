@@ -15,18 +15,25 @@ class TipsInnovacionPage extends StatefulWidget {
   _TipsInnovacionPageState createState() => _TipsInnovacionPageState();
 }
 
-class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
-  List<TipInnovacion> _tips;
+class _TipsInnovacionPageState extends State<TipsInnovacionPage>
+    with SingleTickerProviderStateMixin {
+  List<TipInnovacion> _aulaDivertida = [], _docenteFuturo= [], _videos= [];
   StreamSubscription _subs;
-  String tag;
+  TabController _tabController;
 
   @override
   void initState() {
     super.initState();
-    this.tag = 'all';
+    this._tabController = TabController(length: 3, vsync: this);
     this._subs = widget.stream.listen((tips) {
       setState(() {
-        this._tips = tips;
+        // turn data into slitted lists
+        for (TipInnovacion tip in tips)
+          if (tip.tag == "videos")
+            this._videos.add(tip);
+          else if (tip.tag == "aula-divertida")
+            this._aulaDivertida.add(tip);
+          else if (tip.tag == "docentes-futuro") this._docenteFuturo.add(tip);
       });
     });
   }
@@ -35,141 +42,118 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
   void dispose() {
     super.dispose();
     this._subs.cancel();
+    _tabController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: <Widget>[
-          // header
-          SliverAppBar(
-            title: Text("Tips de Innovación"),
-            pinned: true,
-          ),
-
-          SliverAppBar(
-            flexibleSpace: _buildFilters(context),
-            expandedHeight: 100.0,
-            pinned: true,
-            automaticallyImplyLeading: false,
-            titleSpacing: 0.0,
-            backgroundColor: Colors.white,
-          ),
-
-          // items
-          SliverList(delegate: SliverChildListDelegate(this._buildListTips()))
-        ],
+      appBar: AppBar(
+        title: Text('Tips de Innovación'),
+      ),
+      body: TabBarView(
+        controller: this._tabController,
+        children: _buildListTips(),
+      ),
+      bottomNavigationBar:
+          // this._tips == null
+          //     ? Text("Loading")
+          //     :
+          TabBar(
+        indicatorColor: Colors.transparent,
+        labelPadding: EdgeInsets.all(0.0),
+        controller: this._tabController,
+        isScrollable: true,
+        tabs: _buildFilters(context),
       ),
     );
   }
 
   List<Widget> _buildListTips() {
-    // component is loading
-    if (this._tips == null)
-      return [
-        Text("Loading"),
-      ];
+    List<Widget> res = [
+      ListView.builder(
+        itemBuilder: (BuildContext context, int index) {
+          return _TipCard(
+            tip: this._aulaDivertida[index],
+          );
+        },
+        itemCount: this._aulaDivertida.length,
+      ),
+      ListView.builder(
+        itemBuilder: (BuildContext context, int index) {
+          return _TipCard(
+            tip: this._docenteFuturo[index],
+          );
+        },
+        itemCount: this._docenteFuturo.length,
+      ),
+      ListView.builder(
+        itemBuilder: (BuildContext context, int index) {
+          return _TipCard(
+            tip: this._videos[index],
+          );
+        },
+        itemCount: this._videos.length,
+      ),
+    ];
 
-    // list of new is empty
-    if (this._tips.length == 0)
-      return [
-        Icon(
-          Icons.block,
-          size: 40.0,
-        ),
-        Text(
-          "There are no items to show",
-          style: Theme.of(context).textTheme.subhead,
-        ),
-      ];
-
-    // list has items return list view
-    List<Widget> res = [];
-
-    // add card items
-    for (TipInnovacion tip in this._tips) {
-      if (tip.tag == this.tag || this.tag == 'all') res.add(_TipCard(tip: tip));
-    }
     return res;
   }
 
-  Widget _buildFilters(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-        _buildQueryButtom(
-          context,
-          image:
-              'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Fpod.jpg?alt=media&token=d791889c-15cc-403c-9cf2-a5dc74f20505',
-          title: 'TODOS',
-          tag: 'all',
-        ),
-        _buildQueryButtom(
-          context,
-          image:
-              'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Ffun.jpg?alt=media&token=36c1f88d-e4fa-4636-a562-a32a85e1c9c9',
-          title: 'AULA DIVERTIDA',
-          tag: 'aula-divertida',
-        ),
-        _buildQueryButtom(
-          context,
-          image:
-              "https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Fdocfut.jpg?alt=media&token=5733d1a3-1249-40f5-a705-970c4d1df82f",
-          title: 'DOCENTES DEL FUTURO',
-          tag: 'docentes-futuro',
-        ),
-        _buildQueryButtom(
-          context,
-          image:
-              'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Fvideo.jpg?alt=media&token=00090cf4-7470-4c49-8fb9-99c95cae2ade',
-          title: 'VIDEOS',
-          tag: 'videos',
-        ),
-      ],
-      scrollDirection: Axis.horizontal,
-    );
+  List<Widget> _buildFilters(BuildContext context) {
+    return [
+      _buildQueryButtom(
+        context,
+        image:
+            'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Ffun.jpg?alt=media&token=36c1f88d-e4fa-4636-a562-a32a85e1c9c9',
+        title: 'AULA DIVERTIDA',
+      ),
+      _buildQueryButtom(
+        context,
+        image:
+            "https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Fdocfut.jpg?alt=media&token=5733d1a3-1249-40f5-a705-970c4d1df82f",
+        title: 'DOCENTES DEL FUTURO',
+      ),
+      _buildQueryButtom(
+        context,
+        image:
+            'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Fvideo.jpg?alt=media&token=00090cf4-7470-4c49-8fb9-99c95cae2ade',
+        title: 'VIDEOS',
+      ),
+    ];
   }
 
   Widget _buildQueryButtom(
     BuildContext context, {
     @required String title,
     @required String image,
-    @required String tag,
   }) {
-    // if (tag == this.tag) return Container();
-    return GestureDetector(
-      // update list filter
-      onTap: () {
-        setState(() {
-          this.tag = tag;
-        });
-      },
-      // main btn desing
-      child: Container(
-        margin: EdgeInsets.symmetric(
-          vertical: 10.0,
-          horizontal: 5.0,
+    return Container(
+      height: 60.0,
+      margin: EdgeInsets.symmetric(
+        vertical: 10.0,
+        horizontal: 5.0,
+      ),
+      padding: EdgeInsets.symmetric(
+        horizontal: 30.0,
+      ),
+      child: Center(
+        child: Text(
+          title,
+          style:
+              Theme.of(context).textTheme.title.copyWith(color: Colors.white),
         ),
-        padding: EdgeInsets.symmetric(
-          horizontal: 30.0,
-        ),
-        child: Center(
-          child: Text(
-            title,
-            style: Theme.of(context).textTheme.title.copyWith(color: Colors.white),
+      ),
+      decoration: BoxDecoration(
+        color: Theme.of(context).primaryColor,
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        image: DecorationImage(
+          image: NetworkImage(image),
+          colorFilter: ColorFilter.mode(
+            Theme.of(context).primaryColor,
+            BlendMode.softLight,
           ),
-        ),
-        decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          image: DecorationImage(
-            image: NetworkImage(image),
-            colorFilter: ColorFilter.mode(
-              Theme.of(context).primaryColor,
-              BlendMode.softLight,
-            ),
-            fit: BoxFit.cover,
-          ),
+          fit: BoxFit.cover,
         ),
       ),
     );
