@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/layouts/default.dart';
 
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return DefaultLayout(
-      title: "Home",
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Home"),
+      ),
       body: ListView(
         children: <Widget>[
           Text("Hello u"),

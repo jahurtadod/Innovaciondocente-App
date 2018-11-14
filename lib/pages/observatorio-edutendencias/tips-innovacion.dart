@@ -53,71 +53,81 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage>
       appBar: AppBar(
         title: Text('Tips de Innovación'),
       ),
-      body: !_loaded
-          ? Text("Loading")
-          : TabBarView(
-              controller: this._tabController,
-              children: [
-                ListView.builder(
-                  itemBuilder: (BuildContext context, int index) {
-                    return _TipCard(
-                      tip: this._aulaDivertida[index],
-                    );
-                  },
-                  itemCount: this._aulaDivertida.length,
-                ),
-                ListView.builder(
-                  itemBuilder: (BuildContext context, int index) {
-                    return _TipCard(
-                      tip: this._docenteFuturo[index],
-                    );
-                  },
-                  itemCount: this._docenteFuturo.length,
-                ),
-                ListView.builder(
-                  itemBuilder: (BuildContext context, int index) {
-                    return _TipCard(
-                      tip: this._videos[index],
-                    );
-                  },
-                  itemCount: this._videos.length,
-                ),
-              ],
-            ),
-      bottomNavigationBar: TabBar(
-        indicatorColor: Colors.transparent,
-        labelPadding: EdgeInsets.all(0.0),
-        controller: this._tabController,
-        isScrollable: true,
-        tabs: [
-          _buildQueryButtom(
-            context,
-            image:
-                'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Ffun.jpg?alt=media&token=36c1f88d-e4fa-4636-a562-a32a85e1c9c9',
-            title: 'AULA DIVERTIDA',
-          ),
-          _buildQueryButtom(
-            context,
-            image:
-                "https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Fdocfut.jpg?alt=media&token=5733d1a3-1249-40f5-a705-970c4d1df82f",
-            title: 'DOCENTES DEL FUTURO',
-          ),
-          _buildQueryButtom(
-            context,
-            image:
-                'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Fvideo.jpg?alt=media&token=00090cf4-7470-4c49-8fb9-99c95cae2ade',
-            title: 'VIDEOS',
-          ),
-        ],
-      ),
+      body: !_loaded ? Text("Loading") : _buildTabBarView(),
+      bottomNavigationBar: _buildTabBar(),
     );
   }
 
-  Widget _buildQueryButtom(
-    BuildContext context, {
-    @required String title,
-    @required String image,
-  }) {
+  TabBarView _buildTabBarView() {
+    return TabBarView(
+      controller: this._tabController,
+      children: [
+        ListView.builder(
+          itemBuilder: (BuildContext context, int index) {
+            return _TipCard(
+              tip: this._aulaDivertida[index],
+            );
+          },
+          itemCount: this._aulaDivertida.length,
+        ),
+        ListView.builder(
+          itemBuilder: (BuildContext context, int index) {
+            return _TipCard(
+              tip: this._docenteFuturo[index],
+            );
+          },
+          itemCount: this._docenteFuturo.length,
+        ),
+        ListView.builder(
+          itemBuilder: (BuildContext context, int index) {
+            return _TipCard(
+              tip: this._videos[index],
+            );
+          },
+          itemCount: this._videos.length,
+        ),
+      ],
+    );
+  }
+
+  TabBar _buildTabBar() {
+    return TabBar(
+      indicatorColor: Colors.transparent,
+      labelPadding: EdgeInsets.all(0.0),
+      controller: this._tabController,
+      isScrollable: true,
+      tabs: [
+        QueryBTN(
+          image:
+              'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Ffun.jpg?alt=media&token=36c1f88d-e4fa-4636-a562-a32a85e1c9c9',
+          title: 'AULA DIVERTIDA',
+        ),
+        QueryBTN(
+          image:
+              "https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Fdocfut.jpg?alt=media&token=5733d1a3-1249-40f5-a705-970c4d1df82f",
+          title: 'DOCENTES DEL FUTURO',
+        ),
+        QueryBTN(
+          image:
+              'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Fvideo.jpg?alt=media&token=00090cf4-7470-4c49-8fb9-99c95cae2ade',
+          title: 'VIDEOS',
+        ),
+      ],
+    );
+  }
+}
+
+class QueryBTN extends StatelessWidget {
+  const QueryBTN({
+    Key key,
+    @required this.title,
+    @required this.image,
+  }) : super(key: key);
+
+  final String title, image;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       height: 60.0,
       margin: EdgeInsets.symmetric(
@@ -130,8 +140,7 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage>
       child: Center(
         child: Text(
           title,
-          style:
-              Theme.of(context).textTheme.title.copyWith(color: Colors.white),
+          style: Theme.of(context).textTheme.title.copyWith(color: Colors.white),
         ),
       ),
       decoration: BoxDecoration(
@@ -160,62 +169,38 @@ class _TipCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.only(
-        top: 10.0,
-        bottom: 5.0,
-        left: 10.0,
-        right: 10.0,
-      ),
-      child: Column(
-        children: <Widget>[
-          _buildCardHeader(context),
-          ExpansionTile(
-            title: Text(
-              tip.name,
-              style: Theme.of(context).textTheme.subhead,
+    return Column(
+      children: <Widget>[
+        Material(
+          child: InkWell(
+            onTap: () {},
+            child: Column(
+              children: <Widget>[
+                // image - header
+                _buildCardHeader(context),
+                // title
+                ListTile(
+                  title: Text(tip.name),
+                  subtitle: Text(tip.created.toString()),
+                  trailing: Icon(Icons.chevron_right),
+                ),
+              ],
             ),
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Text(
-                  tip.description.trim(),
-                  style: Theme.of(context).textTheme.subhead,
-                ),
-              ),
-              ButtonTheme.bar(
-                child: ButtonBar(
-                  children: <Widget>[
-                    RaisedButton(
-                      child: Text(
-                        'Leer más',
-                        style: Theme.of(context).accentTextTheme.button,
-                      ),
-                      onPressed: _launchURL,
-                    ),
-                  ],
-                ),
-              ),
-            ],
           ),
-        ],
-      ),
+        ),
+        Divider(
+          color: Theme.of(context).primaryColor,
+        ),
+      ],
     );
-  }
-
-  _launchURL() async {
-    if (await canLaunch(tip.link)) {
-      await launch(tip.link);
-    } else {
-      throw 'Could not launch ${tip.link}';
-    }
   }
 
   Stack _buildCardHeader(BuildContext context) {
     return Stack(
       children: <Widget>[
+        // background imagge
         Container(
-          height: 150.0,
+          height: 160.0,
           width: double.infinity,
           child: Image.network(
             tip.img,
@@ -223,6 +208,8 @@ class _TipCard extends StatelessWidget {
           ),
           color: Theme.of(context).primaryColor,
         ),
+
+        // front face text
         Positioned(
           bottom: 0.0,
           right: 0.0,

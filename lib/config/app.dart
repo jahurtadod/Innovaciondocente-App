@@ -8,13 +8,12 @@ class InnovaciondocenteApp extends StatelessWidget {
     return MaterialApp(
       // debug config
       debugShowCheckedModeBanner: false,
-    
+
       title: 'Innovacion Docente',
-      theme: id_buildTheme(),
+      theme: ID_buildTheme(),
       routes: Router.appRoutes(),
       onGenerateRoute: Router.onGenerateRoute,
       onUnknownRoute: Router.appOnUnknownRoute,
-    
     );
   }
 }
