@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:innovaciondocente_app/pages/observatorio-edutendencias/tip-detail.dart';
 
 import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion-database.dart';
 import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion.dart';
@@ -92,7 +92,7 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage>
 
   TabBar _buildTabBar() {
     return TabBar(
-      indicatorColor: Colors.transparent,
+      indicatorColor: Theme.of(context).primaryColor,
       labelPadding: EdgeInsets.all(0.0),
       controller: this._tabController,
       isScrollable: true,
@@ -129,12 +129,12 @@ class QueryBTN extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60.0,
-      margin: EdgeInsets.symmetric(
-        vertical: 10.0,
-        horizontal: 5.0,
+      height: 50.0,
+      margin: const EdgeInsets.symmetric(
+        vertical: 5.0,
+        horizontal: 4.0,
       ),
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         horizontal: 30.0,
       ),
       child: Center(
@@ -173,7 +173,13 @@ class _TipCard extends StatelessWidget {
       children: <Widget>[
         Material(
           child: InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+                return TipDetail(
+                  tip: tip,
+                );
+              }));
+            },
             child: Column(
               children: <Widget>[
                 // image - header
@@ -200,11 +206,12 @@ class _TipCard extends StatelessWidget {
       children: <Widget>[
         // background imagge
         Container(
-          height: 160.0,
+          height: 170.0,
           width: double.infinity,
           child: Image.network(
             tip.img,
             fit: BoxFit.cover,
+            filterQuality: FilterQuality.low,
           ),
           color: Theme.of(context).primaryColor,
         ),

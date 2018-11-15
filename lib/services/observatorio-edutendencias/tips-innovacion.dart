@@ -1,9 +1,8 @@
-
 class TipInnovacion {
-  var created;
+  DateTime created;
   String creator;
   String description;
-  var edited;
+  DateTime edited;
   String editor;
   String img;
   String link;
