@@ -12,6 +12,8 @@ dependencies:
   cupertino_icons: ^0.1.2
   cloud_firestore: ^0.8.2+1
   url_launcher: ^4.0.1
+  intl: ^0.15.7
+
 
 dev_dependencies:
   flutter_test:

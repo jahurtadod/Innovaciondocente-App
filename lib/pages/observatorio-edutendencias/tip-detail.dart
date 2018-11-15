@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:intl/intl.dart';
 
 class TipDetail extends StatelessWidget {
   const TipDetail({
@@ -16,27 +17,31 @@ class TipDetail extends StatelessWidget {
       body: buildListView(context),
       floatingActionButton: _buildFloatingActionButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomAppBar(
-        color: Theme.of(context).primaryColor,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            IconButton(
-              icon: Icon(Icons.share),
+      bottomNavigationBar: _buildBottomAppBar(context),
+    );
+  }
+
+  BottomAppBar _buildBottomAppBar(BuildContext context) {
+    return BottomAppBar(
+      color: Theme.of(context).primaryColor,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.arrow_back,
               color: Colors.white,
-              onPressed: () {},
             ),
-          ],
-        ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.share),
+            color: Colors.white,
+            onPressed: () {},
+          ),
+        ],
       ),
     );
   }
@@ -60,7 +65,9 @@ class TipDetail extends StatelessWidget {
         // date
         Padding(
           padding: padding,
-          child: Text(tip.created.toString()),
+          child: Text(
+            DateFormat.yMMMd("es-ES").format(tip.created),
+          ),
         ),
         // image
         _buildImage(),

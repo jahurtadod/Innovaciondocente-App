@@ -4,6 +4,7 @@ import 'package:innovaciondocente_app/pages/observatorio-edutendencias/tip-detai
 
 import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion-database.dart';
 import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion.dart';
+import 'package:intl/intl.dart';
 
 class TipsInnovacionPage extends StatefulWidget {
   final Database database;
@@ -187,7 +188,9 @@ class _TipCard extends StatelessWidget {
                 // title
                 ListTile(
                   title: Text(tip.name),
-                  subtitle: Text(tip.created.toString()),
+                  subtitle: Text(
+                    DateFormat.yMMMd("es-ES").format(tip.created),
+                  ),
                   trailing: Icon(Icons.chevron_right),
                 ),
               ],
