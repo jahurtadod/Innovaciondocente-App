@@ -70,7 +70,18 @@ class TipDetail extends StatelessWidget {
           ),
         ),
         // image
-        _buildImage(),
+        _buildImage(context),
+        // chip
+        Padding(
+          padding: padding,
+          child: Row(
+            children: <Widget>[
+              Chip(
+                label: Text(tip.tag.toUpperCase()),
+              ),
+            ],
+          ),
+        ),
         //description
         Padding(
           padding: padding,
@@ -80,7 +91,7 @@ class TipDetail extends StatelessWidget {
     );
   }
 
-  Padding _buildImage() {
+  Padding _buildImage(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
         top: 20.0,
@@ -93,8 +104,10 @@ class TipDetail extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5.0),
+              color: Theme.of(context).primaryColor,
               image: DecorationImage(
                 image: NetworkImage(tip.img),
+
                 fit: BoxFit.cover,
               ),
             ),
