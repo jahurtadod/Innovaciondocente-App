@@ -5,6 +5,7 @@ import 'package:innovaciondocente_app/pages/observatorio-edutendencias/tip-detai
 import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion-database.dart';
 import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TipsInnovacionPage extends StatefulWidget {
   final Database database;
@@ -18,25 +19,17 @@ class TipsInnovacionPage extends StatefulWidget {
 
 class _TipsInnovacionPageState extends State<TipsInnovacionPage>
     with SingleTickerProviderStateMixin {
-  List<TipInnovacion> _aulaDivertida = [], _docenteFuturo = [], _videos = [];
-  StreamSubscription _subs;
-  TabController _tabController;
-  bool _loaded = false;
+  List<TipInnovacion> _tips;
+  StreamSubscription<List<TipInnovacion>> _subs;
+  String _tag = "";
 
   @override
   void initState() {
     super.initState();
-    this._tabController = TabController(length: 3, vsync: this);
     this._subs = widget.stream.listen((tips) {
       setState(() {
-        this._loaded = true;
-        // turn data into slitted lists
-        for (TipInnovacion tip in tips)
-          if (tip.tag == "videos")
-            this._videos.add(tip);
-          else if (tip.tag == "aula-divertida")
-            this._aulaDivertida.add(tip);
-          else if (tip.tag == "docentes-futuro") this._docenteFuturo.add(tip);
+        this._tips = tips;
+        print("setting state");
       });
     });
   }
@@ -45,118 +38,110 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage>
   void dispose() {
     super.dispose();
     this._subs.cancel();
-    _tabController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    // TODO: add filter
+    List<TipInnovacion> tips =
+        (this._tips == null) ? null : this._tips.where((tip) => true).toList();
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Tips de Innovación'),
-      ),
-      body: !_loaded ? Text("Loading") : _buildTabBarView(),
-      bottomNavigationBar: _buildTabBar(),
+      body: (this._tips == null)
+          ? Text("Loading")
+          : ListView.builder(
+              itemBuilder: (BuildContext context, int index) {
+                return _TipCard(
+                  tip: tips[index],
+                );
+              },
+              itemCount: tips.length,
+            ),
+      floatingActionButton: _buildFloatingActionButton(context),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: _buildBottomAppBar(context),
     );
   }
 
-  TabBarView _buildTabBarView() {
-    return TabBarView(
-      controller: this._tabController,
-      children: [
-        ListView.builder(
-          itemBuilder: (BuildContext context, int index) {
-            return _TipCard(
-              tip: this._aulaDivertida[index],
-            );
-          },
-          itemCount: this._aulaDivertida.length,
-        ),
-        ListView.builder(
-          itemBuilder: (BuildContext context, int index) {
-            return _TipCard(
-              tip: this._docenteFuturo[index],
-            );
-          },
-          itemCount: this._docenteFuturo.length,
-        ),
-        ListView.builder(
-          itemBuilder: (BuildContext context, int index) {
-            return _TipCard(
-              tip: this._videos[index],
-            );
-          },
-          itemCount: this._videos.length,
-        ),
-      ],
+  FloatingActionButton _buildFloatingActionButton(BuildContext context) {
+    return FloatingActionButton.extended(
+      icon: Icon(Icons.filter_list),
+      label: Text("Seleccionar Categoría"),
+      onPressed: () {
+        showModalBottomSheet<void>(
+            context: context,
+            builder: (BuildContext context) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  ListTile(
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Ffun.jpg?alt=media&token=36c1f88d-e4fa-4636-a562-a32a85e1c9c9',
+                      ),
+                    ),
+                    title: Text('AULA DIVERTIDA'),
+                    onTap: () => {},
+                  ),
+                  ListTile(
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Fdocfut.jpg?alt=media&token=5733d1a3-1249-40f5-a705-970c4d1df82f',
+                      ),
+                    ),
+                    title: Text('DOCENTES DEL FUTURO'),
+                    onTap: () => {},
+                  ),
+                  ListTile(
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Fvideo.jpg?alt=media&token=00090cf4-7470-4c49-8fb9-99c95cae2ade',
+                      ),
+                    ),
+                    title: Text('VIDEOS'),
+                    onTap: () => {},
+                  ),
+                ],
+              );
+            });
+      },
     );
   }
 
-  TabBar _buildTabBar() {
-    return TabBar(
-      indicatorColor: Theme.of(context).primaryColor,
-      labelPadding: EdgeInsets.all(0.0),
-      controller: this._tabController,
-      isScrollable: true,
-      tabs: [
-        QueryBTN(
-          image:
-              'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Ffun.jpg?alt=media&token=36c1f88d-e4fa-4636-a562-a32a85e1c9c9',
-          title: 'AULA DIVERTIDA',
-        ),
-        QueryBTN(
-          image:
-              "https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Fdocfut.jpg?alt=media&token=5733d1a3-1249-40f5-a705-970c4d1df82f",
-          title: 'DOCENTES DEL FUTURO',
-        ),
-        QueryBTN(
-          image:
-              'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Fvideo.jpg?alt=media&token=00090cf4-7470-4c49-8fb9-99c95cae2ade',
-          title: 'VIDEOS',
-        ),
-      ],
-    );
-  }
-}
-
-class QueryBTN extends StatelessWidget {
-  const QueryBTN({
-    Key key,
-    @required this.title,
-    @required this.image,
-  }) : super(key: key);
-
-  final String title, image;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 50.0,
-      margin: const EdgeInsets.symmetric(
-        vertical: 5.0,
-        horizontal: 4.0,
-      ),
-      padding: const EdgeInsets.symmetric(
-        horizontal: 30.0,
-      ),
-      child: Center(
-        child: Text(
-          title,
-          style: Theme.of(context).textTheme.title.copyWith(color: Colors.white),
-        ),
-      ),
-      decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
-        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-        image: DecorationImage(
-          image: NetworkImage(image),
-          colorFilter: ColorFilter.mode(
-            Theme.of(context).primaryColor,
-            BlendMode.softLight,
+  BottomAppBar _buildBottomAppBar(BuildContext context) {
+    return BottomAppBar(
+      color: Theme.of(context).primaryColor,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
           ),
-          fit: BoxFit.cover,
-        ),
+          IconButton(
+            tooltip: "Abrir todos los Tips",
+            icon: Icon(Icons.launch),
+            color: Colors.white,
+            onPressed: _launchURL,
+          ),
+        ],
       ),
     );
+  }
+
+  _launchURL() async {
+    String url =
+        "https://innovaciondocente-utpl.firebaseapp.com/observatorio-edutendencias/tips-innovacion";
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch ${url}';
+    }
   }
 }
 
@@ -175,7 +160,8 @@ class _TipCard extends StatelessWidget {
         Material(
           child: InkWell(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (BuildContext context) {
                 return TipDetail(
                   tip: tip,
                 );
@@ -189,7 +175,7 @@ class _TipCard extends StatelessWidget {
                 ListTile(
                   title: Text(tip.name),
                   subtitle: Text(
-                    DateFormat.yMMMd("es-ES").format(tip.created),
+                    DateFormat.yMMMMEEEEd("es_ES").format(tip.created),
                   ),
                   trailing: Icon(Icons.chevron_right),
                 ),
@@ -230,10 +216,10 @@ class _TipCard extends StatelessWidget {
             ),
             child: Text(
               tip.tag.toUpperCase(),
-              style: Theme.of(context).primaryTextTheme.caption,
+              style: Theme.of(context).accentTextTheme.caption,
             ),
             decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).accentColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(15.0),
               ),
