@@ -16,6 +16,12 @@ class Home extends StatelessWidget {
               Navigator.pushNamed(context, '/noticas');
             },
           ),
+          RaisedButton(
+            child: Text("go to tips"),
+            onPressed: () {
+              Navigator.pushNamed(context, '/tips');
+            },
+          ),
         ],
       ),
     );

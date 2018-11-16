@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/pages/observatorio-edutendencias/tip-detail.dart';
+import 'package:innovaciondocente_app/pages/observatorio-edutendencias/tips-innovacion/tip-detail.dart';
+import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion/tips-innovacion-database.dart';
+import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion/tips-innovacion.dart';
 
-import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion-database.dart';
-import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -70,45 +70,46 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage>
       label: Text("Seleccionar Categoría"),
       onPressed: () {
         showModalBottomSheet<void>(
-            context: context,
-            builder: (BuildContext context) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  ListTile(
-                    title: Text("Categorias"),
-                    enabled: false,
-                  ),
-                  _listTile(
-                    context: context,
-                    text: 'Todos',
-                    tag: 'todos',
-                  ),
-                  _listTile(
-                    context: context,
-                    text: 'Aula Divertida',
-                    tag: 'aula-divertida',
-                  ),
-                  _listTile(
-                    context: context,
-                    text: 'Docentes del Futuro',
-                    tag: 'docentes-futuro',
-                  ),
-                  _listTile(
-                    context: context,
-                    text: 'Videos',
-                    tag: 'videos',
-                  ),
-                  // other options
-                  Divider(),
-                  ListTile(
-                    leading: Icon(Icons.launch),
-                    title: Text("Ver todos los Tips"),
-                    onTap: _launchURL,
-                  ),
-                ],
-              );
-            });
+          context: context,
+          builder: (BuildContext context) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                ListTile(
+                  title: Text("Categorias"),
+                  enabled: false,
+                ),
+                _listTile(
+                  context: context,
+                  text: 'Todos',
+                  tag: 'todos',
+                ),
+                _listTile(
+                  context: context,
+                  text: 'Aula Divertida',
+                  tag: 'aula-divertida',
+                ),
+                _listTile(
+                  context: context,
+                  text: 'Docentes del Futuro',
+                  tag: 'docentes-futuro',
+                ),
+                _listTile(
+                  context: context,
+                  text: 'Videos',
+                  tag: 'videos',
+                ),
+                // other options
+                Divider(),
+                ListTile(
+                  leading: Icon(Icons.launch),
+                  title: Text("Ver todos los Tips"),
+                  onTap: _launchURL,
+                ),
+              ],
+            );
+          },
+        );
       },
     );
   }

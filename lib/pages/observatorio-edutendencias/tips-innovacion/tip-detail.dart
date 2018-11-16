@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion.dart';
+import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion/tips-innovacion.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 
