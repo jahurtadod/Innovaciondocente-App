@@ -21,7 +21,7 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage>
     with SingleTickerProviderStateMixin {
   List<TipInnovacion> _tips;
   StreamSubscription<List<TipInnovacion>> _subs;
-  String _tag = "";
+  String _tag = 'todos';
 
   @override
   void initState() {
@@ -43,8 +43,9 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage>
   @override
   Widget build(BuildContext context) {
     // TODO: add filter
-    List<TipInnovacion> tips =
-        (this._tips == null) ? null : this._tips.where((tip) => true).toList();
+    List<TipInnovacion> tips = (this._tips == null)
+        ? null
+        : this._tips.where((tip) => tip.tag == this._tag || this._tag == 'todos').toList();
 
     return Scaffold(
       body: (this._tips == null)
@@ -75,37 +76,71 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage>
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Ffun.jpg?alt=media&token=36c1f88d-e4fa-4636-a562-a32a85e1c9c9',
-                      ),
-                    ),
-                    title: Text('AULA DIVERTIDA'),
-                    onTap: () => {},
+                    title: Text("Categorias"),
+                    enabled: false,
                   ),
-                  ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Fdocfut.jpg?alt=media&token=5733d1a3-1249-40f5-a705-970c4d1df82f',
-                      ),
-                    ),
-                    title: Text('DOCENTES DEL FUTURO'),
-                    onTap: () => {},
+                  _listTile(
+                    context: context,
+                    text: 'Todos',
+                    tag: 'todos',
                   ),
+                  _listTile(
+                    context: context,
+                    text: 'Aula Divertida',
+                    tag: 'aula-divertida',
+                  ),
+                  _listTile(
+                    context: context,
+                    text: 'Docentes del Futuro',
+                    tag: 'docentes-futuro',
+                  ),
+                  _listTile(
+                    context: context,
+                    text: 'Videos',
+                    tag: 'videos',
+                  ),
+                  // other options
+                  Divider(),
                   ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fobsevatorio%2Fvideo.jpg?alt=media&token=00090cf4-7470-4c49-8fb9-99c95cae2ade',
-                      ),
-                    ),
-                    title: Text('VIDEOS'),
-                    onTap: () => {},
+                    leading: Icon(Icons.launch),
+                    title: Text("Ver todos los Tips"),
+                    onTap: _launchURL,
                   ),
                 ],
               );
             });
       },
     );
+  }
+
+  ListTile _listTile({
+    @required BuildContext context,
+    @required String text,
+    @required String tag,
+  }) {
+    Function fn = () {
+      setState(() {
+        this._tag = tag;
+      });
+      Navigator.pop(context);
+    };
+    return this._tag.contains(tag)
+        ? ListTile(
+            selected: true,
+            trailing: Icon(
+              Icons.check,
+              color: Theme.of(context).primaryColor,
+            ),
+            title: Text(
+              text,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            onTap: fn,
+          )
+        : ListTile(
+            title: Text(text),
+            onTap: fn,
+          );
   }
 
   BottomAppBar _buildBottomAppBar(BuildContext context) {
@@ -160,8 +195,7 @@ class _TipCard extends StatelessWidget {
         Material(
           child: InkWell(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (BuildContext context) {
+              Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
                 return TipDetail(
                   tip: tip,
                 );

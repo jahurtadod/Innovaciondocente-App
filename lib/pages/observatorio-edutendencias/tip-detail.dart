@@ -55,7 +55,7 @@ class TipDetail extends StatelessWidget {
     return ListView(
       children: <Widget>[
         // header
-        Padding(
+        Container(
           padding: padding,
           child: Text(
             tip.name,
@@ -63,7 +63,7 @@ class TipDetail extends StatelessWidget {
           ),
         ),
         // date
-        Padding(
+        Container(
           padding: padding,
           child: Text(
             DateFormat.yMMMd("es-ES").format(tip.created),
@@ -72,12 +72,19 @@ class TipDetail extends StatelessWidget {
         // image
         _buildImage(context),
         // chip
-        Padding(
+        Container(
           padding: padding,
-          child: Row(
+          child: Wrap(
+            spacing: 10.0,
             children: <Widget>[
               Chip(
                 label: Text(tip.tag.toUpperCase()),
+              ),
+              Chip(
+                label: Text("EduTendencia".toUpperCase()),
+              ),
+              Chip(
+                label: Text("Tips Innovación".toUpperCase()),
               ),
             ],
           ),
@@ -107,7 +114,6 @@ class TipDetail extends StatelessWidget {
               color: Theme.of(context).primaryColor,
               image: DecorationImage(
                 image: NetworkImage(tip.img),
-
                 fit: BoxFit.cover,
               ),
             ),
