@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:innovaciondocente_app/services/observatorio-edutendencias/noticias/noticia.dart';
+import 'package:innovaciondocente_app/classes/noticia.dart';
 import 'package:innovaciondocente_app/services/service.dart';
 
 class NoticiasDatabase extends Database<Noticia> {

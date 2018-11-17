@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:innovaciondocente_app/classes/filters.dart';
+import 'package:innovaciondocente_app/classes/tips-innovacion.dart';
 import 'package:innovaciondocente_app/pages/observatorio-edutendencias/tips-innovacion/tip-detail.dart';
-import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion/tips-innovacion.dart';
-
-import 'package:intl/intl.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class TipsInnovacionPage extends StatefulWidget {
   final Stream<List> stream;
@@ -39,7 +37,6 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: add filter
     List<TipInnovacion> tips = (this._tips == null)
         ? null
         : this._tips.where((tip) => tip.tag == this._tag || this._tag == 'todos').toList();
@@ -101,7 +98,7 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
                 ListTile(
                   leading: Icon(Icons.launch),
                   title: Text("Ver todos los Tips"),
-                  onTap: _launchURL,
+                  onTap: _gotoTipsWeb,
                 ),
               ],
             );
@@ -160,21 +157,16 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
             tooltip: "Abrir todos los Tips",
             icon: Icon(Icons.launch),
             color: Colors.white,
-            onPressed: _launchURL,
+            onPressed: _gotoTipsWeb,
           ),
         ],
       ),
     );
   }
 
-  _launchURL() async {
-    String url =
-        "https://innovaciondocente-utpl.firebaseapp.com/observatorio-edutendencias/tips-innovacion";
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch ${url}';
-    }
+  _gotoTipsWeb() {
+    Filters.launchURL(
+        'https://innovaciondocente-utpl.firebaseapp.com/observatorio-edutendencias/tips-innovacion');
   }
 }
 
@@ -206,9 +198,7 @@ class _TipCard extends StatelessWidget {
                 // title
                 ListTile(
                   title: Text(tip.name),
-                  subtitle: Text(
-                    DateFormat.yMMMMEEEEd("es_ES").format(tip.created),
-                  ),
+                  subtitle: Text(Filters.date(tip.created)),
                   trailing: Icon(Icons.chevron_right),
                 ),
               ],

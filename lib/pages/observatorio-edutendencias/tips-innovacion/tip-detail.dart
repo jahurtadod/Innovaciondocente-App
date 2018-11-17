@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion/tips-innovacion.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:intl/intl.dart';
+import 'package:innovaciondocente_app/classes/filters.dart';
+import 'package:innovaciondocente_app/classes/tips-innovacion.dart';
 
 class TipDetail extends StatelessWidget {
   const TipDetail({
@@ -65,9 +64,7 @@ class TipDetail extends StatelessWidget {
         // date
         Container(
           padding: padding,
-          child: Text(
-            DateFormat.yMMMd("es-ES").format(tip.created),
-          ),
+          child: Text(Filters.date(tip.created)),
         ),
         // image
         _buildImage(context),
@@ -145,20 +142,12 @@ class TipDetail extends StatelessWidget {
         ? FloatingActionButton.extended(
             icon: Icon(Icons.play_arrow),
             label: Text("Abrir Video"),
-            onPressed: _launchURL,
+            onPressed: Filters.launchURL(tip.link),
           )
         : FloatingActionButton.extended(
             icon: Icon(Icons.link),
             label: Text("Abrir Enlace"),
-            onPressed: _launchURL,
+            onPressed: Filters.launchURL(tip.link),
           );
-  }
-
-  _launchURL() async {
-    if (await canLaunch(tip.link)) {
-      await launch(tip.link);
-    } else {
-      throw 'Could not launch ${tip.link}';
-    }
   }
 }

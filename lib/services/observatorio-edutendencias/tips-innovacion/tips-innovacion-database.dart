@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion/tips-innovacion.dart';
+import 'package:innovaciondocente_app/classes/tips-innovacion.dart';
 import 'package:innovaciondocente_app/services/service.dart';
 
 class TipsDatabase implements Database<TipInnovacion> {
