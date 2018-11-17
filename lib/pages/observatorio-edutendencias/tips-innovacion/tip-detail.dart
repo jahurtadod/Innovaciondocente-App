@@ -138,16 +138,21 @@ class TipDetail extends StatelessWidget {
   }
 
   FloatingActionButton _buildFloatingActionButton() {
+
+    Function goto = () {
+      Filters.launchURL(tip.link);
+    };
+
     return tip.tag == 'videos'
         ? FloatingActionButton.extended(
             icon: Icon(Icons.play_arrow),
             label: Text("Abrir Video"),
-            onPressed: Filters.launchURL(tip.link),
+            onPressed: goto,
           )
         : FloatingActionButton.extended(
             icon: Icon(Icons.link),
             label: Text("Abrir Enlace"),
-            onPressed: Filters.launchURL(tip.link),
+            onPressed: goto,
           );
   }
 }

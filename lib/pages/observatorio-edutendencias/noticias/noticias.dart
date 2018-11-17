@@ -42,13 +42,17 @@ class _NoticiasState extends State<Noticias> {
           ? Text("Loading")
           : ListView.builder(
               itemBuilder: (BuildContext context, int index) {
-                return (index == 0)
+                return (index % 9 == 0)
                     ? _BigCard(
                         noticia: _noticias[index],
                       )
-                    : _SmallCard(
-                        noticia: _noticias[index],
-                      );
+                    : (index % 4 == 3)
+                        ? _MediumCard(
+                            noticia: _noticias[index],
+                          )
+                        : _SmallCard(
+                            noticia: _noticias[index],
+                          );
               },
               itemCount: this._noticias.length,
             ),
@@ -67,13 +71,13 @@ class _SmallCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(
           Radius.circular(10.0),
         ),
       ),
-      margin: EdgeInsets.all(15.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -121,10 +125,10 @@ class _SmallCard extends StatelessWidget {
   }
 }
 
-class _BigCard extends StatelessWidget {
+class _MediumCard extends StatelessWidget {
   final Noticia noticia;
 
-  const _BigCard({
+  const _MediumCard({
     Key key,
     @required this.noticia,
   }) : super(key: key);
@@ -132,7 +136,7 @@ class _BigCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(15.0),
+      margin: EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
       child: ClipRRect(
         borderRadius: BorderRadius.all(
           Radius.circular(10.0),
@@ -141,7 +145,8 @@ class _BigCard extends StatelessWidget {
           children: <Widget>[
             Image.network(
               noticia.img,
-              height: 400.0,
+              height: 150.0,
+              width: double.infinity,
               filterQuality: FilterQuality.medium,
               fit: BoxFit.cover,
             ),
@@ -167,6 +172,94 @@ class _BigCard extends StatelessWidget {
                     style: Theme.of(context).textTheme.subhead,
                   ),
                 ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _BigCard extends StatelessWidget {
+  final Noticia noticia;
+
+  const _BigCard({
+    Key key,
+    @required this.noticia,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(
+          Radius.circular(10.0),
+        ),
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: 400.0,
+              width: double.infinity,
+              child: Stack(
+                children: <Widget>[
+                  // background image
+                  Image.network(
+                    noticia.img,
+                    width: double.infinity,
+                    height: double.infinity,
+                    filterQuality: FilterQuality.medium,
+                    fit: BoxFit.cover,
+                  ),
+                  // gradien layer
+                  Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: FractionalOffset.topCenter,
+                        end: FractionalOffset.bottomCenter,
+                        colors: [
+                          Colors.transparent,
+                          Colors.transparent,
+                          Colors.black,
+                        ],
+                        stops: [0.0, 0.5, 1.0],
+                      ),
+                    ),
+                  ),
+                  // text layer
+                  Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 13.0),
+                          child: Text(
+                            noticia.name,
+                            style: Theme.of(context)
+                                .textTheme
+                                .title
+                                .copyWith(fontSize: 25.0, color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              color: Colors.white,
+              width: double.infinity,
+              padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 13.0),
+              child: Text(
+                Filters.date(noticia.created),
+                style: Theme.of(context).textTheme.caption,
               ),
             ),
           ],

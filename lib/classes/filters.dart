@@ -20,7 +20,7 @@ abstract class Filters {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
-      throw 'Could not launch ${url}';
+      throw 'Could not launch $url';
     }
   }
 }
