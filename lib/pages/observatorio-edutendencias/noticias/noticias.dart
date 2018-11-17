@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/services/observatorio-edutendencias/noticias/noticia.dart';
+import 'package:intl/intl.dart';
 
 class Noticias extends StatefulWidget {
   final Stream<List> stream;
@@ -36,7 +37,7 @@ class _NoticiasState extends State<Noticias> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Theme.of(context).primaryColor,
       body: (this._noticias == null)
           ? Text("Loading")
           : ListView.builder(
@@ -87,7 +88,17 @@ class _SmallCard extends StatelessWidget {
                     noticia.name,
                     style: Theme.of(context).textTheme.title,
                   ),
-                  Text(noticia.description),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5.0),
+                    child: Text(
+                      DateFormat.yMMMd("es-ES").format(noticia.created),
+                      style: Theme.of(context).textTheme.caption,
+                    ),
+                  ),
+                  Text(
+                    noticia.description,
+                    maxLines: 4,
+                  ),
                 ],
               ),
             ),
@@ -97,11 +108,12 @@ class _SmallCard extends StatelessWidget {
             height: 100.0,
             width: 100.0,
             decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor
+              ,
               image: DecorationImage(
                 image: NetworkImage(noticia.img),
                 fit: BoxFit.cover,
               ),
-              color: Colors.black,
               borderRadius: BorderRadius.all(
                 Radius.circular(10.0),
               ),
@@ -145,9 +157,20 @@ class _BigCard extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     noticia.name,
-                    style: Theme.of(context).textTheme.title,
+                    style: Theme.of(context).textTheme.title.copyWith(fontSize: 22.0),
                   ),
-                  Text(noticia.description),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5.0),
+                    child: Text(
+                      DateFormat.yMMMd("es-ES").format(noticia.created),
+                      style: Theme.of(context).textTheme.caption,
+                    ),
+                  ),
+                  Text(
+                    noticia.description,
+                    style: Theme.of(context).textTheme.subhead,
+                    maxLines: 5,
+                  ),
                 ],
               ),
             ),
