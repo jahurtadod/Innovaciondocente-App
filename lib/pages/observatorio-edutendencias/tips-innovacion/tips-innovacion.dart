@@ -1,17 +1,16 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/pages/observatorio-edutendencias/tips-innovacion/tip-detail.dart';
-import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion/tips-innovacion-database.dart';
 import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion/tips-innovacion.dart';
+
 
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TipsInnovacionPage extends StatefulWidget {
-  final Database database;
   final Stream<List> stream;
 
-  TipsInnovacionPage({this.database, this.stream});
+  TipsInnovacionPage({this.stream});
 
   @override
   _TipsInnovacionPageState createState() => _TipsInnovacionPageState();

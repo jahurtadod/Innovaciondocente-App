@@ -2,13 +2,13 @@ class TipInnovacion {
   DateTime created;
   String creator;
   String description;
+  String id;
   DateTime edited;
   String editor;
   String img;
   String link;
   String name;
   String tag;
-  String id;
 
   TipInnovacion({
     this.created,

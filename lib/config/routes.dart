@@ -2,22 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/pages/home.dart';
 import 'package:innovaciondocente_app/pages/observatorio-edutendencias/noticias/noticias.dart';
 import 'package:innovaciondocente_app/pages/observatorio-edutendencias/tips-innovacion/tips-innovacion.dart';
+import 'package:innovaciondocente_app/services/observatorio-edutendencias/noticias/noticias-database.dart';
 import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion/tips-innovacion-database.dart';
+import 'package:innovaciondocente_app/services/service.dart';
 
 class Router {
   static Map<String, WidgetBuilder> appRoutes() {
-    Database database = new AppFirestore();
+    Database tipsDB = TipsDatabase();
+    // Database noticiasDB = NoticiasDatabase();
 
     return {
       '/': (BuildContext context) => Home(),
       '/tips': (BuildContext context) => TipsInnovacionPage(
-            database: database,
-            stream: database.tipsStream(),
+            stream: tipsDB.getStream(),
           ),
-    //   '/noticias': (BuildContext context) => Noticias(
-    //         database: database,
-    //         stream: database.tipsStream(),
-    //       ),
+      // '/noticias': (BuildContext context) => Noticias(
+      //       stream: noticiasDB.getStream(),
+      //     ),
     };
   }
 
