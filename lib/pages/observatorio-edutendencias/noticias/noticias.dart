@@ -1,39 +1,66 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:innovaciondocente_app/services/observatorio-edutendencias/noticias/noticia.dart';
 
 class Noticias extends StatefulWidget {
+  final Stream<List> stream;
+
+  Noticias({this.stream});
+
   @override
   _NoticiasState createState() => _NoticiasState();
 }
 
 class _NoticiasState extends State<Noticias> {
+  List<Noticia> _noticias;
+  StreamSubscription<List<Noticia>> _subs;
+
+  @override
+  void initState() {
+    super.initState();
+    this._subs = widget.stream.listen((noticias) {
+      setState(() {
+        this._noticias = noticias;
+        print("setting state");
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    this._subs.cancel();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blue,
-      body: ListView(
-        children: <Widget>[
-          new _BigCard(),
-          new _SmallCard(),
-          new _SmallCard(),
-          new _SmallCard(),
-          new _BigCard(),
-          new _SmallCard(),
-          new _SmallCard(),
-          new _SmallCard(),
-          new _BigCard(),
-          new _SmallCard(),
-          new _SmallCard(),
-          new _SmallCard(),
-          new _SmallCard(),
-        ],
-      ),
+      body: (this._noticias == null)
+          ? Text("Loading")
+          : ListView.builder(
+              itemBuilder: (BuildContext context, int index) {
+                return (index == 0)
+                    ? _BigCard(
+                        noticia: _noticias[index],
+                      )
+                    : _SmallCard(
+                        noticia: _noticias[index],
+                      );
+              },
+              itemCount: this._noticias.length,
+            ),
     );
   }
 }
 
 class _SmallCard extends StatelessWidget {
+  final Noticia noticia;
+
   const _SmallCard({
     Key key,
+    @required this.noticia,
   }) : super(key: key);
 
   @override
@@ -47,6 +74,7 @@ class _SmallCard extends StatelessWidget {
       ),
       margin: EdgeInsets.all(15.0),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Flexible(
             flex: 6,
@@ -56,27 +84,26 @@ class _SmallCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    'INNOVACIÓN MATEMÁTICA',
+                    noticia.name,
                     style: Theme.of(context).textTheme.title,
                   ),
-                  Text(
-                      'La Universidad Técnica Particular de Loja dentro de sus actividades académicas en vinculación y con el fin ...'),
+                  Text(noticia.description),
                 ],
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0.0, 15.0, 15.0, 15.0),
-            child: ClipRRect(
+          Container(
+            margin: const EdgeInsets.fromLTRB(0.0, 15.0, 15.0, 15.0),
+            height: 100.0,
+            width: 100.0,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(noticia.img),
+                fit: BoxFit.cover,
+              ),
+              color: Colors.black,
               borderRadius: BorderRadius.all(
                 Radius.circular(10.0),
-              ),
-              child: Image.network(
-                'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fnoticias%2Finnovacion-matematica%2FMatematicasA.png?alt=media&amp;token=46d41388-d71e-4555-b55c-0a0c4aa554bd',
-                fit: BoxFit.cover,
-                height: 100.0,
-                width: 100.0,
-                filterQuality: FilterQuality.low,
               ),
             ),
           ),
@@ -87,8 +114,11 @@ class _SmallCard extends StatelessWidget {
 }
 
 class _BigCard extends StatelessWidget {
+  final Noticia noticia;
+
   const _BigCard({
     Key key,
+    @required this.noticia,
   }) : super(key: key);
 
   @override
@@ -102,7 +132,7 @@ class _BigCard extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Image.network(
-              'https://firebasestorage.googleapis.com/v0/b/innovaciondocente-utpl.appspot.com/o/observatorio-edutendencias%2Fnoticias%2Finnovacion-matematica%2FMatematicasA.png?alt=media&amp;token=46d41388-d71e-4555-b55c-0a0c4aa554bd',
+              noticia.img,
               height: 400.0,
               filterQuality: FilterQuality.medium,
               fit: BoxFit.cover,
@@ -114,11 +144,10 @@ class _BigCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    'INNOVACIÓN MATEMÁTICA',
+                    noticia.name,
                     style: Theme.of(context).textTheme.title,
                   ),
-                  Text(
-                      'La Universidad Técnica Particular de Loja dentro de sus actividades académicas en vinculación y con el fin nexos con la Educación Secundaria emprendió el curso denominado “Estrategias Institucionales para el de Enseñanza de la Matemática...'),
+                  Text(noticia.description),
                 ],
               ),
             ),

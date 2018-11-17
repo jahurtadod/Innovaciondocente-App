@@ -9,7 +9,7 @@ import 'package:innovaciondocente_app/services/service.dart';
 class Router {
   static Map<String, WidgetBuilder> appRoutes() {
     Database tipsDB = TipsDatabase();
-    // Database noticiasDB = NoticiasDatabase();
+    Database noticiasDB = NoticiasDatabase();
 
     return {
       '/': (BuildContext context) => Home(),
@@ -17,7 +17,7 @@ class Router {
             stream: tipsDB.getStream(),
           ),
       '/noticias': (BuildContext context) => Noticias(
-          // stream: noticiasDB.getStream(),
+            stream: noticiasDB.getStream(),
           ),
     };
   }

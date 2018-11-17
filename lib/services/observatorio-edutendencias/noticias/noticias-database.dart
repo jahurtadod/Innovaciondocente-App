@@ -11,7 +11,7 @@ class NoticiasDatabase extends Database<Noticia> {
       parser: _NoticiasParser(),
       query: Firestore.instance
           .collection('observatorio/edutendencias/noticias')
-          .orderBy('edited', descending: true)
+          .orderBy('created', descending: true)
           .limit(20),
     ).stream;
   }

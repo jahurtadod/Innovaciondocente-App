@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/pages/observatorio-edutendencias/tips-innovacion/tip-detail.dart';
 import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion/tips-innovacion.dart';
 
-
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -16,8 +15,7 @@ class TipsInnovacionPage extends StatefulWidget {
   _TipsInnovacionPageState createState() => _TipsInnovacionPageState();
 }
 
-class _TipsInnovacionPageState extends State<TipsInnovacionPage>
-    with SingleTickerProviderStateMixin {
+class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
   List<TipInnovacion> _tips;
   StreamSubscription<List<TipInnovacion>> _subs;
   String _tag = 'todos';
