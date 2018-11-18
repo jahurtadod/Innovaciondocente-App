@@ -24,7 +24,6 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
     this._subs = widget.stream.listen((tips) {
       setState(() {
         this._tips = tips;
-        print("setting state");
       });
     });
   }
@@ -37,24 +36,53 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
 
   @override
   Widget build(BuildContext context) {
+    // filter tips by tag
     List<TipInnovacion> tips = (this._tips == null)
         ? null
         : this._tips.where((tip) => tip.tag == this._tag || this._tag == 'todos').toList();
 
     return Scaffold(
-      body: (this._tips == null)
-          ? Text("Loading")
-          : ListView.builder(
-              itemBuilder: (BuildContext context, int index) {
-                return _TipCard(
-                  tip: tips[index],
-                );
-              },
-              itemCount: tips.length,
-            ),
-      floatingActionButton: _buildFloatingActionButton(context),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: _buildBottomAppBar(context),
+      appBar: AppBar(
+        title: Text('Tips Innovación'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.filter_list),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: Icon(Icons.open_in_new),
+            onPressed: () {},
+          ),
+        ],
+      ),
+
+      // main content
+      body: Container(
+        color: Theme.of(context).primaryColor,
+        child: (this._tips == null)
+            ? Text("Loading")
+            : ListView.builder(
+                itemBuilder: (BuildContext context, int index) {
+                  return (index % 9 == 0)
+                      ? _BigCard(
+                          tip: tips[index],
+                        )
+                      : (index % 4 == 3)
+                          ? _MediumCard(
+                              tip: tips[index],
+                            )
+                          : _SmallCard(
+                              tip: tips[index],
+                            );
+                },
+                itemCount: tips.length,
+              ),
+      ),
+
+      // Bottom page config
+      // floatingActionButton: _buildFloatingActionButton(context),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // bottomNavigationBar: _buildBottomAppBar(context),
     );
   }
 
@@ -170,19 +198,180 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
   }
 }
 
-class _TipCard extends StatelessWidget {
-  const _TipCard({
+class _SmallCard extends StatelessWidget {
+  final TipInnovacion tip;
+
+  const _SmallCard({
     Key key,
     @required this.tip,
   }) : super(key: key);
 
+  @override
+  Widget build(BuildContext context) {
+    return _MaterialCard(
+      tip: tip,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          // right side, text, details
+          Expanded(
+            child: _CardDetails(tip: tip),
+          ),
+
+          // Img
+          Container(
+            margin: const EdgeInsets.fromLTRB(0.0, 15.0, 15.0, 15.0),
+            height: 110.0,
+            width: 110.0,
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
+              image: DecorationImage(
+                image: NetworkImage(tip.img),
+                fit: BoxFit.cover,
+              ),
+              borderRadius: BorderRadius.all(
+                Radius.circular(10.0),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _MediumCard extends StatelessWidget {
   final TipInnovacion tip;
+
+  const _MediumCard({
+    Key key,
+    @required this.tip,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Material(
+    return _MaterialCard(
+      tip: tip,
+      child: Column(
+        children: <Widget>[
+          // top img
+          Image.network(
+            tip.img,
+            height: 150.0,
+            width: double.infinity,
+            filterQuality: FilterQuality.medium,
+            fit: BoxFit.cover,
+          ),
+
+          // text and content
+          _CardDetails(tip: tip),
+        ],
+      ),
+    );
+  }
+}
+
+class _BigCard extends StatelessWidget {
+  final TipInnovacion tip;
+
+  const _BigCard({
+    Key key,
+    @required this.tip,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return _MaterialCard(
+      tip: tip,
+      child: Column(
+        children: <Widget>[
+          Container(
+            height: 350.0,
+            width: double.infinity,
+            child: Stack(
+              children: <Widget>[
+                // background image
+                Image.network(
+                  tip.img,
+                  width: double.infinity,
+                  height: double.infinity,
+                  filterQuality: FilterQuality.medium,
+                  fit: BoxFit.cover,
+                ),
+                // gradien layer
+                Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: FractionalOffset.topCenter,
+                      end: FractionalOffset.bottomCenter,
+                      colors: [
+                        Colors.transparent,
+                        Colors.transparent,
+                        Colors.black,
+                      ],
+                      stops: [0.0, 0.5, 1.0],
+                    ),
+                  ),
+                ),
+                // text layer
+                Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 13.0),
+                        child: Text(
+                          tip.name,
+                          style: Theme.of(context)
+                              .textTheme
+                              .title
+                              .copyWith(fontSize: 22.0, color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 13.0),
+            child: Text(
+              Filters.date(tip.created),
+              style: Theme.of(context).textTheme.caption,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _MaterialCard extends StatelessWidget {
+  final Widget child;
+  final TipInnovacion tip;
+
+  _MaterialCard({
+    @required this.child,
+    @required this.tip,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(
+          Radius.circular(10.0),
+        ),
+        child: Material(
+          color: Colors.white,
           child: InkWell(
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
@@ -191,64 +380,46 @@ class _TipCard extends StatelessWidget {
                 );
               }));
             },
-            child: Column(
-              children: <Widget>[
-                // image - header
-                _buildCardHeader(context),
-                // title
-                ListTile(
-                  title: Text(tip.name),
-                  subtitle: Text(Filters.date(tip.created)),
-                  trailing: Icon(Icons.chevron_right),
-                ),
-              ],
-            ),
+            child: this.child,
           ),
         ),
-        Divider(
-          color: Theme.of(context).primaryColor,
-        ),
-      ],
+      ),
     );
   }
+}
 
-  Stack _buildCardHeader(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        // background imagge
-        Container(
-          height: 170.0,
-          width: double.infinity,
-          child: Image.network(
-            tip.img,
-            fit: BoxFit.cover,
-            filterQuality: FilterQuality.low,
-          ),
-          color: Theme.of(context).primaryColor,
-        ),
+class _CardDetails extends StatelessWidget {
+  const _CardDetails({
+    Key key,
+    @required this.tip,
+  }) : super(key: key);
 
-        // front face text
-        Positioned(
-          bottom: 0.0,
-          right: 0.0,
-          child: Container(
-            padding: EdgeInsets.symmetric(
-              vertical: 5.0,
-              horizontal: 20.0,
-            ),
+  final TipInnovacion tip;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(15.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10.0),
             child: Text(
-              tip.tag.toUpperCase(),
-              style: Theme.of(context).accentTextTheme.caption,
-            ),
-            decoration: BoxDecoration(
-              color: Theme.of(context).accentColor,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(15.0),
-              ),
+              Filters.slice(0, 45, tip.name),
+              style: Theme.of(context).textTheme.title,
             ),
           ),
-        ),
-      ],
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10.0),
+            child: Text(Filters.slice(0, 75, tip.description)),
+          ),
+          Text(
+            Filters.date(tip.created),
+            style: Theme.of(context).textTheme.caption,
+          ),
+        ],
+      ),
     );
   }
 }

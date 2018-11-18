@@ -23,7 +23,6 @@ class _NoticiasState extends State<Noticias> {
     this._subs = widget.stream.listen((noticias) {
       setState(() {
         this._noticias = noticias;
-        print("setting state");
       });
     });
   }
