@@ -70,44 +70,21 @@ class _SmallCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(
-          Radius.circular(10.0),
-        ),
-      ),
+    return _MaterialCard(
+      noticia: noticia,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Flexible(
-            flex: 6,
-            child: Container(
-              padding: EdgeInsets.all(15.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    noticia.name,
-                    style: Theme.of(context).textTheme.title,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5.0),
-                    child: Text(
-                      Filters.date(noticia.created),
-                      style: Theme.of(context).textTheme.caption,
-                    ),
-                  ),
-                  Text(Filters.slice(0, 75, noticia.description)),
-                ],
-              ),
-            ),
+          // right side, text, details
+          Expanded(
+            child: _CardDetails(tip: noticia),
           ),
+
+          // Img
           Container(
             margin: const EdgeInsets.fromLTRB(0.0, 15.0, 15.0, 15.0),
-            height: 100.0,
-            width: 100.0,
+            height: 110.0,
+            width: 110.0,
             decoration: BoxDecoration(
               color: Theme.of(context).primaryColor,
               image: DecorationImage(
@@ -135,47 +112,22 @@ class _MediumCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.all(
-          Radius.circular(10.0),
-        ),
-        child: Column(
-          children: <Widget>[
-            Image.network(
-              noticia.img,
-              height: 150.0,
-              width: double.infinity,
-              filterQuality: FilterQuality.medium,
-              fit: BoxFit.cover,
-            ),
-            Container(
-              color: Colors.white,
-              padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 13.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    noticia.name,
-                    style: Theme.of(context).textTheme.title.copyWith(fontSize: 22.0),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5.0),
-                    child: Text(
-                      Filters.date(noticia.created),
-                      style: Theme.of(context).textTheme.caption,
-                    ),
-                  ),
-                  Text(
-                    Filters.slice(0, 200, noticia.description),
-                    style: Theme.of(context).textTheme.subhead,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+    return _MaterialCard(
+      noticia: noticia,
+      child: Column(
+        children: <Widget>[
+          // top img
+          Image.network(
+            noticia.img,
+            height: 150.0,
+            width: double.infinity,
+            filterQuality: FilterQuality.medium,
+            fit: BoxFit.cover,
+          ),
+
+          // text and content
+          _CardDetails(tip: noticia),
+        ],
       ),
     );
   }
@@ -191,79 +143,141 @@ class _BigCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return _MaterialCard(
+      noticia: noticia,
+      child: Column(
+        children: <Widget>[
+          Container(
+            height: 350.0,
+            width: double.infinity,
+            child: Stack(
+              children: <Widget>[
+                // background image
+                Image.network(
+                  noticia.img,
+                  width: double.infinity,
+                  height: double.infinity,
+                  filterQuality: FilterQuality.medium,
+                  fit: BoxFit.cover,
+                ),
+                // gradien layer
+                Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: FractionalOffset.topCenter,
+                      end: FractionalOffset.bottomCenter,
+                      colors: [
+                        Colors.transparent,
+                        Colors.transparent,
+                        Colors.black,
+                      ],
+                      stops: [0.0, 0.5, 1.0],
+                    ),
+                  ),
+                ),
+                // text layer
+                Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 13.0),
+                        child: Text(
+                          noticia.name,
+                          style: Theme.of(context)
+                              .textTheme
+                              .title
+                              .copyWith(fontSize: 22.0, color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 13.0),
+            child: Text(
+              Filters.date(noticia.created),
+              style: Theme.of(context).textTheme.caption,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _MaterialCard extends StatelessWidget {
+  final Widget child;
+  final Noticia noticia;
+
+  _MaterialCard({
+    @required this.child,
+    @required this.noticia,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+      margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
       child: ClipRRect(
         borderRadius: BorderRadius.all(
           Radius.circular(10.0),
         ),
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 400.0,
-              width: double.infinity,
-              child: Stack(
-                children: <Widget>[
-                  // background image
-                  Image.network(
-                    noticia.img,
-                    width: double.infinity,
-                    height: double.infinity,
-                    filterQuality: FilterQuality.medium,
-                    fit: BoxFit.cover,
-                  ),
-                  // gradien layer
-                  Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: FractionalOffset.topCenter,
-                        end: FractionalOffset.bottomCenter,
-                        colors: [
-                          Colors.transparent,
-                          Colors.transparent,
-                          Colors.black,
-                        ],
-                        stops: [0.0, 0.5, 1.0],
-                      ),
-                    ),
-                  ),
-                  // text layer
-                  Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 13.0),
-                          child: Text(
-                            noticia.name,
-                            style: Theme.of(context)
-                                .textTheme
-                                .title
-                                .copyWith(fontSize: 25.0, color: Colors.white),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              color: Colors.white,
-              width: double.infinity,
-              padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 13.0),
-              child: Text(
-                Filters.date(noticia.created),
-                style: Theme.of(context).textTheme.caption,
-              ),
-            ),
-          ],
+        child: Material(
+          color: Colors.white,
+          child: InkWell(
+            onTap: () {
+              // Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+              // }));
+            },
+            child: this.child,
+          ),
         ),
+      ),
+    );
+  }
+}
+
+class _CardDetails extends StatelessWidget {
+  const _CardDetails({
+    Key key,
+    @required this.tip,
+  }) : super(key: key);
+
+  final Noticia tip;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(15.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10.0),
+            child: Text(
+              Filters.slice(0, 45, tip.name),
+              style: Theme.of(context).textTheme.title,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10.0),
+            child: Text(Filters.slice(0, 75, tip.description)),
+          ),
+          Text(
+            Filters.date(tip.created),
+            style: Theme.of(context).textTheme.caption,
+          ),
+        ],
       ),
     );
   }
