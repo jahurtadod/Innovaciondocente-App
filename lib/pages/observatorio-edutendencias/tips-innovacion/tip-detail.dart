@@ -13,85 +13,75 @@ class TipDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Tip Innovacion'),
+      ),
       body: buildListView(context),
       floatingActionButton: _buildFloatingActionButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: _buildBottomAppBar(context),
     );
   }
 
-  BottomAppBar _buildBottomAppBar(BuildContext context) {
-    return BottomAppBar(
-      color: Theme.of(context).primaryColor,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget buildListView(BuildContext context) {
+    EdgeInsets padding = const EdgeInsets.only(
+      top: 20.0,
+      left: 20.0,
+      right: 20.0,
+    );
+    return SingleChildScrollView(
+      child: Column(
         children: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: Colors.white,
+          // header
+          Container(
+            padding: padding,
+            child: Text(
+              tip.name,
+              style: Theme.of(context).textTheme.title.copyWith(fontSize: 24.0),
+              textAlign: TextAlign.center,
             ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
           ),
-          IconButton(
-            icon: Icon(Icons.share),
-            color: Colors.white,
-            onPressed: () {},
+          // image
+          _buildImage(context),
+          // chip category
+          _buildChip(padding, context),
+          // date
+          Container(
+            padding: padding,
+            child: Text(Filters.date(tip.created)),
+          ),
+          //description
+          Padding(
+            padding: padding,
+            child: Text(
+              tip.description,
+              textAlign: TextAlign.center,
+            ),
           ),
         ],
       ),
     );
   }
 
-  ListView buildListView(BuildContext context) {
-    EdgeInsets padding = const EdgeInsets.only(
-      top: 20.0,
-      left: 20.0,
-      right: 20.0,
-    );
-    return ListView(
-      children: <Widget>[
-        // header
-        Container(
-          padding: padding,
-          child: Text(
-            tip.name,
-            style: Theme.of(context).textTheme.title,
+  Container _buildChip(EdgeInsets padding, BuildContext context) {
+    return Container(
+      padding: padding,
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          vertical: 2.5,
+          horizontal: 5.0,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Theme.of(context).primaryColor,
+          ),
+          borderRadius: BorderRadius.all(
+            Radius.circular(3.0),
           ),
         ),
-        // date
-        Container(
-          padding: padding,
-          child: Text(Filters.date(tip.created)),
+        child: Text(
+          tip.tag.toUpperCase(),
+          style: Theme.of(context).textTheme.overline,
         ),
-        // image
-        _buildImage(context),
-        // chip
-        Container(
-          padding: padding,
-          child: Wrap(
-            spacing: 10.0,
-            children: <Widget>[
-              Chip(
-                label: Text(tip.tag.toUpperCase()),
-              ),
-              Chip(
-                label: Text("EduTendencia".toUpperCase()),
-              ),
-              Chip(
-                label: Text("Tips Innovación".toUpperCase()),
-              ),
-            ],
-          ),
-        ),
-        //description
-        Padding(
-          padding: padding,
-          child: Text(tip.description),
-        ),
-      ],
+      ),
     );
   }
 
@@ -138,7 +128,6 @@ class TipDetail extends StatelessWidget {
   }
 
   FloatingActionButton _buildFloatingActionButton() {
-
     Function goto = () {
       Filters.launchURL(tip.link);
     };
