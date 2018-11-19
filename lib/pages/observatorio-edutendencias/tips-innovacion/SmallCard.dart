@@ -64,7 +64,7 @@ class SmallCard extends StatelessWidget {
               children: <Widget>[
                 Icon(
                   Icons.radio_button_checked,
-                  size: 10.0,
+                  size: 13.0,
                   color: Theme.of(context).primaryColor,
                 ),
                 Text(
