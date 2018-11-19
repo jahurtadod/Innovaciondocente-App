@@ -36,8 +36,8 @@ class MediumCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 10.0),
       padding: const EdgeInsets.symmetric(
-        vertical: 2.5,
-        horizontal: 5.0,
+        vertical: 5.0,
+        horizontal: 10.0,
       ),
       decoration: BoxDecoration(
         border: Border.all(

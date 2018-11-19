@@ -67,12 +67,15 @@ class SmallCard extends StatelessWidget {
                   size: 13.0,
                   color: Theme.of(context).primaryColor,
                 ),
-                Text(
-                  tip.tag.toUpperCase(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .overline
-                      .copyWith(color: Theme.of(context).primaryColor),
+                Padding(
+                  padding: const EdgeInsets.only(left: 5.0),
+                  child: Text(
+                    tip.tag.toUpperCase(),
+                    style: Theme.of(context)
+                        .textTheme
+                        .overline
+                        .copyWith(color: Theme.of(context).primaryColor),
+                  ),
                 ),
               ],
             ),
