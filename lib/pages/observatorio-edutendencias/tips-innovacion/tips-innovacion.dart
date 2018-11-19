@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/classes/filters.dart';
 import 'package:innovaciondocente_app/classes/tips-innovacion.dart';
+import 'package:innovaciondocente_app/pages/observatorio-edutendencias/tips-innovacion/MediumCard.dart';
+import 'package:innovaciondocente_app/pages/observatorio-edutendencias/tips-innovacion/SmallCard.dart';
 import 'package:innovaciondocente_app/pages/observatorio-edutendencias/tips-innovacion/tip-detail.dart';
 
 class TipsInnovacionPage extends StatefulWidget {
@@ -45,51 +47,54 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
       appBar: AppBar(
         title: Text('Tips Innovación'),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.filter_list),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: Icon(Icons.open_in_new),
-            onPressed: () {},
-          ),
+          _buildOptions(context),
         ],
       ),
 
       // main content
       body: Container(
-        color: Theme.of(context).primaryColor,
         child: (this._tips == null)
             ? Text("Loading")
             : ListView.builder(
-                itemBuilder: (BuildContext context, int index) {
-                  return (index % 9 == 0)
-                      ? _BigCard(
-                          tip: tips[index],
-                        )
-                      : (index % 4 == 3)
-                          ? _MediumCard(
-                              tip: tips[index],
-                            )
-                          : _SmallCard(
-                              tip: tips[index],
-                            );
-                },
                 itemCount: tips.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Column(
+                    children: <Widget>[
+                      (index % 6 == 0)
+                          ? MediumCard(
+                              tip: tips[index],
+                              onTap: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (BuildContext context) {
+                                  return TipDetail(
+                                    tip: tips[index],
+                                  );
+                                }));
+                              },
+                            )
+                          : SmallCard(
+                              tip: tips[index],
+                              onTap: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (BuildContext context) {
+                                  return TipDetail(
+                                    tip: tips[index],
+                                  );
+                                }));
+                              },
+                            ),
+                      Divider(),
+                    ],
+                  );
+                },
               ),
       ),
-
-      // Bottom page config
-      // floatingActionButton: _buildFloatingActionButton(context),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      // bottomNavigationBar: _buildBottomAppBar(context),
     );
   }
 
-  FloatingActionButton _buildFloatingActionButton(BuildContext context) {
-    return FloatingActionButton.extended(
-      icon: Icon(Icons.filter_list),
-      label: Text("Seleccionar Categoría"),
+  IconButton _buildOptions(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.more_vert),
       onPressed: () {
         showModalBottomSheet<void>(
           context: context,
@@ -126,7 +131,10 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
                 ListTile(
                   leading: Icon(Icons.launch),
                   title: Text("Ver todos los Tips"),
-                  onTap: _gotoTipsWeb,
+                  onTap: () {
+                    Filters.launchURL(
+                        'https://innovaciondocente-utpl.firebaseapp.com/observatorio-edutendencias/tips-innovacion');
+                  },
                 ),
               ],
             );
@@ -165,261 +173,6 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
             onTap: fn,
           );
   }
-
-  BottomAppBar _buildBottomAppBar(BuildContext context) {
-    return BottomAppBar(
-      color: Theme.of(context).primaryColor,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          IconButton(
-            tooltip: "Abrir todos los Tips",
-            icon: Icon(Icons.launch),
-            color: Colors.white,
-            onPressed: _gotoTipsWeb,
-          ),
-        ],
-      ),
-    );
-  }
-
-  _gotoTipsWeb() {
-    Filters.launchURL(
-        'https://innovaciondocente-utpl.firebaseapp.com/observatorio-edutendencias/tips-innovacion');
-  }
 }
 
-class _SmallCard extends StatelessWidget {
-  final TipInnovacion tip;
-
-  const _SmallCard({
-    Key key,
-    @required this.tip,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return _MaterialCard(
-      tip: tip,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          // right side, text, details
-          Expanded(
-            child: _CardDetails(tip: tip),
-          ),
-
-          // Img
-          Container(
-            margin: const EdgeInsets.fromLTRB(0.0, 15.0, 15.0, 15.0),
-            height: 110.0,
-            width: 110.0,
-            decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
-              image: DecorationImage(
-                image: NetworkImage(tip.img),
-                fit: BoxFit.cover,
-              ),
-              borderRadius: BorderRadius.all(
-                Radius.circular(10.0),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _MediumCard extends StatelessWidget {
-  final TipInnovacion tip;
-
-  const _MediumCard({
-    Key key,
-    @required this.tip,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return _MaterialCard(
-      tip: tip,
-      child: Column(
-        children: <Widget>[
-          // top img
-          Image.network(
-            tip.img,
-            height: 150.0,
-            width: double.infinity,
-            filterQuality: FilterQuality.medium,
-            fit: BoxFit.cover,
-          ),
-
-          // text and content
-          _CardDetails(tip: tip),
-        ],
-      ),
-    );
-  }
-}
-
-class _BigCard extends StatelessWidget {
-  final TipInnovacion tip;
-
-  const _BigCard({
-    Key key,
-    @required this.tip,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return _MaterialCard(
-      tip: tip,
-      child: Column(
-        children: <Widget>[
-          Container(
-            height: 350.0,
-            width: double.infinity,
-            child: Stack(
-              children: <Widget>[
-                // background image
-                Image.network(
-                  tip.img,
-                  width: double.infinity,
-                  height: double.infinity,
-                  filterQuality: FilterQuality.medium,
-                  fit: BoxFit.cover,
-                ),
-                // gradien layer
-                Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: FractionalOffset.topCenter,
-                      end: FractionalOffset.bottomCenter,
-                      colors: [
-                        Colors.transparent,
-                        Colors.transparent,
-                        Colors.black,
-                      ],
-                      stops: [0.0, 0.5, 1.0],
-                    ),
-                  ),
-                ),
-                // text layer
-                Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 13.0),
-                        child: Text(
-                          tip.name,
-                          style: Theme.of(context)
-                              .textTheme
-                              .title
-                              .copyWith(fontSize: 22.0, color: Colors.white),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 13.0),
-            child: Text(
-              Filters.date(tip.created),
-              style: Theme.of(context).textTheme.caption,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _MaterialCard extends StatelessWidget {
-  final Widget child;
-  final TipInnovacion tip;
-
-  _MaterialCard({
-    @required this.child,
-    @required this.tip,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.all(
-          Radius.circular(10.0),
-        ),
-        child: Material(
-          color: Colors.white,
-          child: InkWell(
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-                return TipDetail(
-                  tip: tip,
-                );
-              }));
-            },
-            child: this.child,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _CardDetails extends StatelessWidget {
-  const _CardDetails({
-    Key key,
-    @required this.tip,
-  }) : super(key: key);
-
-  final TipInnovacion tip;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(15.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10.0),
-            child: Text(
-              Filters.slice(0, 45, tip.name),
-              style: Theme.of(context).textTheme.title,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10.0),
-            child: Text(Filters.slice(0, 75, tip.description)),
-          ),
-          Text(
-            Filters.date(tip.created),
-            style: Theme.of(context).textTheme.caption,
-          ),
-        ],
-      ),
-    );
-  }
-}
+class _SmallCard {}
