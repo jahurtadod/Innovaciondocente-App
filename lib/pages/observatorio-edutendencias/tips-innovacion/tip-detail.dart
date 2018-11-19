@@ -129,6 +129,7 @@ class TipDetail extends StatelessWidget {
 
   FloatingActionButton _buildFloatingActionButton() {
     Function goto = () {
+      
       Filters.launchURL(tip.link);
     };
 
