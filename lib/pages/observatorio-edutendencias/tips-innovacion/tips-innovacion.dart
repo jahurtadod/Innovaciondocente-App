@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/classes/filters.dart';
 import 'package:innovaciondocente_app/classes/tips-innovacion.dart';
-import 'package:innovaciondocente_app/pages/observatorio-edutendencias/tips-innovacion/MediumCard.dart';
-import 'package:innovaciondocente_app/pages/observatorio-edutendencias/tips-innovacion/SmallCard.dart';
+import 'package:innovaciondocente_app/pages/observatorio-edutendencias/tips-innovacion/medium-card.dart';
+import 'package:innovaciondocente_app/pages/observatorio-edutendencias/tips-innovacion/small-card.dart';
 import 'package:innovaciondocente_app/pages/observatorio-edutendencias/tips-innovacion/tip-detail.dart';
 
 class TipsInnovacionPage extends StatefulWidget {

@@ -3,17 +3,18 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/classes/filters.dart';
 import 'package:innovaciondocente_app/classes/noticia.dart';
+import 'package:innovaciondocente_app/pages/observatorio-edutendencias/noticias/asymmetric-view.dart';
 
-class Noticias extends StatefulWidget {
+class NoticiasPage extends StatefulWidget {
   final Stream<List> stream;
 
-  Noticias({this.stream});
+  NoticiasPage({this.stream});
 
   @override
-  _NoticiasState createState() => _NoticiasState();
+  _NoticiasPageState createState() => _NoticiasPageState();
 }
 
-class _NoticiasState extends State<Noticias> {
+class _NoticiasPageState extends State<NoticiasPage> {
   List<Noticia> _noticias;
   StreamSubscription<List<Noticia>> _subs;
 
@@ -37,24 +38,23 @@ class _NoticiasState extends State<Noticias> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
-      body: (this._noticias == null)
-          ? Text("Loading")
-          : ListView.builder(
-              itemBuilder: (BuildContext context, int index) {
-                return (index % 9 == 0)
-                    ? _BigCard(
-                        noticia: _noticias[index],
-                      )
-                    : (index % 4 == 3)
-                        ? _MediumCard(
-                            noticia: _noticias[index],
-                          )
-                        : _SmallCard(
-                            noticia: _noticias[index],
-                          );
-              },
-              itemCount: this._noticias.length,
-            ),
+      body: (this._noticias == null) ? Text("Loading") : AsymmetricView(noticias: this._noticias),
+      // ListView.builder(
+      //     itemBuilder: (BuildContext context, int index) {
+      //       return (index % 9 == 0)
+      //           ? _BigCard(
+      //               noticia: _noticias[index],
+      //             )
+      //           : (index % 4 == 3)
+      //               ? _MediumCard(
+      //                   noticia: _noticias[index],
+      //                 )
+      //               : _SmallCard(
+      //                   noticia: _noticias[index],
+      //                 );
+      //     },
+      //     itemCount: this._noticias.length,
+      //   ),
     );
   }
 }
