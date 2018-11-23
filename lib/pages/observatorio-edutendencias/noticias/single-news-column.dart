@@ -49,9 +49,21 @@ class SingleNewsColumn extends StatelessWidget {
           style: Theme.of(context).textTheme.title,
         ),
         SizedBox(height: 5.0),
-        Text(
-          Filters.date(noticia.created),
-          style: Theme.of(context).textTheme.overline,
+        Row(
+          children: <Widget>[
+            Text(
+              Filters.date(noticia.created),
+              style: Theme.of(context).textTheme.overline,
+            ),
+            SizedBox(width: 3.0,),
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                height: 2.0,
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+          ],
         ),
         SizedBox(height: 10.0),
         Text(noticia.description),

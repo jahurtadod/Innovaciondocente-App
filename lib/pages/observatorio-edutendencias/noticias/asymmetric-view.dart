@@ -12,7 +12,7 @@ class AsymmetricView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       scrollDirection: Axis.horizontal,
-      padding: EdgeInsets.fromLTRB(0.0, 34.0, 16.0, 44.0),
+      padding: EdgeInsets.symmetric(vertical: 30.0),
       children: _buildColumns(context),
     );
   }
@@ -23,7 +23,7 @@ class AsymmetricView extends StatelessWidget {
 
     // build list
     return List.generate(_listItemCount(noticias.length), (int index) {
-      double width = .7 * MediaQuery.of(context).size.width;
+      double width = .9 * MediaQuery.of(context).size.width;
       if (index % 2 == 0) {
         /// Even cases
         int bottom = _evenCasesIndex(index);
