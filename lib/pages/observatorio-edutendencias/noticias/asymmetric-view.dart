@@ -12,18 +12,17 @@ class AsymmetricView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       scrollDirection: Axis.horizontal,
-      padding: EdgeInsets.symmetric(vertical: 30.0),
+      padding: EdgeInsets.symmetric(horizontal: 10.0),
       children: _buildColumns(context),
     );
   }
 
   List<Container> _buildColumns(BuildContext context) {
-    // validate list has items
     if (noticias.isEmpty) return <Container>[];
 
     // build list
     return List.generate(_listItemCount(noticias.length), (int index) {
-      double width = .9 * MediaQuery.of(context).size.width;
+      double width = .8 * MediaQuery.of(context).size.width;
       if (index % 2 == 0) {
         /// Even cases
         int bottom = _evenCasesIndex(index);
@@ -31,25 +30,23 @@ class AsymmetricView extends StatelessWidget {
           width: width,
           child: DoubleNewsColumn(
             top: noticias[bottom],
-            bottom:
-                noticias.length - 1 >= bottom + 1 ? noticias[bottom + 1] : null,
-          ),
-        );
-      } else {
-        /// Odd cases
-        return Container(
-          width: width,
-          child: SingleNewsColumn(
-            noticia: noticias[_oddCasesIndex(index)],
+            bottom: noticias.length - 1 >= bottom + 1 ? noticias[bottom + 1] : null,
           ),
         );
       }
+
+      /// Odd cases
+      return Container(
+        width: width,
+        child: SingleNewsColumn(
+          noticia: noticias[_oddCasesIndex(index)],
+        ),
+      );
     }).toList();
   }
 
   ///  return `number of columns`
   int _listItemCount(int totalItems) {
-    /// get asimetic size, every 3 items generate 2 colums
     return (totalItems % 3 == 0)
         // total number of columns matches totalItems
         ? totalItems ~/ 3 * 2
@@ -57,15 +54,12 @@ class AsymmetricView extends StatelessWidget {
         : (totalItems / 3).ceil() * 2 - 1;
   }
 
-  ///  return `truncated index of item`
   int _evenCasesIndex(int input) {
     return input ~/ 2 * 3;
   }
 
   int _oddCasesIndex(int input) {
     assert(input > 0);
-
-    /// TODO: validate assert
     return (input / 2).ceil() * 3 - 1;
   }
 }

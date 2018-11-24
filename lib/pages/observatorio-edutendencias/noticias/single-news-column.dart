@@ -12,12 +12,13 @@ class SingleNewsColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Container(
-          child: Card(
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Card(
             child: InkWell(
               onTap: () {},
               child: Container(
@@ -34,8 +35,8 @@ class SingleNewsColumn extends StatelessWidget {
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -55,7 +56,9 @@ class SingleNewsColumn extends StatelessWidget {
               Filters.date(noticia.created),
               style: Theme.of(context).textTheme.overline,
             ),
-            SizedBox(width: 3.0,),
+            SizedBox(
+              width: 3.0,
+            ),
             Expanded(
               child: Container(
                 width: double.infinity,
@@ -74,6 +77,7 @@ class SingleNewsColumn extends StatelessWidget {
 
   Widget _buildImage(BuildContext context) {
     return AspectRatio(
+      aspectRatio: 1,
       child: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColor,
@@ -86,7 +90,6 @@ class SingleNewsColumn extends StatelessWidget {
           ),
         ),
       ),
-      aspectRatio: 1,
     );
   }
 }
