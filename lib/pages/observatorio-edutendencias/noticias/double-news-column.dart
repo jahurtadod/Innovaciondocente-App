@@ -49,6 +49,8 @@ class _NewsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+      elevation: 2,
+      color: Colors.grey.shade200,
       borderRadius: BorderRadius.all(Radius.circular(3.0)),
       child: InkWell(
         onTap: () {},
@@ -108,7 +110,6 @@ class _NewsCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             maxLines: 6,
           ),
-          SizedBox(height: 10.0),
         ],
       ),
     );

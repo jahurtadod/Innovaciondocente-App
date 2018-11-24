@@ -12,29 +12,32 @@ class SingleNewsColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 10.0),
+        child: Material(
+          elevation: 2,
+          color: Colors.grey.shade200,
+          child: InkWell(
+            onTap: () {},
+            child: _buildCard(context),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Container _buildCard(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10.0),
+      padding: EdgeInsets.all(10.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Card(
-            child: InkWell(
-              onTap: () {},
-              child: Container(
-                padding: EdgeInsets.all(10.0),
-                child: Column(
-                  children: <Widget>[
-                    /// Image asset
-                    _buildImage(context),
+          /// Image asset
+          _buildImage(context),
 
-                    /// Details
-                    _buildDetails(context)
-                  ],
-                ),
-              ),
-            ),
-          ),
+          /// Details
+          _buildDetails(context)
         ],
       ),
     );
@@ -48,29 +51,20 @@ class SingleNewsColumn extends StatelessWidget {
         Text(
           noticia.name,
           style: Theme.of(context).textTheme.title,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 3,
         ),
         SizedBox(height: 5.0),
-        Row(
-          children: <Widget>[
-            Text(
-              Filters.date(noticia.created),
-              style: Theme.of(context).textTheme.overline,
-            ),
-            SizedBox(
-              width: 3.0,
-            ),
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                height: 2.0,
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-          ],
+        Text(
+          Filters.date(noticia.created),
+          style: Theme.of(context).textTheme.overline,
         ),
         SizedBox(height: 10.0),
-        Text(noticia.description),
-        SizedBox(height: 10.0),
+        Text(
+          noticia.description,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 6,
+        ),
       ],
     );
   }

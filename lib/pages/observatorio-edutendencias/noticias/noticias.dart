@@ -40,7 +40,7 @@ class _NoticiasPageState extends State<NoticiasPage> {
       appBar: AppBar(
         title: Text("Noticias"),
       ),
-      backgroundColor: Theme.of(context).primaryColor,
+      // backgroundColor: Theme.of(context).primaryColor,
       body: (this._noticias == null) ? Text("Loading") : AsymmetricView(noticias: this._noticias),
     );
   }
