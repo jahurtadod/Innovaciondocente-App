@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/classes/filters.dart';
 import 'package:innovaciondocente_app/classes/noticia.dart';
 import 'package:innovaciondocente_app/pages/observatorio-edutendencias/noticias/asymmetric-view.dart';
 

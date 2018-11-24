@@ -16,7 +16,7 @@ class Router {
       '/tips': (BuildContext context) => TipsInnovacionPage(
             stream: tipsDB.getStream(),
           ),
-      '/noticias': (BuildContext context) => Noticias(
+      '/noticias': (BuildContext context) => NoticiasPage(
             stream: noticiasDB.getStream(),
           ),
     };
