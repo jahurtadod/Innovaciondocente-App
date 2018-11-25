@@ -53,7 +53,7 @@ ThemeData Theme2() {
   final ThemeData base = ThemeData.light();
   return base.copyWith(
     primaryColor: Colors.white,
-    accentColor: Colors.red,
+    accentColor: const Color(0xffff0266),
     scaffoldBackgroundColor: Colors.white,
 
     // text theme

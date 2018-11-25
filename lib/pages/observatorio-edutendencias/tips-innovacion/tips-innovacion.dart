@@ -44,22 +44,24 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
         : this._tips.where((tip) => tip.tag == this._tag || this._tag == 'todos').toList();
 
     return Scaffold(
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            title: Text('Tips Innovación'),
-            pinned: true,
-            actions: <Widget>[
-              _buildOptions(context),
-            ],
-          ),
-          (this._tips == null)
-              ? Text("Loading")
-              : SliverList(
+      body: (this._tips == null)
+          ? Center(
+              child: Text("Loading..."),
+            )
+          : CustomScrollView(
+              slivers: <Widget>[
+                SliverAppBar(
+                  title: Text('Tips Innovación'),
+                  pinned: true,
+                  actions: <Widget>[
+                    _buildOptions(context),
+                  ],
+                ),
+                SliverList(
                   delegate: _buildListView(tips),
                 )
-        ],
-      ),
+              ],
+            ),
     );
   }
 
