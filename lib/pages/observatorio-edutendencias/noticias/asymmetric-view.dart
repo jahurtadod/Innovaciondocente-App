@@ -10,39 +10,35 @@ class AsymmetricView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return ListView.builder(
+      itemBuilder: _itemsBuilder,
+      itemCount: _listItemCount(noticias.length),
       scrollDirection: Axis.horizontal,
       padding: EdgeInsets.symmetric(horizontal: 10.0),
-      children: _buildColumns(context),
     );
   }
 
-  List<Container> _buildColumns(BuildContext context) {
-    if (noticias.isEmpty) return <Container>[];
-
-    // build list
-    return List.generate(_listItemCount(noticias.length), (int index) {
-      double width = .85 * MediaQuery.of(context).size.width;
-      if (index % 2 == 0) {
-        /// Even cases
-        int bottom = _evenCasesIndex(index);
-        return Container(
-          width: width,
-          child: DoubleNewsColumn(
-            top: noticias[bottom],
-            bottom: noticias.length - 1 >= bottom + 1 ? noticias[bottom + 1] : null,
-          ),
-        );
-      }
-
-      /// Odd cases
+  Widget _itemsBuilder(BuildContext context, int index) {
+    double width = .85 * MediaQuery.of(context).size.width;
+    if (index % 2 == 0) {
+      /// Even cases
+      int bottom = _evenCasesIndex(index);
       return Container(
         width: width,
-        child: SingleNewsColumn(
-          noticia: noticias[_oddCasesIndex(index)],
+        child: DoubleNewsColumn(
+          top: noticias[bottom],
+          bottom: noticias.length - 1 >= bottom + 1 ? noticias[bottom + 1] : null,
         ),
       );
-    }).toList();
+    }
+
+    /// Odd cases
+    return Container(
+      width: width,
+      child: SingleNewsColumn(
+        noticia: noticias[_oddCasesIndex(index)],
+      ),
+    );
   }
 
   ///  return `number of columns`

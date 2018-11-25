@@ -44,22 +44,31 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
         : this._tips.where((tip) => tip.tag == this._tag || this._tag == 'todos').toList();
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Tips Innovación'),
-        actions: <Widget>[
-          _buildOptions(context),
-        ],
-      ),
-      body: Container(
-        child: (this._tips == null) ? Text("Loading") : _buildListView(tips),
-      ),
-    );
+        body: CustomScrollView(
+      slivers: <Widget>[
+        SliverAppBar(
+          title: Text('Tips Innovación'),
+          pinned: true,
+          actions: <Widget>[
+            _buildOptions(context),
+          ],
+        ),
+        (this._tips == null)
+            ? Text("Loading")
+            : SliverList(
+                delegate: _buildListView(tips),
+              )
+      ],
+    )
+        // Container(
+        //   child: (this._tips == null) ? Text("Loading") : _buildListView(tips),
+        // ),
+        );
   }
 
-  ListView _buildListView(List<TipInnovacion> tips) {
-    return ListView.builder(
-      itemCount: tips.length,
-      itemBuilder: (BuildContext context, int index) {
+  SliverChildDelegate _buildListView(List<TipInnovacion> tips) {
+    return SliverChildBuilderDelegate(
+      (BuildContext context, int index) {
         Function gotoDetails = () {
           Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
             return TipDetail(
@@ -85,6 +94,7 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
           ],
         );
       },
+      childCount: tips.length,
     );
   }
 
