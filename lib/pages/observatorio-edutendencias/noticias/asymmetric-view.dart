@@ -22,7 +22,7 @@ class AsymmetricView extends StatelessWidget {
 
     // build list
     return List.generate(_listItemCount(noticias.length), (int index) {
-      double width = .8 * MediaQuery.of(context).size.width;
+      double width = .85 * MediaQuery.of(context).size.width;
       if (index % 2 == 0) {
         /// Even cases
         int bottom = _evenCasesIndex(index);

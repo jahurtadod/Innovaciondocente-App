@@ -74,7 +74,7 @@ class SingleNewsColumn extends StatelessWidget {
       aspectRatio: 1,
       child: Container(
         decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).accentColor,
           borderRadius: BorderRadius.all(
             Radius.circular(3.0),
           ),

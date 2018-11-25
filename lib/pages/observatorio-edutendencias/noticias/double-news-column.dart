@@ -78,7 +78,7 @@ class _NewsCard extends StatelessWidget {
       width: 110.0,
       height: 110.0,
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
+        color: Theme.of(context).accentColor,
         image: DecorationImage(
           image: NetworkImage(noticia.img),
           fit: BoxFit.cover,

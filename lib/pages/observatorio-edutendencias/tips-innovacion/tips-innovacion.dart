@@ -50,45 +50,41 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
           _buildOptions(context),
         ],
       ),
-
-      // main content
       body: Container(
-        child: (this._tips == null)
-            ? Text("Loading")
-            : ListView.builder(
-                itemCount: tips.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Column(
-                    children: <Widget>[
-                      (index % 4 == 0)
-                          ? MediumCard(
-                              tip: tips[index],
-                              onTap: () {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (BuildContext context) {
-                                  return TipDetail(
-                                    tip: tips[index],
-                                  );
-                                }));
-                              },
-                            )
-                          : SmallCard(
-                              tip: tips[index],
-                              onTap: () {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (BuildContext context) {
-                                  return TipDetail(
-                                    tip: tips[index],
-                                  );
-                                }));
-                              },
-                            ),
-                      Divider(),
-                    ],
-                  );
-                },
-              ),
+        child: (this._tips == null) ? Text("Loading") : _buildListView(tips),
       ),
+    );
+  }
+
+  ListView _buildListView(List<TipInnovacion> tips) {
+    return ListView.builder(
+      itemCount: tips.length,
+      itemBuilder: (BuildContext context, int index) {
+        Function gotoDetails = () {
+          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+            return TipDetail(
+              tip: tips[index],
+            );
+          }));
+        };
+        return Column(
+          children: <Widget>[
+            (index % 4 == 0)
+                ? MediumCard(
+                    tip: tips[index],
+                    onTap: gotoDetails,
+                  )
+                : SmallCard(
+                    tip: tips[index],
+                    onTap: gotoDetails,
+                  ),
+            Container(
+              color: Theme.of(context).accentColor,
+              height: .6,
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -103,10 +99,7 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                ListTile(
-                  title: Text("Categorias"),
-                  enabled: false,
-                ),
+                _buildOptionsTitle(context),
                 _listTile(
                   context: context,
                   text: 'Todos',
@@ -128,7 +121,6 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
                   tag: 'videos',
                 ),
                 // other options
-                Divider(),
                 ListTile(
                   leading: Icon(Icons.launch),
                   title: Text("Ver todos los Tips"),
@@ -145,17 +137,29 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
     );
   }
 
+  Container _buildOptionsTitle(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.all(10.0),
+      padding: EdgeInsets.symmetric(
+        vertical: 5.0,
+        horizontal: 10.0,
+      ),
+      child: Text(
+        "Categorias",
+        style: Theme.of(context).textTheme.overline.copyWith(
+              color: Theme.of(context).accentColor,
+              fontSize: 15.0,
+            ),
+      ),
+    );
+  }
+
   Widget _listTile({
     @required BuildContext context,
     @required String text,
     @required String tag,
   }) {
-    Function fn = () {
-      setState(() {
-        this._tag = tag;
-      });
-      Navigator.pop(context);
-    };
     return this._tag.contains(tag)
         // this is selected tile
         ? _ListTile(
@@ -165,7 +169,12 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
         // normal tile
         : Material(
             child: InkWell(
-              onTap: fn,
+              onTap: () {
+                setState(() {
+                  this._tag = tag;
+                });
+                Navigator.pop(context);
+              },
               child: _ListTile(text),
             ),
           );
@@ -188,7 +197,7 @@ class _ListTile extends StatelessWidget {
     if (active)
       return Container(
         decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).accentColor,
           borderRadius: BorderRadius.only(
             topRight: Radius.circular(3.0),
             bottomRight: Radius.circular(3.0),
@@ -211,13 +220,12 @@ class _ListTile extends StatelessWidget {
       decoration: ShapeDecoration(
         shape: RoundedRectangleBorder(
           side: BorderSide(
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).accentColor,
             width: 1.0,
             style: BorderStyle.solid,
           ),
           borderRadius: BorderRadius.all(Radius.circular(3.0)),
         ),
-        // borderRadius: BorderRadius.all(Radius.circular(3.0)),
       ),
       width: double.infinity,
       margin: EdgeInsets.all(10.0),

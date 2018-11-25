@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/classes/filters.dart';
 import 'package:innovaciondocente_app/classes/noticia.dart';
 import 'package:innovaciondocente_app/pages/observatorio-edutendencias/noticias/asymmetric-view.dart';
 
@@ -39,8 +37,8 @@ class _NoticiasPageState extends State<NoticiasPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Noticias"),
+        elevation: 0,
       ),
-      // backgroundColor: Theme.of(context).primaryColor,
       body: (this._noticias == null) ? Text("Loading") : AsymmetricView(noticias: this._noticias),
     );
   }
