@@ -19,7 +19,10 @@ class SingleNewsColumn extends StatelessWidget {
           elevation: 2,
           color: Colors.grey.shade200,
           child: InkWell(
-            onTap: () {},
+            onTap: () {
+              Filters.launchURL(
+                  'https://innovaciondocente-utpl.firebaseapp.com/observatorio-edutendencias/noticias/${noticia.id}');
+            },
             child: _buildCard(context),
           ),
         ),

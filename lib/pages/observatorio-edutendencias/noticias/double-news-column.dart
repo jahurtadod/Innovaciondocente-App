@@ -53,7 +53,10 @@ class _NewsCard extends StatelessWidget {
       color: Colors.grey.shade200,
       borderRadius: BorderRadius.all(Radius.circular(3.0)),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Filters.launchURL(
+              'https://innovaciondocente-utpl.firebaseapp.com/observatorio-edutendencias/noticias/${noticia.id}');
+        },
         child: _buildCard(context),
       ),
     );

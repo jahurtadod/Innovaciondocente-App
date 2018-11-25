@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:innovaciondocente_app/classes/filters.dart';
 import 'package:innovaciondocente_app/classes/noticia.dart';
 import 'package:innovaciondocente_app/pages/observatorio-edutendencias/noticias/asymmetric-view.dart';
 
@@ -38,6 +39,20 @@ class _NoticiasPageState extends State<NoticiasPage> {
       appBar: AppBar(
         title: Text("Noticias"),
         elevation: 0,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.launch),
+            tooltip: "Ver todos los Tips",
+            onPressed: () {
+              Filters.launchURL(
+                  'https://innovaciondocente-utpl.firebaseapp.com/observatorio-edutendencias/noticias');
+            },
+          ),
+        ],
+      ),
+      bottomNavigationBar: Container(
+        height: 100.0,
+        color: Theme.of(context).accentColor,
       ),
       body: (this._noticias == null) ? Text("Loading") : AsymmetricView(noticias: this._noticias),
     );
