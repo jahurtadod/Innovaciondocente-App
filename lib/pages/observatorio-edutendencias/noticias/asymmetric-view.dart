@@ -13,18 +13,17 @@ class AsymmetricView extends StatelessWidget {
     return ListView.builder(
       itemBuilder: _itemsBuilder,
       itemCount: _listItemCount(noticias.length),
-      scrollDirection: Axis.horizontal,
+      scrollDirection: Axis.vertical,
       padding: EdgeInsets.symmetric(horizontal: 10.0),
     );
   }
 
   Widget _itemsBuilder(BuildContext context, int index) {
-    double width = .85 * MediaQuery.of(context).size.width;
     if (index % 2 == 0) {
       /// Even cases
       int bottom = _evenCasesIndex(index);
       return Container(
-        width: width,
+        padding: const EdgeInsets.only(bottom: 10.0),
         child: DoubleNewsColumn(
           top: noticias[bottom],
           bottom: noticias.length - 1 >= bottom + 1 ? noticias[bottom + 1] : null,
@@ -34,7 +33,7 @@ class AsymmetricView extends StatelessWidget {
 
     /// Odd cases
     return Container(
-      width: width,
+      padding: const EdgeInsets.only(bottom: 10.0),
       child: SingleNewsColumn(
         noticia: noticias[_oddCasesIndex(index)],
       ),

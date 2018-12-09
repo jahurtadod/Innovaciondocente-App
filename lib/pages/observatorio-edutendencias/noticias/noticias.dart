@@ -50,10 +50,6 @@ class _NoticiasPageState extends State<NoticiasPage> {
           ),
         ],
       ),
-      bottomNavigationBar: Container(
-        height: 100.0,
-        color: Theme.of(context).accentColor,
-      ),
       body: (this._noticias == null) ? Text("Loading") : AsymmetricView(noticias: this._noticias),
     );
   }

@@ -13,21 +13,16 @@ class DoubleNewsColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        // top card
-        Padding(
-          padding: EdgeInsetsDirectional.only(start: 10.0),
+        Expanded(
           child: _NewsCard(
             noticia: top,
           ),
         ),
-
-        // bottom
-        Padding(
-          padding: EdgeInsetsDirectional.only(end: 10.0),
+        SizedBox(width: 10),
+        Expanded(
           child: bottom != null
               ? _NewsCard(
                   noticia: bottom,
@@ -41,9 +36,10 @@ class DoubleNewsColumn extends StatelessWidget {
 
 class _NewsCard extends StatelessWidget {
   final Noticia noticia;
-  _NewsCard({
+
+  const _NewsCard({
     Key key,
-    @required this.noticia,
+    this.noticia,
   }) : super(key: key);
 
   @override
@@ -51,7 +47,6 @@ class _NewsCard extends StatelessWidget {
     return Material(
       elevation: 2,
       color: Colors.grey.shade200,
-      borderRadius: BorderRadius.all(Radius.circular(3.0)),
       child: InkWell(
         onTap: () {
           Filters.launchURL(
@@ -62,58 +57,62 @@ class _NewsCard extends StatelessWidget {
     );
   }
 
-  Widget _buildCard(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          _buildDetails(context),
-          SizedBox(width: 10.0),
-          _buildImg(context),
-        ],
-      ),
-    );
-  }
-
-  Container _buildImg(BuildContext context) {
+  Container _buildCard(BuildContext context) {
     return Container(
-      width: 110.0,
-      height: 110.0,
-      decoration: BoxDecoration(
-        color: Theme.of(context).accentColor,
-        image: DecorationImage(
-          image: NetworkImage(noticia.img),
-          fit: BoxFit.cover,
-        ),
-        borderRadius: BorderRadius.all(Radius.circular(3.0)),
+      padding: EdgeInsets.all(10.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          /// Image asset
+          _buildImage(context),
+
+          /// Details
+          _buildDetails(context)
+        ],
       ),
     );
   }
 
-  Expanded _buildDetails(BuildContext context) {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            noticia.name,
-            style: Theme.of(context).textTheme.title,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 3,
+  Column _buildDetails(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        SizedBox(height: 10.0),
+        Text(
+          noticia.name,
+          style: Theme.of(context).textTheme.title,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 3,
+        ),
+        SizedBox(height: 5.0),
+        Text(
+          Filters.date(noticia.created),
+          style: Theme.of(context).textTheme.overline,
+        ),
+        SizedBox(height: 10.0),
+        Text(
+          noticia.description,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 6,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildImage(BuildContext context) {
+    return AspectRatio(
+      aspectRatio: 1,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).accentColor,
+          borderRadius: BorderRadius.all(
+            Radius.circular(3.0),
           ),
-          SizedBox(height: 5.0),
-          Text(
-            Filters.date(noticia.created),
-            style: Theme.of(context).textTheme.overline,
+          image: DecorationImage(
+            image: NetworkImage(noticia.img),
+            fit: BoxFit.cover,
           ),
-          SizedBox(height: 10.0),
-          Text(
-            noticia.description,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 6,
-          ),
-        ],
+        ),
       ),
     );
   }
