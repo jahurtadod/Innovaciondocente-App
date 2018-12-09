@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/pages/home.dart';
-import 'package:innovaciondocente_app/pages/observatorio-edutendencias/noticias/noticias.dart';
+import 'package:innovaciondocente_app/pages/observatorio-edutendencias/noticias/noticias-page.dart';
 import 'package:innovaciondocente_app/pages/observatorio-edutendencias/tips-innovacion/tips-innovacion.dart';
 import 'package:innovaciondocente_app/services/observatorio-edutendencias/noticias/noticias-database.dart';
 import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion/tips-innovacion-database.dart';
