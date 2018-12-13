@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/pages/formacion-cocente/cafe-cientifico/cafe-cientifico-page.dart';
+import 'package:innovaciondocente_app/pages/formacion-cocente/cafe-cientifico/encuentros-page.dart';
 import 'package:innovaciondocente_app/pages/home.dart';
 import 'package:innovaciondocente_app/pages/observatorio-edutendencias/noticias/noticias-page.dart';
 import 'package:innovaciondocente_app/pages/observatorio-edutendencias/tips-innovacion/tips-innovacion.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/cafe-cientifico/encuentros-database.dart';
 import 'package:innovaciondocente_app/services/observatorio-edutendencias/noticias/noticias-database.dart';
 import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion/tips-innovacion-database.dart';
-import 'package:innovaciondocente_app/services/service.dart';
 
 class Router {
   static Map<String, WidgetBuilder> appRoutes() {
@@ -18,7 +17,7 @@ class Router {
       '/noticias': (BuildContext context) => NoticiasPage(
             stream: NoticiasDatabase().getStream(),
           ),
-      '/cafe-cientifico/encuentros': (BuildContext context) => CafeCientificoPage(
+      '/cafe-cientifico/encuentros': (BuildContext context) => EncuentrosPage(
             stream: EncuentrosCafeCientificoDatabase().getStream(),
           ),
     };

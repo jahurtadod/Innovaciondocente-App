@@ -3,16 +3,16 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/cafe-cientifico/encuentro.dart';
 
-class CafeCientificoPage extends StatefulWidget {
+class EncuentrosPage extends StatefulWidget {
   final Stream<List> stream;
 
-  const CafeCientificoPage({Key key, this.stream}) : super(key: key);
+  const EncuentrosPage({Key key, this.stream}) : super(key: key);
 
   @override
-  _CafeCientificoPAgeState createState() => _CafeCientificoPAgeState();
+  _EncuentrosPageState createState() => _EncuentrosPageState();
 }
 
-class _CafeCientificoPAgeState extends State<CafeCientificoPage> {
+class _EncuentrosPageState extends State<EncuentrosPage> {
   List<Encuentro> _encuentros;
   StreamSubscription<List<Encuentro>> _subs;
 
