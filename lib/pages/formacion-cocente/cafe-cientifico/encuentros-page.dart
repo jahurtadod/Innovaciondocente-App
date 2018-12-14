@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/pages/formacion-cocente/cafe-cientifico/encuentro-detail-page.dart';
+import 'package:innovaciondocente_app/pages/formacion-cocente/cafe-cientifico/encuentro-card.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/cafe-cientifico/encuentro.dart';
 
 class EncuentrosPage extends StatefulWidget {
-  final Stream<List> stream;
+  final Stream<List<Encuentro>> stream;
 
   const EncuentrosPage({Key key, this.stream}) : super(key: key);
 
@@ -38,29 +38,96 @@ class _EncuentrosPageState extends State<EncuentrosPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Café Científico'),
+        centerTitle: true,
         elevation: 0,
       ),
-      body: ListView(
-        children: this
-            ._encuentros
-            .map((val) => Container(
-                  child: ListTile(
-                    title: Text(
-                      val.name,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-                        return EncuentroDetailPage(
-                          encuentro: val,
-                        );
-                      }));
-                    },
-                  ),
-                ))
-            .toList(),
+      body: this._encuentros == null
+          ? Center(
+              child: Text('Loading...'),
+            )
+          : _EncuentrosView(encuentros: _encuentros),
+    );
+  }
+}
+
+class _EncuentrosView extends StatelessWidget {
+  const _EncuentrosView({
+    Key key,
+    @required List<Encuentro> encuentros,
+  })  : encuentros = encuentros,
+        super(key: key);
+
+  final List<Encuentro> encuentros;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        /// background image
+        _buildBackground(),
+        _buildGradiente(),
+
+        /// gallery
+        Column(
+          children: <Widget>[
+            Expanded(
+              flex: 6,
+              child: Container(),
+            ),
+            Expanded(
+              flex: 3,
+              child: Container(
+                height: double.infinity,
+                width: double.infinity,
+                child: ListView.builder(
+                  padding: const EdgeInsets.symmetric(horizontal: 7.5),
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (BuildContext context, int index) =>
+                      EncuentroCard(encuentro: encuentros[index]),
+                  itemCount: encuentros.length,
+                ),
+              ),
+            )
+          ],
+        ),
+      ],
+    );
+  }
+
+  Container _buildBackground() {
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      child: FadeInImage(
+        image: NetworkImage(getLastEncuentro().img),
+        placeholder: AssetImage('assets/images/default.png'),
+        fit: BoxFit.cover,
       ),
     );
+  }
+
+  Container _buildGradiente() {
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          tileMode: TileMode.clamp,
+          stops: [0, 0.4, 0.8],
+          colors: <Color>[
+            Colors.transparent,
+            Colors.transparent,
+            Colors.black,
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
+    );
+  }
+
+  Encuentro getLastEncuentro() {
+    if (encuentros.length <= 0) return null;
+    return encuentros[0];
   }
 }
