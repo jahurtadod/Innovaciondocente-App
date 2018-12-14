@@ -13,123 +13,115 @@ class TipDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Tip Innovacion'),
-      ),
-      body: buildListView(context),
+      body: _buildBody(context),
       floatingActionButton: _buildFloatingActionButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
-  Widget buildListView(BuildContext context) {
-    EdgeInsets padding = const EdgeInsets.only(
-      top: 20.0,
-      left: 20.0,
-      right: 20.0,
-    );
-    return SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          // header
-          Container(
-            padding: padding,
-            child: Text(
-              tip.name,
-              style: Theme.of(context).textTheme.title.copyWith(fontSize: 24.0),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          // image
-          _buildImage(context),
-          // chip category
-          _buildChip(padding, context),
-          // date
-          Container(
-            padding: padding,
-            child: Text(Filters.date(tip.created)),
-          ),
-          //description
-          Padding(
-            padding: padding,
-            child: Text(
-              tip.description,
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Container _buildChip(EdgeInsets padding, BuildContext context) {
-    return Container(
-      padding: padding,
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          vertical: 2.5,
-          horizontal: 5.0,
+  CustomScrollView _buildBody(BuildContext context) {
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverAppBar(
+          title: Text('Tip Innovación'),
+          pinned: true,
         ),
-        decoration: BoxDecoration(
-          border: Border.all(
+        SliverPadding(
+          padding: EdgeInsets.all(15.0),
+          sliver: SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                Text(
+                  tip.name,
+                  style: Theme.of(context).textTheme.title,
+                ),
+                SizedBox(height: 10),
+                // image
+                _buildImage(context),
+                SizedBox(height: 10),
+                // chip category
+                _buildChip(context),
+                SizedBox(height: 10),
+                // date
+                Text(Filters.date(tip.created)),
+                SizedBox(height: 10),
+                //description
+                Text(
+                  tip.description,
+                  textAlign: TextAlign.justify,
+                ),
+              ],
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _buildChip(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Container(
+          padding: const EdgeInsets.symmetric(
+            vertical: 2.5,
+            horizontal: 5.0,
+          ),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Theme.of(context).accentColor,
+            ),
+            borderRadius: BorderRadius.all(
+              Radius.circular(3.0),
+            ),
+          ),
+          child: Text(
+            tip.tag.toUpperCase(),
+            style: Theme.of(context).textTheme.overline,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildImage(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        // image
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5.0),
             color: Theme.of(context).primaryColor,
+            image: DecorationImage(
+              image: NetworkImage(tip.img),
+              fit: BoxFit.cover,
+            ),
           ),
-          borderRadius: BorderRadius.all(
-            Radius.circular(3.0),
-          ),
+          height: 170.0,
         ),
-        child: Text(
-          tip.tag.toUpperCase(),
-          style: Theme.of(context).textTheme.overline,
-        ),
-      ),
-    );
-  }
-
-  Padding _buildImage(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        top: 20.0,
-        left: 20.0,
-        right: 20.0,
-      ),
-      child: Stack(
-        children: <Widget>[
-          // image
-          Container(
+        // image icon
+        Positioned(
+          child: Container(
             decoration: BoxDecoration(
+              color: Colors.black,
               borderRadius: BorderRadius.circular(5.0),
-              color: Theme.of(context).primaryColor,
-              image: DecorationImage(
-                image: NetworkImage(tip.img),
-                fit: BoxFit.cover,
-              ),
             ),
-            height: 170.0,
+            padding: EdgeInsets.all(2.0),
+            child: Icon(
+              Icons.image,
+              color: Colors.white,
+            ),
           ),
-          // image icon
-          Positioned(
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              padding: EdgeInsets.all(2.0),
-              child: Icon(
-                Icons.image,
-                color: Colors.white,
-              ),
-            ),
-            bottom: 5.0,
-            right: 5.0,
-          )
-        ],
-      ),
+          bottom: 5.0,
+          right: 5.0,
+        )
+      ],
     );
   }
 
   FloatingActionButton _buildFloatingActionButton() {
     Function goto = () {
-      
       Filters.launchURL(tip.link);
     };
 

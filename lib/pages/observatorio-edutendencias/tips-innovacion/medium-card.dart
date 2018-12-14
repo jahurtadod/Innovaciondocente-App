@@ -18,12 +18,16 @@ class MediumCard extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Container(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 15.0,
+            vertical: 10.0,
+          ),
           child: Column(
             children: <Widget>[
-              // chip category
               _buildChip(context),
+              SizedBox(height: 10.0),
               _buildImg(context),
+              SizedBox(height: 10.0),
               _buildDetails(context),
             ],
           ),
@@ -34,14 +38,13 @@ class MediumCard extends StatelessWidget {
 
   Container _buildChip(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 10.0),
       padding: const EdgeInsets.symmetric(
         vertical: 5.0,
         horizontal: 10.0,
       ),
       decoration: BoxDecoration(
         border: Border.all(
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).accentColor,
         ),
         borderRadius: BorderRadius.all(
           Radius.circular(3.0),
@@ -59,22 +62,21 @@ class MediumCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         // title
-        Padding(
-          padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-          child: Text(
-            Filters.slice(0, 45, tip.name),
-            style: Theme.of(context).textTheme.title,
-          ),
+        Text(
+          tip.name,
+          style: Theme.of(context).textTheme.title,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 2,
         ),
+        SizedBox(height: 10.0),
         // description
-        Padding(
-          padding: const EdgeInsets.only(bottom: 10.0),
-          child: Text(
-            Filters.slice(0, 120, tip.description),
-            textAlign: TextAlign.justify,
-          ),
+        Text(
+          tip.description,
+          textAlign: TextAlign.justify,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 4,
         ),
-
+        SizedBox(height: 10.0),
         // date
         Text(
           Filters.date(tip.created),
@@ -89,7 +91,7 @@ class MediumCard extends StatelessWidget {
       height: 150.0,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
+        color: Theme.of(context).accentColor,
         borderRadius: BorderRadius.all(
           Radius.circular(3.0),
         ),

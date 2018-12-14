@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:innovaciondocente_app/classes/filters.dart';
 import 'package:innovaciondocente_app/classes/noticia.dart';
 
 class DoubleNewsColumn extends StatelessWidget {
-  final Noticia top;
-  final Noticia bottom;
+  final Noticia top, bottom;
 
   const DoubleNewsColumn({
     Key key,
@@ -13,36 +13,105 @@ class DoubleNewsColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        NewsCard(
-          noticia: top,
+        Expanded(
+          child: _NewsCard(
+            noticia: top,
+          ),
         ),
-        bottom != null
-            ? NewsCard(
-                noticia: bottom,
-              )
-            : Expanded(
-                child: Container(),
-              ),
+        SizedBox(width: 10),
+        Expanded(
+          child: bottom != null
+              ? _NewsCard(
+                  noticia: bottom,
+                )
+              : Container(),
+        ),
       ],
     );
   }
 }
 
-class NewsCard extends StatelessWidget {
+class _NewsCard extends StatelessWidget {
   final Noticia noticia;
-  NewsCard({
+
+  const _NewsCard({
     Key key,
-    @required this.noticia,
+    this.noticia,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return Material(
+      elevation: 2,
+      color: Colors.grey.shade200,
+      child: InkWell(
+        onTap: () {
+          Filters.launchURL(
+              'https://innovaciondocente-utpl.firebaseapp.com/observatorio-edutendencias/noticias/${noticia.id}');
+        },
+        child: _buildCard(context),
+      ),
+    );
+  }
+
+  Container _buildCard(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(10.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          /// Image asset
+          _buildImage(context),
+
+          /// Details
+          _buildDetails(context)
+        ],
+      ),
+    );
+  }
+
+  Column _buildDetails(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        SizedBox(height: 10.0),
+        Text(
+          noticia.name,
+          style: Theme.of(context).textTheme.title,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 3,
+        ),
+        SizedBox(height: 5.0),
+        Text(
+          Filters.date(noticia.created),
+          style: Theme.of(context).textTheme.overline,
+        ),
+        SizedBox(height: 10.0),
+        Text(
+          noticia.description,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 6,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildImage(BuildContext context) {
+    return AspectRatio(
+      aspectRatio: 1,
       child: Container(
-        child: Center(
-          child: Text(noticia.name),
+        decoration: BoxDecoration(
+          color: Theme.of(context).accentColor,
+          borderRadius: BorderRadius.all(
+            Radius.circular(3.0),
+          ),
+          image: DecorationImage(
+            image: NetworkImage(noticia.img),
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );

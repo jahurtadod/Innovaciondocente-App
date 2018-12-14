@@ -32,15 +32,37 @@ TextTheme _buildTextTheme({
         headline: base.headline.copyWith(
           fontWeight: FontWeight.w500,
         ),
-        title: base.title.copyWith(fontSize: 18.0),
+        title: base.title.copyWith(
+          fontSize: 18.0,
+        ),
         caption: base.caption.copyWith(
           fontWeight: FontWeight.w400,
           fontSize: 14.0,
         ),
-        button: base.button.copyWith(color: color),
+        overline: base.overline.copyWith(
+          fontSize: 12.0,
+        ),
       )
       .apply(
         displayColor: color,
         bodyColor: color,
       );
+}
+
+ThemeData Theme2() {
+  final ThemeData base = ThemeData.light();
+  return base.copyWith(
+    primaryColor: Colors.white,
+    accentColor: const Color(0xffff0266),
+    scaffoldBackgroundColor: Colors.white,
+
+    // text theme
+    textTheme: _buildTextTheme(base: base.textTheme),
+    primaryTextTheme: _buildTextTheme(base: base.primaryTextTheme),
+
+    // icon theme
+    iconTheme: base.iconTheme.copyWith(color: Colors.black),
+    primaryIconTheme: base.iconTheme.copyWith(color: Colors.black),
+    accentIconTheme: base.iconTheme.copyWith(color: Colors.white),
+  );
 }

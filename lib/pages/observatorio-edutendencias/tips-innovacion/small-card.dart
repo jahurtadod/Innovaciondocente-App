@@ -17,11 +17,15 @@ class SmallCard extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Container(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 15.0,
+            vertical: 10.0,
+          ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               _buildDetails(context),
+              SizedBox(width: 15.0),
               _buildImg(context),
             ],
           ),
@@ -32,55 +36,52 @@ class SmallCard extends StatelessWidget {
 
   Expanded _buildDetails(BuildContext context) {
     return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.only(right: 10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            // title
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10.0),
-              child: Text(
-                Filters.slice(0, 45, tip.name),
-                style: Theme.of(context).textTheme.title,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          // title
+          Text(
+            tip.name,
+            style: Theme.of(context).textTheme.title,
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+          ),
+          SizedBox(height: 10),
+          // description(small)
+          Text(
+            tip.description,
+            maxLines: 4,
+            overflow: TextOverflow.ellipsis,
+          ),
+          SizedBox(height: 10),
+          // date
+          Text(
+            Filters.date(tip.created),
+            style: Theme.of(context).textTheme.caption,
+          ),
+          SizedBox(height: 10),
+          // chip category
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Icon(
+                Icons.radio_button_checked,
+                size: 13.0,
+                color: Theme.of(context).accentColor,
               ),
-            ),
-            // description(small)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10.0),
-              child: Text(Filters.slice(0, 75, tip.description)),
-            ),
-            // date
-            Container(
-              padding: const EdgeInsets.only(bottom: 10.0),
-              child: Text(
-                Filters.date(tip.created),
-                style: Theme.of(context).textTheme.caption,
+              Padding(
+                padding: const EdgeInsets.only(left: 5.0),
+                child: Text(
+                  tip.tag.toUpperCase(),
+                  style: Theme.of(context)
+                      .accentTextTheme
+                      .overline
+                      .copyWith(color: Theme.of(context).accentColor),
+                ),
               ),
-            ),
-            // chip category
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Icon(
-                  Icons.radio_button_checked,
-                  size: 13.0,
-                  color: Theme.of(context).primaryColor,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 5.0),
-                  child: Text(
-                    tip.tag.toUpperCase(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .overline
-                        .copyWith(color: Theme.of(context).primaryColor),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -90,7 +91,7 @@ class SmallCard extends StatelessWidget {
       height: 110.0,
       width: 110.0,
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
+        color: Theme.of(context).accentColor,
         image: DecorationImage(
           image: NetworkImage(tip.img),
           fit: BoxFit.cover,

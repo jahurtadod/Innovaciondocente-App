@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:innovaciondocente_app/pages/formacion-cocente/cafe-cientifico/encuentros-page.dart';
+import 'package:innovaciondocente_app/pages/formacion-cocente/programa-formacion/cursos-page.dart';
 import 'package:innovaciondocente_app/pages/home.dart';
-import 'package:innovaciondocente_app/pages/observatorio-edutendencias/noticias/noticias.dart';
+import 'package:innovaciondocente_app/pages/observatorio-edutendencias/noticias/noticias-page.dart';
 import 'package:innovaciondocente_app/pages/observatorio-edutendencias/tips-innovacion/tips-innovacion.dart';
+import 'package:innovaciondocente_app/services/formacion-docente/cafe-cientifico/encuentros-database.dart';
+import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/cursos-database.dart';
 import 'package:innovaciondocente_app/services/observatorio-edutendencias/noticias/noticias-database.dart';
 import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion/tips-innovacion-database.dart';
-import 'package:innovaciondocente_app/services/service.dart';
 
 class Router {
   static Map<String, WidgetBuilder> appRoutes() {
-    Database tipsDB = TipsDatabase();
-    Database noticiasDB = NoticiasDatabase();
-
     return {
       '/': (BuildContext context) => Home(),
       '/tips': (BuildContext context) => TipsInnovacionPage(
-            stream: tipsDB.getStream(),
+            stream: TipsDatabase().getStream(),
           ),
       '/noticias': (BuildContext context) => NoticiasPage(
-            stream: noticiasDB.getStream(),
+            stream: NoticiasDatabase().getStream(),
+          ),
+      '/cafe-cientifico/encuentros': (BuildContext context) => EncuentrosPage(
+            stream: EncuentrosCafeCientificoDatabase().getStream(),
+          ),
+      '/programa-formacion/cursos': (BuildContext context) => CursosPage(
+            stream: CursoProgramaFormacionDatabase().getStream(),
           ),
     };
   }
