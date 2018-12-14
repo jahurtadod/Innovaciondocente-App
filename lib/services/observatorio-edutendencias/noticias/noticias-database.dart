@@ -5,14 +5,14 @@ import 'package:innovaciondocente_app/services/service.dart';
 
 class NoticiasDatabase extends Database<Noticia> {
   @override
-  Stream<List<Noticia>> getStream() {
+  Stream<List<Noticia>> getStream({int limit = 20}) {
     // create firebase stream and return stream
     return FirestoreStream<List<Noticia>>(
       parser: _NoticiasParser(),
       query: Firestore.instance
           .collection('observatorio/edutendencias/noticias')
           .orderBy('created', descending: true)
-          .limit(20),
+          .limit(limit),
     ).stream;
   }
 }
