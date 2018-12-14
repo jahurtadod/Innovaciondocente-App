@@ -131,9 +131,8 @@ class EncuentroDetailPage extends StatelessWidget {
   }
 
   bool isActive() {
-    return true;
     if (encuentro.postulations == null) return false;
     DateTime today = DateTime.now();
-    return today.difference(encuentro.postulations.add(Duration(days: 1))).inSeconds > 0;
+    return today.difference(encuentro.postulations).inDays <= 0;
   }
 }
