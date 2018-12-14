@@ -28,61 +28,59 @@ class EncuentroDetailPage extends StatelessWidget {
     );
   }
 
-  SliverPadding _buildBody(BuildContext context) {
-    return SliverPadding(
-      padding: const EdgeInsets.fromLTRB(15, 20, 15, 65),
-      sliver: SliverList(
-        delegate: SliverChildListDelegate([
-          Text(
+  SliverList _buildBody(BuildContext context) {
+    return SliverList(
+      delegate: SliverChildListDelegate([
+        Padding(
+          padding: const EdgeInsets.fromLTRB(15, 15, 15, 10),
+          child: Text(
             encuentro.name,
             style: Theme.of(context).primaryTextTheme.title,
           ),
-          SizedBox(height: 10),
-          Text(
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Text(
             Filters.date(encuentro.date),
             style: Theme.of(context).textTheme.overline,
           ),
-          SizedBox(height: 15),
-          EncuentroDescription(
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+          child: EncuentroDescription(
             description: encuentro.description,
           ),
-          SizedBox(height: 15),
-          Row(
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(15, 10, 15, 5),
+          child: Row(
             children: <Widget>[
               Icon(Icons.people),
-              SizedBox(width: 5),
+              SizedBox(width: 15),
               Text(
                 'Invitados',
                 style: Theme.of(context).primaryTextTheme.subtitle,
               ),
             ],
           ),
-          SizedBox(height: 10),
-          Column(
-            crossAxisAlignment
-            : CrossAxisAlignment.start,
-            children: encuentro.guests
-                .map(
-                  (guest) => Padding(
-                        padding: const EdgeInsets.only(bottom: 15),
-                        child: RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: '${guest.name}',
-                                style: Theme.of(context).textTheme.subtitle,
-                              ),
-                              // TextSpan(text: guest.description.trim()),
-                            ],
-                            style: Theme.of(context).textTheme.body1,
-                          ),
-                        ),
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: encuentro.guests
+              .map((guest) => ExpansionTile(
+                    title: Text(guest.name),
+                    leading: Icon(Icons.person),
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
+                        child: Text(guest.description),
                       ),
-                )
-                .toList(),
-          )
-        ]),
-      ),
+                    ],
+                  ))
+              .toList(),
+        ),
+        SizedBox(height: 65),
+      ]),
     );
   }
 
