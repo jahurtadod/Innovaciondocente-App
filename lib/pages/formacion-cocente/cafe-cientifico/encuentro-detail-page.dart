@@ -13,11 +13,7 @@ class EncuentroDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        icon: Icon(Icons.access_alarm),
-        label: Text('Inscribete'),
-        onPressed: () {},
-      ),
+      floatingActionButton: _buildInscriptionButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: CustomScrollView(
         slivers: <Widget>[
@@ -28,16 +24,23 @@ class EncuentroDetailPage extends StatelessWidget {
     );
   }
 
+  FloatingActionButton _buildInscriptionButton() {
+    return (isActive())
+        ? FloatingActionButton.extended(
+            icon: Icon(Icons.event_note),
+            label: Text('Inscribete'),
+            onPressed: () {
+              Filters.launchURL(
+                  'https://innovaciondocente-utpl.firebaseapp.com/formacion-docente/cafe-cientifico/inscripcion?id=${encuentro.id}');
+            },
+          )
+        : null;
+  }
+
   SliverList _buildBody(BuildContext context) {
     return SliverList(
       delegate: SliverChildListDelegate([
-        Padding(
-          padding: const EdgeInsets.fromLTRB(15, 15, 15, 10),
-          child: Text(
-            encuentro.name,
-            style: Theme.of(context).primaryTextTheme.title,
-          ),
-        ),
+        _buildTitle(context),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Text(
@@ -68,8 +71,15 @@ class EncuentroDetailPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: encuentro.guests
               .map((guest) => ExpansionTile(
-                    title: Text(guest.name),
-                    leading: Icon(Icons.person),
+                    title: Row(
+                      children: <Widget>[
+                        Icon(Icons.person),
+                        SizedBox(width: 15),
+                        Expanded(
+                          child: Text(guest.name),
+                        ),
+                      ],
+                    ),
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
@@ -79,21 +89,34 @@ class EncuentroDetailPage extends StatelessWidget {
                   ))
               .toList(),
         ),
-        SizedBox(height: 65),
+        isActive() ? SizedBox(height: 65) : Container(),
       ]),
+    );
+  }
+
+  Padding _buildTitle(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(15, 15, 15, 10),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: Text(
+              encuentro.name,
+              style: Theme.of(context).primaryTextTheme.title,
+            ),
+          ),
+          CloseButton(),
+        ],
+      ),
     );
   }
 
   SliverAppBar _buildSliverAppBar() {
     return SliverAppBar(
-      pinned: true,
       automaticallyImplyLeading: false,
       elevation: 0,
       backgroundColor: Colors.transparent,
       expandedHeight: 280,
-      actions: <Widget>[
-        CloseButton(),
-      ],
       flexibleSpace: FlexibleSpaceBar(
         collapseMode: CollapseMode.parallax,
         background: FadeInImage(
@@ -105,5 +128,12 @@ class EncuentroDetailPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  bool isActive() {
+    return true;
+    if (encuentro.postulations == null) return false;
+    DateTime today = DateTime.now();
+    return today.difference(encuentro.postulations.add(Duration(days: 1))).inSeconds > 0;
   }
 }
