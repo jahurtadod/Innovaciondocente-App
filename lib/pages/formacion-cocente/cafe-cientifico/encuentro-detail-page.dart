@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/classes/filters.dart';
+import 'package:innovaciondocente_app/pages/formacion-cocente/cafe-cientifico/description.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/cafe-cientifico/encuentro.dart';
 
 class EncuentroDetailPage extends StatelessWidget {
@@ -36,13 +37,15 @@ class EncuentroDetailPage extends StatelessWidget {
             encuentro.name,
             style: Theme.of(context).primaryTextTheme.title,
           ),
-          SizedBox(height: 15),
+          SizedBox(height: 10),
           Text(
             Filters.date(encuentro.date),
             style: Theme.of(context).textTheme.overline,
           ),
           SizedBox(height: 15),
-          Text(encuentro.description.trim()),
+          EncuentroDescription(
+            description: encuentro.description,
+          ),
           SizedBox(height: 15),
           Row(
             children: <Widget>[
@@ -56,6 +59,8 @@ class EncuentroDetailPage extends StatelessWidget {
           ),
           SizedBox(height: 10),
           Column(
+            crossAxisAlignment
+            : CrossAxisAlignment.start,
             children: encuentro.guests
                 .map(
                   (guest) => Padding(
@@ -64,10 +69,10 @@ class EncuentroDetailPage extends StatelessWidget {
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: '${guest.name}: ',
+                                text: '${guest.name}',
                                 style: Theme.of(context).textTheme.subtitle,
                               ),
-                              TextSpan(text: guest.description.trim()),
+                              // TextSpan(text: guest.description.trim()),
                             ],
                             style: Theme.of(context).textTheme.body1,
                           ),
@@ -93,8 +98,11 @@ class EncuentroDetailPage extends StatelessWidget {
       ],
       flexibleSpace: FlexibleSpaceBar(
         collapseMode: CollapseMode.parallax,
-        background: Image.network(
-          encuentro.img,
+        background: FadeInImage(
+          image: NetworkImage(
+            encuentro.img,
+          ),
+          placeholder: AssetImage('assets/images/default.png'),
           fit: BoxFit.cover,
         ),
       ),
