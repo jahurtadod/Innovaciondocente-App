@@ -21,7 +21,6 @@ class _CursosPageState extends State<CursosPage> {
     super.initState();
     this._subs = widget.stream.listen((cursos) {
       setState(() {
-        print(cursos);
         this._cursos = cursos;
       });
     });
@@ -40,7 +39,7 @@ class _CursosPageState extends State<CursosPage> {
         children: this
             ._cursos
             .map((val) => Container(
-                  child: Text(val.name),
+                  child: Text(val.postulation.message ?? 'no existe'),
                 ))
             .toList(),
       ),

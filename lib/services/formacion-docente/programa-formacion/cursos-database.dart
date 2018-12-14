@@ -49,8 +49,9 @@ class _CursosParser extends FirestoreNodeParser<List<Curso>> {
               module: snapshot['module'],
               place: snapshot['place'],
               postulation: Postulation(
-                date: snapshot['postulation']['date'],
+                date: snapshot.data['postulation']['date'],
                 link: snapshot['postulation']['link'],
+                message: snapshot['postulation']['message'],
               ),
               schedule: snapshot['schedule'],
             ))

@@ -24,6 +24,12 @@ class Home extends StatelessWidget {
             },
           ),
           RaisedButton(
+            child: Text("go to encuentros Cursos"),
+            onPressed: () {
+              Navigator.pushNamed(context, '/programa-formacion/cursos');
+            },
+          ),
+          RaisedButton(
             child: Text("go to encuentros cafe cientifico"),
             onPressed: () {
               Navigator.pushNamed(context, '/cafe-cientifico/encuentros');

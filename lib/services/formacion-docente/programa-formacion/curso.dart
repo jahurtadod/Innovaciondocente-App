@@ -66,10 +66,12 @@ class Instructor {
 }
 
 class Postulation {
-  String date;
+  DateTime date;
   String link;
+  String message;
   Postulation({
     this.date,
     this.link,
+    this.message
   });
 }

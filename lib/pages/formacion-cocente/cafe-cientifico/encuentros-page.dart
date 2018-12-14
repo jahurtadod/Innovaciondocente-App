@@ -21,7 +21,6 @@ class _EncuentrosPageState extends State<EncuentrosPage> {
     super.initState();
     this._subs = widget.stream.listen((encuentros) {
       setState(() {
-        print(encuentros);
         this._encuentros = encuentros;
       });
     });

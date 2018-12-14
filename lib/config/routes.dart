@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/pages/formacion-cocente/cafe-cientifico/encuentros-page.dart';
+import 'package:innovaciondocente_app/pages/formacion-cocente/programa-formacion/cursos-page.dart';
 import 'package:innovaciondocente_app/pages/home.dart';
 import 'package:innovaciondocente_app/pages/observatorio-edutendencias/noticias/noticias-page.dart';
 import 'package:innovaciondocente_app/pages/observatorio-edutendencias/tips-innovacion/tips-innovacion.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/cafe-cientifico/encuentros-database.dart';
+import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/cursos-database.dart';
 import 'package:innovaciondocente_app/services/observatorio-edutendencias/noticias/noticias-database.dart';
 import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion/tips-innovacion-database.dart';
 
@@ -19,6 +21,9 @@ class Router {
           ),
       '/cafe-cientifico/encuentros': (BuildContext context) => EncuentrosPage(
             stream: EncuentrosCafeCientificoDatabase().getStream(),
+          ),
+      '/programa-formacion/cursos': (BuildContext context) => CursosPage(
+            stream: CursoProgramaFormacionDatabase().getStream(),
           ),
     };
   }
