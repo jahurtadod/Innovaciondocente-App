@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:innovaciondocente_app/pages/formacion-cocente/cafe-cientifico/encuentro-detail-page.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/cafe-cientifico/encuentro.dart';
 
 class EncuentrosPage extends StatefulWidget {
@@ -35,11 +36,28 @@ class _EncuentrosPageState extends State<EncuentrosPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Café Científico'),
+        elevation: 0,
+      ),
       body: ListView(
         children: this
             ._encuentros
             .map((val) => Container(
-                  child: Text(val.name),
+                  child: ListTile(
+                    title: Text(
+                      val.name,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+                        return EncuentroDetailPage(
+                          encuentro: val,
+                        );
+                      }));
+                    },
+                  ),
                 ))
             .toList(),
       ),

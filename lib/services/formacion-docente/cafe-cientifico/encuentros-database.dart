@@ -20,23 +20,9 @@ class _EncuentrosParser extends FirestoreNodeParser<List<Encuentro>> {
   @override
   List<Encuentro> parse(QuerySnapshot querySnapshot) {
     return querySnapshot.documents
-        .map((snapshot) => Encuentro(
+        .map((snapshot) => Encuentro.fromJSON(
               id: snapshot.documentID,
-              name: snapshot['name'],
-              img: snapshot['img'],
-              created: snapshot['created'],
-              description: snapshot['description'],
-              creator: snapshot['creator'],
-              edited: snapshot['edited'],
-              date: snapshot['date'],
-              editor: snapshot['editor'],
-              guests: snapshot['guests']
-                  .map<Guest>((data) => Guest(
-                        name: snapshot['name'],
-                        description: snapshot['description'],
-                      ))
-                  .toList(),
-              postulations: snapshot['postulations'],
+              data: snapshot.data,
             ))
         .toList();
   }

@@ -24,6 +24,25 @@ class Encuentro {
     this.postulations,
     this.id,
   });
+
+  Encuentro.fromJSON({
+    String id,
+    Map<String, dynamic> data,
+  }) {
+    this.id = id;
+    this.name = data['name'];
+    this.img = data['img'];
+    this.created = data['created'];
+    this.description = data['description'];
+    this.creator = data['creator'];
+    this.edited = data['edited'];
+    this.date = data['date'];
+    this.editor = data['editor'];
+    this.postulations = data['postulations'];
+    this.guests = (data['guests'] as List<dynamic>)
+        .map<Guest>((guest) => Guest.fromJSON(data: guest))
+        .toList();
+  }
 }
 
 class Guest {
@@ -33,4 +52,9 @@ class Guest {
     this.description,
     this.name,
   });
+
+  Guest.fromJSON({Map<dynamic, dynamic> data}) {
+    this.name = data['name'];
+    this.description = data['description'];
+  }
 }
