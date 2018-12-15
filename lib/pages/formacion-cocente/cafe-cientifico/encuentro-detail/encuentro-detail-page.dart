@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/classes/filters.dart';
-import 'package:innovaciondocente_app/pages/formacion-cocente/cafe-cientifico/description.dart';
+import 'package:innovaciondocente_app/pages/formacion-cocente/cafe-cientifico/encuentro-detail/description.dart';
+import 'package:innovaciondocente_app/pages/formacion-cocente/cafe-cientifico/encuentro-detail/guests-detail.dart';
+import 'package:innovaciondocente_app/pages/formacion-cocente/cafe-cientifico/encuentro-detail/title-encuentro-detail.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/cafe-cientifico/encuentro.dart';
 
 class EncuentroDetailPage extends StatelessWidget {
@@ -40,7 +42,7 @@ class EncuentroDetailPage extends StatelessWidget {
   SliverList _buildBody(BuildContext context) {
     return SliverList(
       delegate: SliverChildListDelegate([
-        _buildTitle(context),
+        TitleEncuentroDetail(name: encuentro.name),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Text(
@@ -54,60 +56,9 @@ class EncuentroDetailPage extends StatelessWidget {
             description: encuentro.description,
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(15, 10, 15, 5),
-          child: Row(
-            children: <Widget>[
-              Icon(Icons.people),
-              SizedBox(width: 15),
-              Text(
-                'Invitados',
-                style: Theme.of(context).primaryTextTheme.subtitle,
-              ),
-            ],
-          ),
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: encuentro.guests
-              .map((guest) => ExpansionTile(
-                    title: Row(
-                      children: <Widget>[
-                        Icon(Icons.person),
-                        SizedBox(width: 15),
-                        Expanded(
-                          child: Text(guest.name),
-                        ),
-                      ],
-                    ),
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
-                        child: Text(guest.description),
-                      ),
-                    ],
-                  ))
-              .toList(),
-        ),
+        GuestsDetails(guests: encuentro.guests),
         isActive() ? SizedBox(height: 65) : Container(),
       ]),
-    );
-  }
-
-  Padding _buildTitle(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(15, 15, 15, 10),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Text(
-              encuentro.name,
-              style: Theme.of(context).primaryTextTheme.title,
-            ),
-          ),
-          CloseButton(),
-        ],
-      ),
     );
   }
 
@@ -119,12 +70,15 @@ class EncuentroDetailPage extends StatelessWidget {
       expandedHeight: 280,
       flexibleSpace: FlexibleSpaceBar(
         collapseMode: CollapseMode.parallax,
-        background: FadeInImage(
-          image: NetworkImage(
-            encuentro.img,
+        background: Hero(
+          tag: encuentro.id,
+          child: FadeInImage(
+            image: NetworkImage(
+              encuentro.img,
+            ),
+            placeholder: AssetImage('assets/images/default.png'),
+            fit: BoxFit.cover,
           ),
-          placeholder: AssetImage('assets/images/default.png'),
-          fit: BoxFit.cover,
         ),
       ),
     );

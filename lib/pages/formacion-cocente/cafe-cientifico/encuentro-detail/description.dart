@@ -51,10 +51,14 @@ class _EncuentroDescriptionState extends State<EncuentroDescription> {
   }
 
   Widget _buildDescription() => isExpanded
-      ? Text(widget.description.trim())
+      ? Text(
+          widget.description.trim(),
+          textAlign: TextAlign.justify,
+        )
       : Text(
           widget.description.trim(),
           maxLines: 5,
+          textAlign: TextAlign.justify,
           overflow: TextOverflow.ellipsis,
         );
 }

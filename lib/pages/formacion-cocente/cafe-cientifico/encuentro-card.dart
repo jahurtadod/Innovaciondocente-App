@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/pages/formacion-cocente/cafe-cientifico/encuentro-detail-page.dart';
+import 'package:innovaciondocente_app/pages/formacion-cocente/cafe-cientifico/encuentro-detail/encuentro-detail-page.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/cafe-cientifico/encuentro.dart';
 
 class EncuentroCard extends StatelessWidget {
@@ -83,13 +83,16 @@ class EncuentroCard extends StatelessWidget {
     );
   }
 
-  FadeInImage _buildImage() {
-    return FadeInImage(
-      width: double.infinity,
-      height: double.infinity,
-      image: NetworkImage(encuentro.img),
-      placeholder: AssetImage('assets/images/default.png'),
-      fit: BoxFit.cover,
+  Widget _buildImage() {
+    return Hero(
+      tag: encuentro.id,
+      child: FadeInImage(
+        width: double.infinity,
+        height: double.infinity,
+        image: NetworkImage(encuentro.img),
+        placeholder: AssetImage('assets/images/default.png'),
+        fit: BoxFit.cover,
+      ),
     );
   }
 }
