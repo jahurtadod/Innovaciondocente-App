@@ -40,6 +40,7 @@ class _EncuentrosPageState extends State<EncuentrosPage> {
         title: Text('Café Científico'),
         centerTitle: true,
         elevation: 0,
+        backgroundColor: Colors.transparent,
       ),
       body: this._encuentros == null
           ? Center(
