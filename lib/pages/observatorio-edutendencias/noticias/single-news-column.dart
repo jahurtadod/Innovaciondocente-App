@@ -39,17 +39,15 @@ class SingleNewsColumn extends StatelessWidget {
     );
   }
 
-  Container _buildImg(BuildContext context) {
-    return Container(
-      width: 110.0,
-      height: 110.0,
-      decoration: BoxDecoration(
-        color: Theme.of(context).accentColor,
-        image: DecorationImage(
-          image: NetworkImage(noticia.img),
-          fit: BoxFit.cover,
-        ),
-        borderRadius: BorderRadius.all(Radius.circular(3.0)),
+  Widget _buildImg(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.all(Radius.circular(3.0)),
+      child: FadeInImage(
+        width: 135.0,
+        height: 135.0,
+        fit: BoxFit.cover,
+        image: NetworkImage(noticia.img),
+        placeholder: AssetImage('assets/images/default.png'),
       ),
     );
   }
@@ -61,20 +59,20 @@ class SingleNewsColumn extends StatelessWidget {
         children: <Widget>[
           Text(
             noticia.name,
-            style: Theme.of(context).textTheme.title,
+            style: Theme.of(context).textTheme.subtitle,
             overflow: TextOverflow.ellipsis,
-            maxLines: 3,
+            maxLines: 2,
           ),
-          SizedBox(height: 5.0),
+          SizedBox(height: 3.0),
           Text(
             Filters.date(noticia.created),
             style: Theme.of(context).textTheme.overline,
           ),
-          SizedBox(height: 10.0),
+          SizedBox(height: 5.0),
           Text(
             noticia.description,
             overflow: TextOverflow.ellipsis,
-            maxLines: 6,
+            maxLines: 5,
           ),
         ],
       ),

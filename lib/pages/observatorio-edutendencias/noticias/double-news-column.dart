@@ -61,7 +61,6 @@ class _NewsCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(10.0),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           /// Image asset
           _buildImage(context),
@@ -73,23 +72,23 @@ class _NewsCard extends StatelessWidget {
     );
   }
 
-  Column _buildDetails(BuildContext context) {
+  Widget _buildDetails(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         SizedBox(height: 10.0),
         Text(
           noticia.name,
-          style: Theme.of(context).textTheme.title,
+          style: Theme.of(context).textTheme.subtitle,
           overflow: TextOverflow.ellipsis,
-          maxLines: 3,
+          maxLines: 1,
         ),
-        SizedBox(height: 5.0),
+        SizedBox(height: 3.0),
         Text(
           Filters.date(noticia.created),
           style: Theme.of(context).textTheme.overline,
         ),
-        SizedBox(height: 10.0),
+        SizedBox(height: 5.0),
         Text(
           noticia.description,
           overflow: TextOverflow.ellipsis,
@@ -102,16 +101,14 @@ class _NewsCard extends StatelessWidget {
   Widget _buildImage(BuildContext context) {
     return AspectRatio(
       aspectRatio: 1,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).accentColor,
-          borderRadius: BorderRadius.all(
-            Radius.circular(3.0),
-          ),
-          image: DecorationImage(
-            image: NetworkImage(noticia.img),
-            fit: BoxFit.cover,
-          ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(
+          Radius.circular(3.0),
+        ),
+        child: FadeInImage(
+          image: NetworkImage(noticia.img),
+          placeholder: AssetImage('assets/images/default.png'),
+          fit: BoxFit.cover,
         ),
       ),
     );
