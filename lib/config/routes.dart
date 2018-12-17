@@ -4,6 +4,8 @@ import 'package:innovaciondocente_app/pages/formacion-cocente/programa-formacion
 import 'package:innovaciondocente_app/pages/home.dart';
 import 'package:innovaciondocente_app/pages/observatorio-edutendencias/noticias/noticias-page.dart';
 import 'package:innovaciondocente_app/pages/observatorio-edutendencias/tips-innovacion/tips-innovacion.dart';
+import 'package:innovaciondocente_app/pages/start/presentation/presentation-page.dart';
+import 'package:innovaciondocente_app/pages/start/start-page.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/cafe-cientifico/encuentros-database.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/cursos-database.dart';
 import 'package:innovaciondocente_app/services/observatorio-edutendencias/noticias/noticias-database.dart';
@@ -13,6 +15,15 @@ class Router {
   static Map<String, WidgetBuilder> appRoutes() {
     return {
       '/': (BuildContext context) => Home(),
+      '/start': (BuildContext context) => StartPage(
+            stream: [
+              TipsDatabase().getStream(),
+              NoticiasDatabase().getStream(),
+              EncuentrosCafeCientificoDatabase().getStream(),
+              CursoProgramaFormacionDatabase().getStream(),
+            ],
+          ),
+      '/start/presentation': (BuildContext context) => PresentationPage(),
       '/tips': (BuildContext context) => TipsInnovacionPage(
             stream: TipsDatabase().getStream(),
           ),
