@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:innovaciondocente_app/classes/filters.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/curso.dart';
 
 class CourseSection extends StatelessWidget {
@@ -40,24 +41,7 @@ class CourseSection extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemBuilder: (BuildContext context, int index) => CourseCard(curso: _cursos[index]),
           ),
-        ),
-        Container(
-          padding: const EdgeInsets.all(15),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                "Tips De Expertos",
-                style: Theme.of(context).textTheme.headline,
-              ),
-              // TODO: change color
-              Text(
-                "Ver Todos",
-                style: Theme.of(context).textTheme.body1,
-              ),
-            ],
-          ),
-        ),
+        )
       ],
     );
   }
@@ -121,9 +105,7 @@ class CourseCard extends StatelessWidget {
         ),
         SizedBox(height: 7),
         Text(
-          curso.instructors.length > 1
-              ? '${curso.instructors.length} Instructores'
-              : '${curso.instructors.length} Instructor',
+          Filters.date(curso.date),
           style: Theme.of(context).textTheme.body1.copyWith(color: Colors.white),
         )
       ],

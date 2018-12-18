@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/pages/formacion-cocente/cafe-cientifico/encuentros/encuentros-page.dart';
-import 'package:innovaciondocente_app/pages/formacion-cocente/programa-formacion/programa-formacion.dart';
+import 'package:innovaciondocente_app/pages/formacion-cocente/programa-formacion/programa-formacion-page.dart';
 import 'package:innovaciondocente_app/pages/home.dart';
 import 'package:innovaciondocente_app/pages/observatorio-edutendencias/noticias/noticias-page.dart';
 import 'package:innovaciondocente_app/pages/observatorio-edutendencias/tips-innovacion/tips-innovacion.dart';
@@ -8,6 +8,7 @@ import 'package:innovaciondocente_app/pages/start/presentation/presentation-page
 import 'package:innovaciondocente_app/pages/start/start-page.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/cafe-cientifico/encuentros-database.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/cursos-database.dart';
+import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/innova-tip-database.dart';
 import 'package:innovaciondocente_app/services/observatorio-edutendencias/noticias/noticias-database.dart';
 import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion/tips-innovacion-database.dart';
 
@@ -20,7 +21,7 @@ class Router {
               TipsDatabase().getStream(),
               NoticiasDatabase().getStream(),
               EncuentrosCafeCientificoDatabase().getStream(),
-              CursoProgramaFormacionDatabase().getStream(),
+              CursosProgramaFormacionDatabase().getStream(),
             ],
           ),
       '/start/presentation': (BuildContext context) => PresentationPage(),
@@ -34,7 +35,8 @@ class Router {
             stream: EncuentrosCafeCientificoDatabase().getStream(),
           ),
       '/formacion-docente/programa-formacion': (BuildContext context) => ProgramaFormacionPage(
-            stream: CursoProgramaFormacionDatabase().getStream(),
+            cursosStream: CursosProgramaFormacionDatabase().getStream(),
+            innovaTipsStream: InnovaTipsProgramaFormacionDatabase().getStream(),
           ),
     };
   }

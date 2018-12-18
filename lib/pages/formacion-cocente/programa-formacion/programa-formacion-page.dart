@@ -3,12 +3,18 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/pages/formacion-cocente/programa-formacion/courses-section.dart';
 import 'package:innovaciondocente_app/pages/formacion-cocente/programa-formacion/header-section.dart';
+import 'package:innovaciondocente_app/pages/formacion-cocente/programa-formacion/tips-section.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/curso.dart';
+import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/innova-tip.dart';
 
 class ProgramaFormacionPage extends StatefulWidget {
-  final Stream<List> stream;
+  final Stream<List> cursosStream, innovaTipsStream;
 
-  const ProgramaFormacionPage({Key key, this.stream}) : super(key: key);
+  const ProgramaFormacionPage({
+    Key key,
+    this.cursosStream,
+    this.innovaTipsStream,
+  }) : super(key: key);
 
   @override
   _ProgramaFormacionPageState createState() => _ProgramaFormacionPageState();
@@ -16,14 +22,21 @@ class ProgramaFormacionPage extends StatefulWidget {
 
 class _ProgramaFormacionPageState extends State<ProgramaFormacionPage> {
   List<Curso> _cursos;
-  StreamSubscription<List<Curso>> _subs;
+  List<InnovaTip> _innovaTips;
+  StreamSubscription<List<Curso>> _crusosSubs;
+  StreamSubscription<List<InnovaTip>> _innovaTipsSubs;
 
   @override
   void initState() {
     super.initState();
-    this._subs = widget.stream.listen((cursos) {
+    this._crusosSubs = widget.cursosStream.listen((cursos) {
       setState(() {
         this._cursos = cursos;
+      });
+    });
+    this._innovaTipsSubs = widget.innovaTipsStream.listen((innovaTips) {
+      setState(() {
+        this._innovaTips = innovaTips;
       });
     });
   }
@@ -31,7 +44,8 @@ class _ProgramaFormacionPageState extends State<ProgramaFormacionPage> {
   @override
   void dispose() {
     super.dispose();
-    this._subs.cancel();
+    this._crusosSubs.cancel();
+    this._innovaTipsSubs.cancel();
   }
 
   @override
@@ -48,9 +62,9 @@ class _ProgramaFormacionPageState extends State<ProgramaFormacionPage> {
             delegate: SliverChildListDelegate([
               HeaderSection(),
               CourseSection(cursos: _cursos),
-              CourseSection(cursos: _cursos),
-              CourseSection(cursos: _cursos),
-              CourseSection(cursos: _cursos),
+              TipsSection(
+                innovaTips: _innovaTips,
+              ),
             ]),
           )
         ],
@@ -58,4 +72,3 @@ class _ProgramaFormacionPageState extends State<ProgramaFormacionPage> {
     );
   }
 }
-

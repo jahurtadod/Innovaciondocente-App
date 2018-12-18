@@ -12,7 +12,7 @@ class HeaderSection extends StatelessWidget {
       width: double.infinity,
       height: MediaQuery.of(context).size.height * .4,
       padding: EdgeInsets.all(15),
-      decoration: _buildGradient(),
+      decoration: _buildDecoration(),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
@@ -32,8 +32,18 @@ class HeaderSection extends StatelessWidget {
     );
   }
 
-  BoxDecoration _buildGradient() {
+  BoxDecoration _buildDecoration() {
     return BoxDecoration(
+      // image: DecorationImage(
+      //   image: AssetImage(
+      //     'assets/images/default.png',
+      //   ),
+      //   fit: BoxFit.cover,
+      //   colorFilter: ColorFilter.mode(
+      //     Colors.blue,
+      //     BlendMode.colorBurn,
+      //   ),
+      // ),
       gradient: LinearGradient(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,

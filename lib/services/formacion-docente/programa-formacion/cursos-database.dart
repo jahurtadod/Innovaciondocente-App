@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/curso.dart';
 import 'package:innovaciondocente_app/services/service.dart';
 
-class CursoProgramaFormacionDatabase extends Database<Curso> {
+class CursosProgramaFormacionDatabase extends Database<Curso> {
   @override
   Stream<List<Curso>> getStream({int limit = 20}) {
     return FirestoreStream<List<Curso>>(
