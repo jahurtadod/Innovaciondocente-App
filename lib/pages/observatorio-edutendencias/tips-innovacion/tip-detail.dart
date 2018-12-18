@@ -86,38 +86,20 @@ class TipDetail extends StatelessWidget {
   }
 
   Widget _buildImage(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        // image
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5.0),
-            color: Theme.of(context).primaryColor,
-            image: DecorationImage(
-              image: NetworkImage(tip.img),
-              fit: BoxFit.cover,
-            ),
-          ),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(5.0),
+      child: Hero(
+        tag: tip.id,
+        child: FadeInImage(
           height: 170.0,
+          width: double.infinity,
+          image: NetworkImage(tip.img),
+          placeholder: AssetImage('assets/images/default.png'),
+          fit: BoxFit.cover,
         ),
-        // image icon
-        Positioned(
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.circular(5.0),
-            ),
-            padding: EdgeInsets.all(2.0),
-            child: Icon(
-              Icons.image,
-              color: Colors.white,
-            ),
-          ),
-          bottom: 5.0,
-          right: 5.0,
-        )
-      ],
+      ),
     );
+    
   }
 
   FloatingActionButton _buildFloatingActionButton() {

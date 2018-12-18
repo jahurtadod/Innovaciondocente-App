@@ -4,13 +4,13 @@ import 'package:innovaciondocente_app/classes/tips-innovacion.dart';
 import 'package:innovaciondocente_app/services/service.dart';
 
 class TipsDatabase implements Database<TipInnovacion> {
-  Stream<List<TipInnovacion>> getStream() {
+  Stream<List<TipInnovacion>> getStream({int limit = 20}) {
     return FirestoreStream<List<TipInnovacion>>(
       parser: FirestoreTipsParser(),
       query: Firestore.instance
           .collection('/observatorio/edutendencias/tips')
           .orderBy('edited', descending: true)
-          .limit(20),
+          .limit(limit),
     ).stream;
   }
 }
