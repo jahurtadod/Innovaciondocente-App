@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
 
-const ID_blue = Colors.cyan;
-const ID_yellow = const Color(0xfffee900);
+class IndevColors {
+  static Color blue = Color(0xff044a80);
+  static Color yellow = Color(0xfffee900);
+  static Color observatorio = Colors.red;
+  static Color formacion = Colors.purple;
+  static Color innovacion = Colors.red;
+}

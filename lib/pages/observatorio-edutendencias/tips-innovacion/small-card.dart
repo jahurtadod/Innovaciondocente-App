@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/classes/filters.dart';
 import 'package:innovaciondocente_app/classes/tips-innovacion.dart';
+import 'package:innovaciondocente_app/config/colors.dart';
 
 class SmallCard extends StatelessWidget {
   final TipInnovacion tip;
@@ -60,7 +61,7 @@ class SmallCard extends StatelessWidget {
               Icon(
                 Icons.radio_button_checked,
                 size: 13.0,
-                color: Theme.of(context).accentColor,
+                color: IndevColors.observatorio,
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 5.0),
@@ -69,7 +70,7 @@ class SmallCard extends StatelessWidget {
                   style: Theme.of(context)
                       .accentTextTheme
                       .overline
-                      .copyWith(color: Theme.of(context).accentColor),
+                      .copyWith(color: IndevColors.observatorio),
                 ),
               ),
             ],

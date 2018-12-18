@@ -17,7 +17,7 @@ class TitleEncuentroDetail extends StatelessWidget {
           Expanded(
             child: Text(
               name,
-              style: Theme.of(context).primaryTextTheme.title,
+              style: Theme.of(context).textTheme.title,
             ),
           ),
           CloseButton(),

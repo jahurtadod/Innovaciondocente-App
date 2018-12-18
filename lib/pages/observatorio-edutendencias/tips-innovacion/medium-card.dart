@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/classes/filters.dart';
 import 'package:innovaciondocente_app/classes/tips-innovacion.dart';
+import 'package:innovaciondocente_app/config/colors.dart';
 
 /// Card for tips with big img style
 class MediumCard extends StatelessWidget {
@@ -37,7 +38,7 @@ class MediumCard extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         border: Border.all(
-          color: Theme.of(context).accentColor,
+          color: IndevColors.observatorio,
         ),
         borderRadius: BorderRadius.all(
           Radius.circular(3.0),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/classes/filters.dart';
+import 'package:innovaciondocente_app/config/colors.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/curso.dart';
 
 class CourseSection extends StatelessWidget {
@@ -25,10 +26,25 @@ class CourseSection extends StatelessWidget {
                 "Últimos Cursos",
                 style: Theme.of(context).textTheme.headline,
               ),
-              // TODO: change color
-              Text(
-                "Ver Todos",
-                style: Theme.of(context).textTheme.body1,
+              InkWell(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () {
+                  Filters.launchURL(
+                      'https://innovaciondocente-utpl.firebaseapp.com/formacion-docente/programa-formacion/cursos');
+                },
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      "Portafolio",
+                      style: Theme.of(context).textTheme.overline,
+                    ),
+                    Icon(
+                      Icons.keyboard_arrow_right,
+                      size: 18,
+                    )
+                  ],
+                ),
               ),
             ],
           ),

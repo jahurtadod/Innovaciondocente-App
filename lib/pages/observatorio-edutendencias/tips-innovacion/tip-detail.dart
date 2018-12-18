@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/classes/filters.dart';
 import 'package:innovaciondocente_app/classes/tips-innovacion.dart';
+import 'package:innovaciondocente_app/config/colors.dart';
 
 class TipDetail extends StatelessWidget {
   const TipDetail({
@@ -24,7 +25,9 @@ class TipDetail extends StatelessWidget {
       slivers: <Widget>[
         SliverAppBar(
           title: Text('Tip Innovación'),
-          pinned: true,
+          forceElevated: true,
+          floating: true,
+          snap: true,
         ),
         SliverPadding(
           padding: EdgeInsets.all(15.0),
@@ -37,7 +40,7 @@ class TipDetail extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 // image
-                _buildImage(context),
+                _buildImage(),
                 SizedBox(height: 10),
                 // chip category
                 _buildChip(context),
@@ -70,7 +73,7 @@ class TipDetail extends StatelessWidget {
           ),
           decoration: BoxDecoration(
             border: Border.all(
-              color: Theme.of(context).accentColor,
+              color: IndevColors.observatorio,
             ),
             borderRadius: BorderRadius.all(
               Radius.circular(3.0),
@@ -85,7 +88,7 @@ class TipDetail extends StatelessWidget {
     );
   }
 
-  Widget _buildImage(BuildContext context) {
+  Widget _buildImage() {
     return ClipRRect(
       borderRadius: BorderRadius.circular(5.0),
       child: Hero(
@@ -99,7 +102,6 @@ class TipDetail extends StatelessWidget {
         ),
       ),
     );
-    
   }
 
   FloatingActionButton _buildFloatingActionButton() {
@@ -109,11 +111,13 @@ class TipDetail extends StatelessWidget {
 
     return tip.tag == 'videos'
         ? FloatingActionButton.extended(
+            backgroundColor: IndevColors.observatorio,
             icon: Icon(Icons.play_arrow),
             label: Text("Abrir Video"),
             onPressed: goto,
           )
         : FloatingActionButton.extended(
+            backgroundColor: IndevColors.observatorio,
             icon: Icon(Icons.link),
             label: Text("Abrir Enlace"),
             onPressed: goto,

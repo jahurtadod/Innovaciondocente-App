@@ -2,9 +2,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/classes/filters.dart';
 import 'package:innovaciondocente_app/classes/tips-innovacion.dart';
+import 'package:innovaciondocente_app/config/colors.dart';
 import 'package:innovaciondocente_app/pages/observatorio-edutendencias/tips-innovacion/medium-card.dart';
 import 'package:innovaciondocente_app/pages/observatorio-edutendencias/tips-innovacion/small-card.dart';
 import 'package:innovaciondocente_app/pages/observatorio-edutendencias/tips-innovacion/tip-detail.dart';
+import 'package:innovaciondocente_app/pages/share/loader.dart';
 
 class TipsInnovacionPage extends StatefulWidget {
   final Stream<List> stream;
@@ -45,57 +47,56 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
 
     return Scaffold(
       body: (this._tips == null)
-          ? Center(
-              child: Text("Loading..."),
-            )
+          ? Loader()
           : CustomScrollView(
               slivers: <Widget>[
                 SliverAppBar(
                   title: Text('Tips Innovación'),
-                  pinned: true,
+                  forceElevated: true,
+                  floating: true,
+                  snap: true,
                   actions: <Widget>[
                     _buildOptions(context),
                   ],
                 ),
                 SliverList(
-                  delegate: _buildListView(tips),
+                  delegate: SliverChildBuilderDelegate(
+                    _buildListView,
+                    childCount: tips.length,
+                  ),
                 )
               ],
             ),
     );
   }
 
-  SliverChildDelegate _buildListView(List<TipInnovacion> tips) {
-    return SliverChildBuilderDelegate(
-      (BuildContext context, int index) {
-        return Container(
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(color: Theme.of(context).accentColor),
-            ),
-          ),
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              child: (index % 4 == 0)
-                  ? MediumCard(
-                      tip: tips[index],
-                    )
-                  : SmallCard(
-                      tip: tips[index],
-                    ),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-                  return TipDetail(
-                    tip: tips[index],
-                  );
-                }));
-              },
-            ),
-          ),
-        );
-      },
-      childCount: tips.length,
+  Widget _buildListView(BuildContext context, int index) {
+    TipInnovacion tip = _tips[index];
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: IndevColors.observatorio),
+        ),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          child: (index % 4 == 0)
+              ? MediumCard(
+                  tip: tip,
+                )
+              : SmallCard(
+                  tip: tip,
+                ),
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+              return TipDetail(
+                tip: tip,
+              );
+            }));
+          },
+        ),
+      ),
     );
   }
 
@@ -133,7 +134,7 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
                 ),
                 // other options
                 ListTile(
-                  leading: Icon(Icons.launch),
+                  trailing: Icon(Icons.open_in_browser),
                   title: Text("Ver todos los Tips"),
                   onTap: () {
                     Filters.launchURL(
@@ -159,7 +160,7 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
       child: Text(
         "Categorias",
         style: Theme.of(context).textTheme.overline.copyWith(
-              color: Theme.of(context).accentColor,
+              color: IndevColors.observatorio,
               fontSize: 15.0,
             ),
       ),
@@ -208,7 +209,7 @@ class _ListTile extends StatelessWidget {
     if (active)
       return Container(
         decoration: BoxDecoration(
-          color: Theme.of(context).accentColor,
+          color: IndevColors.observatorio,
           borderRadius: BorderRadius.only(
             topRight: Radius.circular(3.0),
             bottomRight: Radius.circular(3.0),
@@ -231,7 +232,7 @@ class _ListTile extends StatelessWidget {
       decoration: ShapeDecoration(
         shape: RoundedRectangleBorder(
           side: BorderSide(
-            color: Theme.of(context).accentColor,
+            color: IndevColors.observatorio,
             width: 1.0,
             style: BorderStyle.solid,
           ),

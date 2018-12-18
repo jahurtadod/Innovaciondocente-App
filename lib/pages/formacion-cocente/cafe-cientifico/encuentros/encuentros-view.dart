@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/classes/filters.dart';
+import 'package:innovaciondocente_app/config/colors.dart';
 import 'package:innovaciondocente_app/pages/formacion-cocente/cafe-cientifico/encuentro-detail/encuentro-detail-page.dart';
 import 'package:innovaciondocente_app/pages/formacion-cocente/cafe-cientifico/encuentros./encuentro-card.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/cafe-cientifico/encuentro.dart';
@@ -105,12 +106,12 @@ class EncuentrosView extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         'Ver más',
-                        style: Theme.of(context).textTheme.body1.copyWith(color: Colors.white),
+                        style: Theme.of(context).textTheme.overline.copyWith(color: Colors.white),
                       ),
-                      SizedBox(width: 3),
                       Icon(
                         Icons.keyboard_arrow_right,
                         color: Colors.white,
+                        size: 18,
                       ),
                     ],
                   ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/classes/filters.dart';
+import 'package:innovaciondocente_app/config/colors.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/innova-tip.dart';
 
 class TipsSection extends StatelessWidget {
@@ -23,10 +24,25 @@ class TipsSection extends StatelessWidget {
                 "InnovaTips",
                 style: Theme.of(context).textTheme.headline,
               ),
-              // TODO: change color
-              Text(
-                "Ver Todos",
-                style: Theme.of(context).textTheme.body1,
+              InkWell(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () {
+                  Filters.launchURL(
+                      'https://innovaciondocente-utpl.firebaseapp.com/formacion-docente/programa-formacion/potencia-formacion');
+                },
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      "Ver Todos",
+                      style: Theme.of(context).textTheme.overline,
+                    ),
+                    Icon(
+                      Icons.keyboard_arrow_right,
+                      size: 18,
+                    )
+                  ],
+                ),
               ),
             ],
           ),
@@ -92,7 +108,10 @@ class InnovaTipTile extends StatelessWidget {
               )),
           SizedBox(width: 8),
           Flexible(
-            child: Text('Ver'),
+            child: Text(
+              'Ver',
+              style: Theme.of(context).textTheme.overline,
+            ),
           )
         ],
       ),

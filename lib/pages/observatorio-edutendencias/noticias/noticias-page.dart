@@ -4,6 +4,7 @@ import 'package:innovaciondocente_app/classes/filters.dart';
 import 'package:innovaciondocente_app/classes/noticia.dart';
 import 'package:innovaciondocente_app/pages/observatorio-edutendencias/noticias/double-news-column.dart';
 import 'package:innovaciondocente_app/pages/observatorio-edutendencias/noticias/single-news-column.dart';
+import 'package:innovaciondocente_app/pages/share/loader.dart';
 
 class NoticiasPage extends StatefulWidget {
   final Stream<List> stream;
@@ -38,12 +39,14 @@ class _NoticiasPageState extends State<NoticiasPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: (this._noticias == null)
-          ? Text("Loading")
+          ? Loader()
           : CustomScrollView(
               slivers: <Widget>[
                 SliverAppBar(
                   title: Text("Noticias"),
-                  pinned: true,
+                  floating: true,
+                  snap: true,
+                  forceElevated: true,
                   actions: <Widget>[
                     IconButton(
                       icon: Icon(Icons.launch),
@@ -71,7 +74,7 @@ class _NoticiasPageState extends State<NoticiasPage> {
       /// Even cases
       int bottom = _evenCasesIndex(index);
       return Container(
-        padding: const EdgeInsets.only(bottom: 10.0, left: 10.0, right: 10.0),
+        padding: const EdgeInsets.all(10),
         child: DoubleNewsColumn(
           top: _noticias[bottom],
           bottom: _noticias.length - 1 >= bottom + 1 ? _noticias[bottom + 1] : null,

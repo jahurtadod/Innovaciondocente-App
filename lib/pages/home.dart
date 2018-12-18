@@ -38,7 +38,7 @@ class Home extends StatelessWidget {
           RaisedButton(
             child: Text("go to inicio"),
             onPressed: () {
-              Navigator.pushNamed(context, '/start');
+              Navigator.pushNamed(context, '/start/presentation');
             },
           ),
         ],

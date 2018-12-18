@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/pages/formacion-cocente/programa-formacion/courses-section.dart';
 import 'package:innovaciondocente_app/pages/formacion-cocente/programa-formacion/header-section.dart';
 import 'package:innovaciondocente_app/pages/formacion-cocente/programa-formacion/tips-section.dart';
+import 'package:innovaciondocente_app/pages/share/loader.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/curso.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/innova-tip.dart';
 
@@ -23,13 +24,13 @@ class ProgramaFormacionPage extends StatefulWidget {
 class _ProgramaFormacionPageState extends State<ProgramaFormacionPage> {
   List<Curso> _cursos;
   List<InnovaTip> _innovaTips;
-  StreamSubscription<List<Curso>> _crusosSubs;
+  StreamSubscription<List<Curso>> _cursosSubs;
   StreamSubscription<List<InnovaTip>> _innovaTipsSubs;
 
   @override
   void initState() {
     super.initState();
-    this._crusosSubs = widget.cursosStream.listen((cursos) {
+    this._cursosSubs = widget.cursosStream.listen((cursos) {
       setState(() {
         this._cursos = cursos;
       });
@@ -44,31 +45,33 @@ class _ProgramaFormacionPageState extends State<ProgramaFormacionPage> {
   @override
   void dispose() {
     super.dispose();
-    this._crusosSubs.cancel();
+    this._cursosSubs.cancel();
     this._innovaTipsSubs.cancel();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            pinned: true,
-            forceElevated: true,
-            title: Text("Formación Docente"),
-          ),
-          SliverList(
-            delegate: SliverChildListDelegate([
-              HeaderSection(),
-              CourseSection(cursos: _cursos),
-              TipsSection(
-                innovaTips: _innovaTips,
-              ),
-            ]),
-          )
-        ],
-      ),
+      body: (this._cursos == null || this._innovaTips == null)
+          ? Loader()
+          : CustomScrollView(
+              slivers: <Widget>[
+                SliverAppBar(
+                  pinned: true,
+                  forceElevated: true,
+                  title: Text("Formación Docente"),
+                ),
+                SliverList(
+                  delegate: SliverChildListDelegate([
+                    HeaderSection(),
+                    CourseSection(cursos: _cursos),
+                    TipsSection(innovaTips: _innovaTips),
+                  ]),
+                )
+              ],
+            ),
     );
   }
 }
+
+class _encuentros {}

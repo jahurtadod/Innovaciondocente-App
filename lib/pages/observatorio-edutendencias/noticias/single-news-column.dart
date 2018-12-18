@@ -43,8 +43,8 @@ class SingleNewsColumn extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(3.0)),
       child: FadeInImage(
-        width: 135.0,
-        height: 135.0,
+        width: 110.0,
+        height: 110.0,
         fit: BoxFit.cover,
         image: NetworkImage(noticia.img),
         placeholder: AssetImage('assets/images/default.png'),

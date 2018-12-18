@@ -16,7 +16,7 @@ class InnovaciondocenteAppState extends State<InnovaciondocenteApp> {
   @override
   void initState() {
     super.initState();
-    this._firebaseMessaging.getToken().then(print);
+    // this._firebaseMessaging.getToken().then(print);
   }
 
   @override
@@ -26,7 +26,7 @@ class InnovaciondocenteAppState extends State<InnovaciondocenteApp> {
       debugShowCheckedModeBanner: false,
 
       title: 'Innovacion Docente',
-      theme: Theme2(),
+      theme: IndevTheme.theme(),
       // theme: ID_buildTheme(),
       routes: Router.appRoutes(),
       onGenerateRoute: Router.onGenerateRoute,

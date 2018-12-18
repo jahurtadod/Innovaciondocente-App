@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:innovaciondocente_app/config/colors.dart';
 
 class EncuentroDescription extends StatefulWidget {
   final String description;
@@ -31,13 +32,17 @@ class _EncuentroDescriptionState extends State<EncuentroDescription> {
     String opt = isExpanded ? 'menos' : 'más';
 
     return InkWell(
-      // TODO: change color
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text('Ver $opt'),
-          SizedBox(width: 3),
-          Icon(isExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down),
+          Text(
+            'Ver $opt',
+            style: Theme.of(context).textTheme.overline,
+          ),
+          Icon(
+            isExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+            size: 18,
+          ),
         ],
       ),
       onTap: () {

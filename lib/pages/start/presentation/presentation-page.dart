@@ -26,7 +26,6 @@ class _PresentationPageState extends State<PresentationPage> with TickerProvider
     slideUpdateStream.stream.listen((SlideUpdate event) {
       setState(() {
         if (event.updateType == UpdateType.dragging) {
-          print('Sliding ${event.direction} at ${event.slidePercent}');
           slideDirection = event.direction;
           slidePercent = event.slidePercent;
 
@@ -38,7 +37,6 @@ class _PresentationPageState extends State<PresentationPage> with TickerProvider
             nextPageIndex = activeIndex;
           }
         } else if (event.updateType == UpdateType.doneDragging) {
-          print('Done dragging.');
           if (slidePercent > 0.3) {
             animatedPageDragger = new AnimatedPageDragger(
               slideDirection: slideDirection,
@@ -61,11 +59,9 @@ class _PresentationPageState extends State<PresentationPage> with TickerProvider
 
           animatedPageDragger.run();
         } else if (event.updateType == UpdateType.animating) {
-          print('Sliding ${event.direction} at ${event.slidePercent}');
           slideDirection = event.direction;
           slidePercent = event.slidePercent;
         } else if (event.updateType == UpdateType.doneAnimating) {
-          print('Done animating. Next page index: $nextPageIndex');
           activeIndex = nextPageIndex;
 
           slideDirection = SlideDirection.none;
