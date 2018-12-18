@@ -35,6 +35,12 @@ class Home extends StatelessWidget {
               Navigator.pushNamed(context, '/cafe-cientifico/encuentros');
             },
           ),
+          RaisedButton(
+            child: Text("go to inicio"),
+            onPressed: () {
+              Navigator.pushNamed(context, '/start');
+            },
+          ),
         ],
       ),
     );
