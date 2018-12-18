@@ -5,13 +5,13 @@ import 'package:innovaciondocente_app/services/service.dart';
 
 class EncuentrosCafeCientificoDatabase extends Database<Encuentro> {
   @override
-  Stream<List<Encuentro>> getStream() {
+  Stream<List<Encuentro>> getStream({int limit = 20}) {
     return FirestoreStream<List<Encuentro>>(
       parser: _EncuentrosParser(),
       query: Firestore.instance
           .collection('formacion-docente/cafe-cientifico/encuentros')
           .orderBy('date', descending: true)
-          .limit(20),
+          .limit(limit),
     ).stream;
   }
 }

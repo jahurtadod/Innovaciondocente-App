@@ -5,33 +5,26 @@ import 'package:innovaciondocente_app/classes/tips-innovacion.dart';
 /// Card for tips with big img style
 class MediumCard extends StatelessWidget {
   final TipInnovacion tip;
-  final Function onTap;
   const MediumCard({
     Key key,
     @required this.tip,
-    @required this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: InkWell(
-        onTap: onTap,
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 15.0,
-            vertical: 10.0,
-          ),
-          child: Column(
-            children: <Widget>[
-              _buildChip(context),
-              SizedBox(height: 10.0),
-              _buildImg(context),
-              SizedBox(height: 10.0),
-              _buildDetails(context),
-            ],
-          ),
-        ),
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 15.0,
+        vertical: 10.0,
+      ),
+      child: Column(
+        children: <Widget>[
+          _buildChip(context),
+          SizedBox(height: 10.0),
+          _buildImg(context),
+          SizedBox(height: 10.0),
+          _buildDetails(context),
+        ],
       ),
     );
   }
@@ -86,17 +79,18 @@ class MediumCard extends StatelessWidget {
     );
   }
 
-  Container _buildImg(BuildContext context) {
-    return Container(
-      height: 150.0,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: Theme.of(context).accentColor,
-        borderRadius: BorderRadius.all(
-          Radius.circular(3.0),
-        ),
-        image: DecorationImage(
+  Widget _buildImg(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.all(
+        Radius.circular(3.0),
+      ),
+      child: Hero(
+        tag: tip.id,
+        child: FadeInImage(
+          height: 150.0,
+          width: double.infinity,
           image: NetworkImage(tip.img),
+          placeholder: AssetImage('assets/images/default.png'),
           fit: BoxFit.cover,
         ),
       ),

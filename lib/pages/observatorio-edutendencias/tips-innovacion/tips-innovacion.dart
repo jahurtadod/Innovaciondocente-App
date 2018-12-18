@@ -68,29 +68,31 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
   SliverChildDelegate _buildListView(List<TipInnovacion> tips) {
     return SliverChildBuilderDelegate(
       (BuildContext context, int index) {
-        Function gotoDetails = () {
-          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-            return TipDetail(
-              tip: tips[index],
-            );
-          }));
-        };
-        return Column(
-          children: <Widget>[
-            (index % 4 == 0)
-                ? MediumCard(
-                    tip: tips[index],
-                    onTap: gotoDetails,
-                  )
-                : SmallCard(
-                    tip: tips[index],
-                    onTap: gotoDetails,
-                  ),
-            Container(
-              color: Theme.of(context).accentColor,
-              height: .6,
+        return Container(
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(color: Theme.of(context).accentColor),
             ),
-          ],
+          ),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              child: (index % 4 == 0)
+                  ? MediumCard(
+                      tip: tips[index],
+                    )
+                  : SmallCard(
+                      tip: tips[index],
+                    ),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+                  return TipDetail(
+                    tip: tips[index],
+                  );
+                }));
+              },
+            ),
+          ),
         );
       },
       childCount: tips.length,
