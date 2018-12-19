@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:innovaciondocente_app/config/colors.dart';
 
 class HeaderSection extends StatelessWidget {
   // TODO: connect to firebase firestore
@@ -49,7 +50,7 @@ class HeaderSection extends StatelessWidget {
         end: Alignment.bottomRight,
         colors: <Color>[
           Color(0xff1a7dca),
-          Color(0xff044a80),
+          IndevColors.formacion,
         ],
       ),
     );

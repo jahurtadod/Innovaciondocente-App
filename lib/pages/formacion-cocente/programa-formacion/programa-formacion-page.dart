@@ -57,8 +57,8 @@ class _ProgramaFormacionPageState extends State<ProgramaFormacionPage> {
           : CustomScrollView(
               slivers: <Widget>[
                 SliverAppBar(
-                  pinned: true,
-                  forceElevated: true,
+                  snap: true,
+                  floating: true,
                   title: Text("Formación Docente"),
                 ),
                 SliverList(

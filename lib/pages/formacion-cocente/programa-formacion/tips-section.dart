@@ -108,9 +108,14 @@ class InnovaTipTile extends StatelessWidget {
               )),
           SizedBox(width: 8),
           Flexible(
-            child: Text(
-              'Ver',
-              style: Theme.of(context).textTheme.overline,
+            child: IconButton(
+              color: IndevColors.formacion,
+              onPressed: () {
+                Filters.launchURL('https://youtu.be/${innovaTip.id}');
+              },
+              icon: Icon(
+                Icons.play_circle_filled,
+              ),
             ),
           )
         ],
