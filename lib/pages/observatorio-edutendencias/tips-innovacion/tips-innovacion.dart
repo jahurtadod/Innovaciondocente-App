@@ -61,42 +61,38 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
                 ),
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
-                    _buildListView,
+                    (BuildContext context, int index) => Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(color: IndevColors.observatorio),
+                            ),
+                          ),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              child: (index % 4 == 0)
+                                  ? MediumCard(
+                                      tip: tips[index],
+                                    )
+                                  : SmallCard(
+                                      tip: tips[index],
+                                    ),
+                              onTap: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (BuildContext context) {
+                                  return TipDetail(
+                                    tip: tips[index],
+                                  );
+                                }));
+                              },
+                            ),
+                          ),
+                        ),
                     childCount: tips.length,
                   ),
                 )
               ],
             ),
-    );
-  }
-
-  Widget _buildListView(BuildContext context, int index) {
-    TipInnovacion tip = _tips[index];
-    return Container(
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: IndevColors.observatorio),
-        ),
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          child: (index % 4 == 0)
-              ? MediumCard(
-                  tip: tip,
-                )
-              : SmallCard(
-                  tip: tip,
-                ),
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-              return TipDetail(
-                tip: tip,
-              );
-            }));
-          },
-        ),
-      ),
     );
   }
 

@@ -15,7 +15,8 @@ import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-i
 class Router {
   static Map<String, WidgetBuilder> appRoutes() {
     return {
-      '/': (BuildContext context) => Home(),
+      // '/': (BuildContext context) => Home(),
+      '/': (BuildContext context) => PresentationPage(),
       '/start': (BuildContext context) => StartPage(
             stream: [
               TipsDatabase().getStream(),
@@ -24,7 +25,6 @@ class Router {
               CursosProgramaFormacionDatabase().getStream(),
             ],
           ),
-      '/start/presentation': (BuildContext context) => PresentationPage(),
       '/observatorio-edutendencias/tips': (BuildContext context) => TipsInnovacionPage(
             stream: TipsDatabase().getStream(),
           ),

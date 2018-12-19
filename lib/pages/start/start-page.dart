@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/classes/noticia.dart';
 import 'package:innovaciondocente_app/classes/tips-innovacion.dart';
+import 'package:innovaciondocente_app/config/colors.dart';
 import 'package:innovaciondocente_app/pages/formacion-cocente/cafe-cientifico/encuentro-detail/encuentro-detail-page.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/cafe-cientifico/encuentro.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/curso.dart';
@@ -66,8 +67,6 @@ class _InicioState extends State<StartPage> {
     return new Scaffold(
       appBar: AppBar(
         titleSpacing: 0.0,
-        backgroundColor: Colors.white,
-        elevation: 0.0,
         title: Row(
           children: <Widget>[
             Text(
@@ -92,7 +91,6 @@ class _InicioState extends State<StartPage> {
             onPressed: () {},
           ),
         ],
-        automaticallyImplyLeading: false,
       ),
       body: ListView(
         children: <Widget>[
@@ -115,10 +113,8 @@ class _InicioState extends State<StartPage> {
                     ),
                     Text(
                       'Conoce nuestras novedades',
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 15.0,
-                          fontFamily: 'Montserrat'),
+                      style:
+                          TextStyle(color: Colors.grey, fontSize: 15.0, fontFamily: 'Montserrat'),
                     ),
                   ],
                 ),
@@ -145,12 +141,17 @@ class _InicioState extends State<StartPage> {
   Widget _subMenu() {
     return Padding(
       padding: EdgeInsets.all(20.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Wrap(
         children: <Widget>[
-          _iconMenu('assets/formacion.png', '/programa-formacion/cursos', const Color(0xFF1A237E)),
-          _iconMenu('assets/inovacion.png', '/tips', const Color(0xFFF57F17)),
-          _iconMenu('assets/observatorio.png', '/noticias', const Color(0xffff0266))
+          _iconMenu('assets/formacion.png', '/formacion-docente/programa-formacion',
+              IndevColors.formacion),
+          _iconMenu('assets/encuentro.png', '/formacion-docente/cafe-cientifico/encuentros',
+              IndevColors.formacion),
+          // _iconMenu('assets/inovacion.png', '', IndevColors.innovacion),
+          _iconMenu('assets/observatorio.png', '/observatorio-edutendencias/noticias',
+              IndevColors.observatorio),
+          _iconMenu('assets/evaluacion.png', '/observatorio-edutendencias/tips',
+              IndevColors.observatorio),
         ],
       ),
     );
@@ -159,15 +160,13 @@ class _InicioState extends State<StartPage> {
   Widget _iconMenu(String imagen, String route, Color color) {
     return Container(
       margin: EdgeInsets.only(left: 10.0, right: 10.0),
-      height: 55.0,
-      width: 55.0,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(32.5), color: color),
+      height: 80.0,
+      width: 80.0,
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(50), color: color),
       child: Material(
         color: Colors.transparent,
-        borderRadius: BorderRadius.all(Radius.circular(32.5)),
         child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(32.5)),
+          borderRadius: BorderRadius.all(Radius.circular(50)),
           child: Stack(
             children: <Widget>[
               Container(
@@ -175,7 +174,7 @@ class _InicioState extends State<StartPage> {
                 child: Image(
                   image: AssetImage(imagen),
                   colorBlendMode: BlendMode.srcIn,
-                  color: Colors.white,
+                  color: Colors.grey.shade200,
                 ),
               ),
               Material(
@@ -212,8 +211,7 @@ class _InicioState extends State<StartPage> {
                     image: DecorationImage(
                       image: NetworkImage(encuentro.img),
                       fit: BoxFit.cover,
-                      colorFilter:
-                          ColorFilter.mode(Colors.black38, BlendMode.darken),
+                      colorFilter: ColorFilter.mode(Colors.black38, BlendMode.darken),
                     ),
                   ),
                   width: MediaQuery.of(context).size.width * 0.9,
@@ -223,9 +221,7 @@ class _InicioState extends State<StartPage> {
                       Text(
                         encuentro.name.toUpperCase(),
                         style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16.0),
+                            color: Colors.grey.shade200, fontWeight: FontWeight.bold, fontSize: 16.0),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -242,16 +238,12 @@ class _InicioState extends State<StartPage> {
                         Text(
                           'CAFE CIENTIFICO',
                           style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15.0),
+                              color: Colors.grey.shade200, fontWeight: FontWeight.bold, fontSize: 15.0),
                         ),
                         SizedBox(
                           height: 5.0,
                         ),
-                        _iconMenu(
-                            'assets/encuentro.png',
-                            '/cafe-cientifico/encuentros',
+                        _iconMenu('assets/encuentro.png', '/cafe-cientifico/encuentros',
                             const Color(0xFFDA8D5E)),
                       ],
                     ),
@@ -270,8 +262,7 @@ class _InicioState extends State<StartPage> {
       color: Colors.transparent,
       child: InkWell(
         onTap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (BuildContext context) {
+          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
             return EncuentroDetailPage(
               encuentro: _encuentros,
             );
@@ -292,8 +283,7 @@ class _InicioState extends State<StartPage> {
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(15.0),
                 ),
-                image: DecorationImage(
-                    image: NetworkImage(noticia[0].img), fit: BoxFit.cover)),
+                image: DecorationImage(image: NetworkImage(noticia[0].img), fit: BoxFit.cover)),
             height: 150.0,
           ),
         ),
@@ -310,7 +300,6 @@ class _InicioState extends State<StartPage> {
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(15.0),
               ),
-              color: Colors.yellow.shade600,
             ),
             height: 150.0,
             child: Column(
@@ -318,10 +307,7 @@ class _InicioState extends State<StartPage> {
               children: <Widget>[
                 Text(
                   noticia[0].name,
-                  style: TextStyle(
-                      color: Colors.blue.shade900,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.0),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -331,8 +317,7 @@ class _InicioState extends State<StartPage> {
                 Expanded(
                   child: Text(
                     noticia[0].description,
-                    style:
-                        TextStyle(color: Colors.blue.shade800, fontSize: 12.0),
+                    style: TextStyle(fontSize: 12.0),
                     maxLines: 4,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -343,7 +328,7 @@ class _InicioState extends State<StartPage> {
                     color: Color(0xffff0266),
                     fontSize: 12.0,
                   ),
-                  backgroundColor: Colors.white,
+                  backgroundColor: Colors.grey.shade200,
                 ),
               ],
             ),
@@ -364,8 +349,7 @@ class _InicioState extends State<StartPage> {
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(15.0),
                 ),
-                image: DecorationImage(
-                    image: NetworkImage(curso[0].img), fit: BoxFit.cover)),
+                image: DecorationImage(image: NetworkImage(curso[0].img), fit: BoxFit.cover)),
             height: 150.0,
           ),
         ),
@@ -382,7 +366,6 @@ class _InicioState extends State<StartPage> {
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(15.0),
               ),
-              color: Colors.yellow.shade600,
             ),
             height: 150.0,
             child: Column(
@@ -390,10 +373,7 @@ class _InicioState extends State<StartPage> {
               children: <Widget>[
                 Text(
                   curso[0].name,
-                  style: TextStyle(
-                      color: Colors.blue.shade900,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.0),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -403,8 +383,7 @@ class _InicioState extends State<StartPage> {
                 Expanded(
                   child: Text(
                     curso[0].description,
-                    style:
-                        TextStyle(color: Colors.blue.shade800, fontSize: 12.0),
+                    style: TextStyle(fontSize: 12.0),
                     maxLines: 4,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -415,7 +394,7 @@ class _InicioState extends State<StartPage> {
                     color: Color(0xFF1A2377),
                     fontSize: 12.0,
                   ),
-                  backgroundColor: Colors.white,
+                  backgroundColor: Colors.grey.shade200,
                 ),
               ],
             ),
@@ -436,8 +415,7 @@ class _InicioState extends State<StartPage> {
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(15.0),
                 ),
-                image: DecorationImage(
-                    image: NetworkImage(tip[0].img), fit: BoxFit.cover)),
+                image: DecorationImage(image: NetworkImage(tip[0].img), fit: BoxFit.cover)),
             height: 150.0,
           ),
         ),
@@ -454,7 +432,6 @@ class _InicioState extends State<StartPage> {
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(15.0),
               ),
-              color: Colors.yellow.shade600,
             ),
             height: 150.0,
             child: Column(
@@ -462,10 +439,7 @@ class _InicioState extends State<StartPage> {
               children: <Widget>[
                 Text(
                   tip[0].name,
-                  style: TextStyle(
-                      color: Colors.blue.shade900,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.0),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -475,8 +449,7 @@ class _InicioState extends State<StartPage> {
                 Expanded(
                   child: Text(
                     tip[0].description,
-                    style:
-                        TextStyle(color: Colors.blue.shade800, fontSize: 12.0),
+                    style: TextStyle(fontSize: 12.0),
                     maxLines: 4,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -487,7 +460,7 @@ class _InicioState extends State<StartPage> {
                     color: Color(0xffff0266),
                     fontSize: 12.0,
                   ),
-                  backgroundColor: Colors.white,
+                  backgroundColor: Colors.grey.shade200,
                 ),
               ],
             ),
