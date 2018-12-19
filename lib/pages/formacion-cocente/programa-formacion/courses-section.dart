@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/classes/filters.dart';
-import 'package:innovaciondocente_app/config/colors.dart';
+import 'package:innovaciondocente_app/pages/formacion-cocente/programa-formacion/courses-utils.dart';
+import 'package:innovaciondocente_app/pages/formacion-cocente/programa-formacion/curso-detail-page.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/curso.dart';
 
 class CourseSection extends StatelessWidget {
@@ -87,11 +88,20 @@ class CourseCard extends StatelessWidget {
             Material(
               color: Colors.transparent,
               child: InkWell(
-                onTap: () {},
-                child: Container(
-                  padding: EdgeInsets.all(15),
-                  decoration: BoxDecoration(),
-                  child: _buildBody(context),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+                    return CursoDetailPage(
+                      curso: curso,
+                    );
+                  }));
+                },
+                child: Hero(
+                  tag: curso.id,
+                  child: Container(
+                    padding: EdgeInsets.all(15),
+                    decoration: BoxDecoration(),
+                    child: _buildBody(context),
+                  ),
                 ),
               ),
             ),
@@ -107,22 +117,22 @@ class CourseCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          getNameType(curso.img),
-          style: Theme.of(context).textTheme.overline.copyWith(color: Colors.white),
+          CoursesUtils.getNameType(curso.img),
+          style: Theme.of(context).accentTextTheme.overline,
         ),
         Expanded(
           child: Container(),
         ),
         Text(
           curso.name,
-          style: Theme.of(context).textTheme.subtitle.copyWith(color: Colors.white),
+          style: Theme.of(context).accentTextTheme.subtitle,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
         ),
         SizedBox(height: 7),
         Text(
           Filters.date(curso.date),
-          style: Theme.of(context).textTheme.body1.copyWith(color: Colors.white),
+          style: Theme.of(context).accentTextTheme.body1,
         )
       ],
     );
@@ -134,58 +144,11 @@ class CourseCard extends StatelessWidget {
       height: double.infinity,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: getColors(curso.img),
-          // stops: [],
+          colors: CoursesUtils.getColors(curso.img),
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
       ),
     );
-  }
-
-  List<Color> getColors(String txt) {
-    if (txt.contains('gestion'))
-      return <Color>[
-        Color(0xff364d9d),
-        Color(0xff1ea3de),
-      ];
-    if (txt.contains('gestion-proyectos'))
-      return <Color>[
-        Color(0xff2aa9dc),
-        Color(0xff2bb4e2),
-      ];
-    if (txt.contains('identidad'))
-      return <Color>[
-        Color(0xffd6332e),
-        Color(0xfff0706f),
-      ];
-    if (txt.contains('pedagogia'))
-      return <Color>[
-        Color(0xff1d9e97),
-        Color(0xff41b8c0),
-      ];
-    if (txt.contains('investigacion'))
-      return <Color>[
-        Color(0xfff36a22),
-        Color(0xfff89a1c),
-      ];
-    if (txt.contains('tic'))
-      return <Color>[
-        Color(0xff1291c6),
-        Color(0xff44b0de),
-      ];
-    return <Color>[
-      Colors.purple,
-      Colors.purpleAccent,
-    ];
-  }
-
-  String getNameType(String txt) {
-    if (txt.contains('gestion')) return "Gestión académica";
-    if (txt.contains('gestion-proyectos')) return "Gestión de proyectos";
-    if (txt.contains('identidad')) return "Identidad UTPL";
-    if (txt.contains('pedagogia')) return "Pedagogía";
-    if (txt.contains('investigacion')) return "Investigación";
-    if (txt.contains('tic')) return "Tic's";
   }
 }

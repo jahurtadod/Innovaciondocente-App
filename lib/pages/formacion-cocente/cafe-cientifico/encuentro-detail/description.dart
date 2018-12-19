@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/config/colors.dart';
 
 class EncuentroDescription extends StatefulWidget {
   final String description;

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/classes/filters.dart';
-import 'package:innovaciondocente_app/config/colors.dart';
 import 'package:innovaciondocente_app/pages/formacion-cocente/cafe-cientifico/encuentro-detail/encuentro-detail-page.dart';
 import 'package:innovaciondocente_app/pages/formacion-cocente/cafe-cientifico/encuentros./encuentro-card.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/cafe-cientifico/encuentro.dart';

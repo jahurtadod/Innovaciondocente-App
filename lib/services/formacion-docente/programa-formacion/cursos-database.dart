@@ -20,40 +20,9 @@ class _CursosParser extends FirestoreNodeParser<List<Curso>> {
   @override
   List<Curso> parse(QuerySnapshot querySnapshot) {
     return querySnapshot.documents
-        .map((snapshot) => Curso(
+        .map((snapshot) => Curso.fromJSON(
               id: snapshot.documentID,
-              name: snapshot['name'],
-              img: snapshot['img'],
-              created: snapshot['created'],
-              description: snapshot['description'],
-              creator: snapshot['creator'],
-              edited: snapshot['edited'],
-              date: snapshot['date'],
-              addressedTo: snapshot['addressedTo'],
-              downloadableContent: snapshot['downloadableContent']
-                  .map<DownloadableContent>((data) => DownloadableContent(
-                        url: snapshot['url'],
-                      ))
-                  .toList(),
-              duration: Duration(
-                days: snapshot['duration']['days'],
-                hours: snapshot['duration']['hours'],
-                weeks: snapshot['duration']['weeks'],
-              ),
-              instructors: snapshot['instructors']
-                  .map<Instructor>((data) => Instructor(
-                        about: snapshot['about'],
-                        name: snapshot['name'],
-                      ))
-                  .toList(),
-              module: snapshot['module'],
-              place: snapshot['place'],
-              postulation: Postulation(
-                date: snapshot.data['postulation']['date'],
-                link: snapshot['postulation']['link'],
-                message: snapshot['postulation']['message'],
-              ),
-              schedule: snapshot['schedule'],
+              data: snapshot.data,
             ))
         .toList();
   }

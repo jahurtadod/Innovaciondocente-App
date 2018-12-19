@@ -11,20 +11,6 @@ class Encuentro {
   DateTime postulations;
   String id;
 
-  Encuentro({
-    this.created,
-    this.creator,
-    this.edited,
-    this.editor,
-    this.date,
-    this.description,
-    this.guests,
-    this.img,
-    this.name,
-    this.postulations,
-    this.id,
-  });
-
   Encuentro.fromJSON({
     String id,
     Map<String, dynamic> data,
@@ -48,10 +34,6 @@ class Encuentro {
 class Guest {
   String description;
   String name;
-  Guest({
-    this.description,
-    this.name,
-  });
 
   Guest.fromJSON({Map<dynamic, dynamic> data}) {
     this.name = data['name'];

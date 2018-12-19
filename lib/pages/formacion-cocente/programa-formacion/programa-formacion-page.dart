@@ -73,5 +73,3 @@ class _ProgramaFormacionPageState extends State<ProgramaFormacionPage> {
     );
   }
 }
-
-class _encuentros {}
