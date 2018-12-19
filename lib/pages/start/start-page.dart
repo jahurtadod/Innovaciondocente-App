@@ -5,6 +5,7 @@ import 'package:innovaciondocente_app/classes/noticia.dart';
 import 'package:innovaciondocente_app/classes/tips-innovacion.dart';
 import 'package:innovaciondocente_app/config/colors.dart';
 import 'package:innovaciondocente_app/pages/formacion-cocente/cafe-cientifico/encuentro-detail/encuentro-detail-page.dart';
+import 'package:innovaciondocente_app/pages/share/loader.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/cafe-cientifico/encuentro.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/curso.dart';
 
@@ -92,66 +93,67 @@ class _InicioState extends State<StartPage> {
           ),
         ],
       ),
-      body: ListView(
-        children: <Widget>[
-          _subMenu(),
-          Padding(
-            padding: EdgeInsets.only(top: 10.0, left: 25.0, right: 25.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: (this._tips == null ||
+              this._cursos == null ||
+              this._encuentros == null ||
+              this._noticias == null)
+          ? Loader()
+          : ListView(
               children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      'ASCENDERE IN',
-                      style: TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15.0,
-                          fontFamily: 'Montserrat'),
-                    ),
-                    Text(
-                      'Conoce nuestras novedades',
-                      style:
-                          TextStyle(color: Colors.grey, fontSize: 15.0, fontFamily: 'Montserrat'),
-                    ),
-                  ],
+                _subMenu(),
+                Padding(
+                  padding: EdgeInsets.only(top: 10.0, left: 25.0, right: 25.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            'ASCENDERE IN',
+                            style: TextStyle(
+                                color: Colors.blue,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15.0,
+                                fontFamily: 'Montserrat'),
+                          ),
+                          Text(
+                            'Conoce nuestras novedades',
+                            style: TextStyle(
+                                color: Colors.grey, fontSize: 15.0, fontFamily: 'Montserrat'),
+                          ),
+                        ],
+                      ),
+                      Text(
+                        'Todos',
+                        style: TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15.0,
+                            fontFamily: 'Montserrat'),
+                      )
+                    ],
+                  ),
                 ),
-                Text(
-                  'Todos',
-                  style: TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15.0,
-                      fontFamily: 'Montserrat'),
-                )
+                _cardCafe(_encuentros),
+                _cardNoticia(_noticias),
+                _cardCurso(_cursos),
+                _cardTip(_tips),
               ],
             ),
-          ),
-          _cardCafe(_encuentros),
-          _cardNoticia(_noticias),
-          _cardCurso(_cursos),
-          _cardTip(_tips),
-        ],
-      ),
     );
   }
 
   Widget _subMenu() {
     return Padding(
       padding: EdgeInsets.all(20.0),
-      child: Wrap(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          _iconMenu('assets/formacion.png', '/formacion-docente/programa-formacion',
-              IndevColors.formacion),
-          _iconMenu('assets/encuentro.png', '/formacion-docente/cafe-cientifico/encuentros',
-              IndevColors.formacion),
-          // _iconMenu('assets/inovacion.png', '', IndevColors.innovacion),
-          _iconMenu('assets/observatorio.png', '/observatorio-edutendencias/noticias',
-              IndevColors.observatorio),
-          _iconMenu('assets/evaluacion.png', '/observatorio-edutendencias/tips',
-              IndevColors.observatorio),
+          _iconMenu('assets/formacion.png', '/formacion-docente', IndevColors.formacion),
+          _iconMenu('assets/inovacion.png', '/', IndevColors.innovacion),
+          _iconMenu(
+              'assets/observatorio.png', '/observatorio-edutendencias', IndevColors.observatorio),
         ],
       ),
     );
@@ -221,7 +223,9 @@ class _InicioState extends State<StartPage> {
                       Text(
                         encuentro.name.toUpperCase(),
                         style: TextStyle(
-                            color: Colors.grey.shade200, fontWeight: FontWeight.bold, fontSize: 16.0),
+                            color: Colors.grey.shade200,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -238,7 +242,9 @@ class _InicioState extends State<StartPage> {
                         Text(
                           'CAFE CIENTIFICO',
                           style: TextStyle(
-                              color: Colors.grey.shade200, fontWeight: FontWeight.bold, fontSize: 15.0),
+                              color: Colors.grey.shade200,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15.0),
                         ),
                         SizedBox(
                           height: 5.0,
