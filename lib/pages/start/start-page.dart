@@ -67,16 +67,26 @@ class _InicioState extends State<StartPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      drawer: MainMenu(),
+      endDrawer: Drawer(
+        child: Center(
+          child: Text('Notifications'),
+        ),
+      ),
       appBar: AppBar(
-        titleSpacing: 0.0,
+        titleSpacing: 0,
         title: Row(
           children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: Image.asset(
+                'assets/icon2.png',
+                fit: BoxFit.fitHeight,
+              ),
+            ),
+            SizedBox(width: 15),
             Text('Ascendere'),
           ],
-        ),
-        leading: Padding(
-          padding: const EdgeInsets.all(13.0),
-          child: Image.asset('assets/icon.png'),
         ),
         actions: <Widget>[
           IconButton(
@@ -90,12 +100,6 @@ class _InicioState extends State<StartPage> {
             onPressed: () {},
           ),
         ],
-      ),
-      drawer: MainMenu(),
-      endDrawer: Drawer(
-        child: Center(
-          child: Text('Notifications'),
-        ),
       ),
       body: (this._tips == null ||
               this._cursos == null ||

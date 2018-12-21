@@ -8,67 +8,90 @@ class MainMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      child: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.symmetric(vertical: 7.5),
-          children: <Widget>[
-            DrawerTile(
-              label: 'Inicio',
-              icon: Icons.home,
-              active: true,
-              goto: '/',
-            ),
-            Divider(),
-            DrawerLabelTile(
-              label: 'Innovación Docente',
-            ),
-            DrawerTile(
-              icon: Icons.folder_special,
-              label: 'Buenas Prácticas',
-              goto: '/',
-            ),
-            DrawerTile(
-              icon: Icons.explore,
-              label: 'Proyectos Actuales',
-              goto: '/',
-            ),
-            Divider(),
-            DrawerLabelTile(
-              label: 'Formación Docente',
-            ),
-            DrawerTile(
-              icon: Icons.school,
-              label: 'Progama de Formación',
-              goto: '/formacion-docente/programa-formacion',
-            ),
-            DrawerTile(
-              icon: Icons.chat,
-              label: 'Café Científico',
-              goto: '/formacion-docente/cafe-cientifico/encuentros',
-            ),
-            Divider(),
-            DrawerLabelTile(
-              label: 'Observatorio EduTendencias',
-            ),
-            DrawerTile(
-              icon: Icons.new_releases,
-              label: 'Noticias',
-              goto: '/observatorio-edutendencias/noticias',
-            ),
-            DrawerTile(
-              icon: Icons.wb_incandescent,
-              label: 'Tips de Innovacion',
-              goto: '/observatorio-edutendencias/tips',
-            ),
-            Divider(),
-            DrawerTile(
-              icon: Icons.info,
-              label: 'Información',
-              goto: '/',
-            ),
-          ],
-        ),
+    Size size = MediaQuery.of(context).size;
+    bool smallDrawer = size.height > size.width;
+    return Container(
+      width: smallDrawer ? size.width : size.height,
+      height: double.infinity,
+      color: Colors.white,
+      child: CustomScrollView(
+        slivers: smallDrawer
+            ? [
+                SliverAppBar(
+                  automaticallyImplyLeading: false,
+                  pinned: true,
+                  actions: <Widget>[
+                    CloseButton(),
+                  ],
+                ),
+                _buildSliverMenu(),
+              ]
+            : [
+                SliverSafeArea(
+                  sliver: SliverPadding(
+                    padding: const EdgeInsets.symmetric(vertical: 7.5),
+                    sliver: _buildSliverMenu(),
+                  ),
+                ),
+              ],
+      ),
+    );
+  }
+
+  SliverList _buildSliverMenu() {
+    return SliverList(
+      delegate: SliverChildListDelegate(
+        [
+          DrawerTile(
+            label: 'Inicio',
+            icon: Icons.home,
+            active: true,
+            goto: '/',
+          ),
+          Divider(),
+          DrawerLabelTile(
+            label: 'Innovación Docente',
+          ),
+          DrawerTile(
+            icon: Icons.folder_special,
+            label: 'Buenas Prácticas',
+            goto: '/',
+          ),
+          Divider(),
+          DrawerLabelTile(
+            label: 'Formación Docente',
+          ),
+          DrawerTile(
+            icon: Icons.school,
+            label: 'Progama de Formación',
+            goto: '/formacion-docente/programa-formacion',
+          ),
+          DrawerTile(
+            icon: Icons.chat,
+            label: 'Café Científico',
+            goto: '/formacion-docente/cafe-cientifico/encuentros',
+          ),
+          Divider(),
+          DrawerLabelTile(
+            label: 'Observatorio EduTendencias',
+          ),
+          DrawerTile(
+            icon: Icons.new_releases,
+            label: 'Noticias',
+            goto: '/observatorio-edutendencias/noticias',
+          ),
+          DrawerTile(
+            icon: Icons.wb_incandescent,
+            label: 'Tips de Innovacion',
+            goto: '/observatorio-edutendencias/tips',
+          ),
+          Divider(),
+          DrawerTile(
+            icon: Icons.info,
+            label: 'Información',
+            goto: '/',
+          ),
+        ],
       ),
     );
   }
