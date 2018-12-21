@@ -18,8 +18,8 @@ class Router {
   static Map<String, WidgetBuilder> appRoutes() {
     return {
       // '/': (BuildContext context) => Home(),
-      '/': (BuildContext context) => PresentationPage(),
-      '/start': (BuildContext context) => StartPage(
+      '/presentation': (BuildContext context) => PresentationPage(),
+      '/': (BuildContext context) => StartPage(
             stream: [
               TipsDatabase().getStream(),
               NoticiasDatabase().getStream(),

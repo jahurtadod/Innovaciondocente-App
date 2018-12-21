@@ -17,30 +17,55 @@ class MainMenu extends StatelessWidget {
               label: 'Inicio',
               icon: Icons.home,
               active: true,
+              goto: '/',
+            ),
+            Divider(),
+            DrawerLabelTile(
+              label: 'Innovación Docente',
+            ),
+            DrawerTile(
+              icon: Icons.folder_special,
+              label: 'Buenas Prácticas',
+              goto: '/',
+            ),
+            DrawerTile(
+              icon: Icons.explore,
+              label: 'Proyectos Actuales',
+              goto: '/',
             ),
             Divider(),
             DrawerLabelTile(
               label: 'Formación Docente',
             ),
             DrawerTile(
-              icon: Icons.date_range,
+              icon: Icons.school,
               label: 'Progama de Formación',
+              goto: '/formacion-docente/programa-formacion',
             ),
             DrawerTile(
-              icon: Icons.date_range,
+              icon: Icons.chat,
               label: 'Café Científico',
+              goto: '/formacion-docente/cafe-cientifico/encuentros',
             ),
             Divider(),
             DrawerLabelTile(
               label: 'Observatorio EduTendencias',
             ),
             DrawerTile(
-              icon: Icons.date_range,
+              icon: Icons.new_releases,
               label: 'Noticias',
+              goto: '/observatorio-edutendencias/noticias',
             ),
             DrawerTile(
-              icon: Icons.date_range,
+              icon: Icons.wb_incandescent,
               label: 'Tips de Innovacion',
+              goto: '/observatorio-edutendencias/tips',
+            ),
+            Divider(),
+            DrawerTile(
+              icon: Icons.info,
+              label: 'Información',
+              goto: '/',
             ),
           ],
         ),
@@ -74,11 +99,13 @@ class DrawerTile extends StatelessWidget {
     Key key,
     this.active = false,
     @required this.label,
+    @required this.goto,
     @required this.icon,
   }) : super(key: key);
 
   final bool active;
   final String label;
+  final String goto;
   final IconData icon;
 
   @override
@@ -92,7 +119,9 @@ class DrawerTile extends StatelessWidget {
         child: Material(
           color: active ? IndevColors.blue : Colors.transparent,
           child: InkWell(
-            onTap: () {},
+            onTap: () {
+              if (!active) Navigator.pushNamed(context, goto);
+            },
             child: Row(
               children: <Widget>[
                 Container(
