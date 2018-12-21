@@ -6,6 +6,7 @@ import 'package:innovaciondocente_app/classes/tips-innovacion.dart';
 import 'package:innovaciondocente_app/config/colors.dart';
 import 'package:innovaciondocente_app/pages/formacion-cocente/cafe-cientifico/encuentro-detail/encuentro-detail-page.dart';
 import 'package:innovaciondocente_app/pages/share/loader.dart';
+import 'package:innovaciondocente_app/pages/share/main-menu.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/cafe-cientifico/encuentro.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/curso.dart';
 
@@ -70,10 +71,7 @@ class _InicioState extends State<StartPage> {
         titleSpacing: 0.0,
         title: Row(
           children: <Widget>[
-            Text(
-              'Ascendere',
-              style: TextStyle(fontSize: 20.0, color: Colors.grey.shade500),
-            ),
+            Text('Ascendere'),
           ],
         ),
         leading: Padding(
@@ -92,6 +90,12 @@ class _InicioState extends State<StartPage> {
             onPressed: () {},
           ),
         ],
+      ),
+      drawer: MainMenu(),
+      endDrawer: Drawer(
+        child: Center(
+          child: Text('Notifications'),
+        ),
       ),
       body: (this._tips == null ||
               this._cursos == null ||

@@ -6,7 +6,7 @@ class ObservatorioEdutendenciasPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Formación Docente'),
+        title: Text('Observatorio EduTendencias'),
       ),
       body: Column(
         children: <Widget>[
