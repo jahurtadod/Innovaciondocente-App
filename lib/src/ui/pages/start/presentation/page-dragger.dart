@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/pages/start/presentation/pager-indicator.dart';
+import 'package:innovaciondocente_app/src/ui/pages/start/presentation/pager-indicator.dart';
 
 class PageDragger extends StatefulWidget {
 

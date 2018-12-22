@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/pages/formacion-cocente/cafe-cientifico/encuentros/encuentros-page.dart';
-import 'package:innovaciondocente_app/pages/formacion-cocente/programa-formacion/programa-formacion-page.dart';
-import 'package:innovaciondocente_app/pages/home.dart';
-import 'package:innovaciondocente_app/pages/observatorio-edutendencias/noticias/noticias-page.dart';
-import 'package:innovaciondocente_app/pages/observatorio-edutendencias/tips-innovacion/tips-innovacion.dart';
-import 'package:innovaciondocente_app/pages/start/presentation/presentation-page.dart';
-import 'package:innovaciondocente_app/pages/start/start-page.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/cafe-cientifico/encuentros-database.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/cursos-database.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/innova-tip-database.dart';
 import 'package:innovaciondocente_app/services/observatorio-edutendencias/noticias/noticias-database.dart';
 import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion/tips-innovacion-database.dart';
+import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/cafe-cientifico/home/encuentros-page.dart';
+import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/programa-formacion/home/programa-formacion-page.dart';
+import 'package:innovaciondocente_app/src/ui/pages/observatorio-edutendencias/noticias/noticias-page.dart';
+import 'package:innovaciondocente_app/src/ui/pages/observatorio-edutendencias/tips-innovacion/tips-innovacion.dart';
+import 'package:innovaciondocente_app/src/ui/pages/start/presentation/presentation-page.dart';
+import 'package:innovaciondocente_app/src/ui/pages/start/start-page.dart';
 
 class Router {
   static Map<String, WidgetBuilder> appRoutes() {
@@ -51,7 +50,14 @@ class Router {
 
   static Route appOnUnknownRoute(RouteSettings settings) {
     return MaterialPageRoute(builder: (BuildContext context) {
-      return Home();
+      return StartPage(
+        stream: [
+          TipsDatabase().getStream(),
+          NoticiasDatabase().getStream(),
+          EncuentrosCafeCientificoDatabase().getStream(),
+          CursosProgramaFormacionDatabase().getStream(),
+        ],
+      );
     });
   }
 }

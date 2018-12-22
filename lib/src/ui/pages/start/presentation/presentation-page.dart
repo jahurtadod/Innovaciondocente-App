@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/pages/start/presentation/page-dragger.dart';
-import 'package:innovaciondocente_app/pages/start/presentation/page-reveal.dart';
-import 'package:innovaciondocente_app/pages/start/presentation/pager-indicator.dart';
-import 'package:innovaciondocente_app/pages/start/presentation/pages.dart';
+import 'package:innovaciondocente_app/src/ui/pages/start/presentation/page-dragger.dart';
+import 'package:innovaciondocente_app/src/ui/pages/start/presentation/page-reveal.dart';
+import 'package:innovaciondocente_app/src/ui/pages/start/presentation/pager-indicator.dart';
+import 'package:innovaciondocente_app/src/ui/pages/start/presentation/pages.dart';
 
 class PresentationPage extends StatefulWidget {
   @override

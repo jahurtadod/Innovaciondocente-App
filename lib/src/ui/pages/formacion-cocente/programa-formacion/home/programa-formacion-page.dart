@@ -1,12 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/pages/formacion-cocente/programa-formacion/courses-section.dart';
-import 'package:innovaciondocente_app/pages/formacion-cocente/programa-formacion/header-section.dart';
-import 'package:innovaciondocente_app/pages/formacion-cocente/programa-formacion/tips-section.dart';
-import 'package:innovaciondocente_app/pages/share/loader.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/curso.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/innova-tip.dart';
+import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/programa-formacion/home/courses-section.dart';
+import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/programa-formacion/home/header-section.dart';
+import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/programa-formacion/home/tips-section.dart';
+import 'package:innovaciondocente_app/src/ui/widgets/loader.dart';
+import 'package:innovaciondocente_app/src/ui/widgets/main-menu.dart';
 
 class ProgramaFormacionPage extends StatefulWidget {
   final Stream<List> cursosStream, innovaTipsStream;
@@ -52,13 +53,13 @@ class _ProgramaFormacionPageState extends State<ProgramaFormacionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: MainMenu(),
       body: (this._cursos == null || this._innovaTips == null)
           ? Loader()
           : CustomScrollView(
               slivers: <Widget>[
                 SliverAppBar(
-                  snap: true,
-                  floating: true,
+                  pinned: true,
                   title: Text("Formación Docente"),
                 ),
                 SliverList(

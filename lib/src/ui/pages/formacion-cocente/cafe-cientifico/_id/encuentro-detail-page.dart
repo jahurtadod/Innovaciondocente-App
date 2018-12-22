@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/classes/filters.dart';
-import 'package:innovaciondocente_app/pages/formacion-cocente/cafe-cientifico/encuentro-detail/description.dart';
-import 'package:innovaciondocente_app/pages/formacion-cocente/cafe-cientifico/encuentro-detail/guests-detail.dart';
-import 'package:innovaciondocente_app/pages/formacion-cocente/cafe-cientifico/encuentro-detail/title-encuentro-detail.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/cafe-cientifico/encuentro.dart';
+import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/cafe-cientifico/_id/description.dart';
+import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/cafe-cientifico/_id/guests-detail.dart';
+import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/cafe-cientifico/_id/title-encuentro-detail.dart';
 
 class EncuentroDetailPage extends StatelessWidget {
   final Encuentro encuentro;
@@ -52,6 +52,7 @@ class EncuentroDetailPage extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+          // TODO: MAKE this description global
           child: EncuentroDescription(
             description: encuentro.description,
           ),

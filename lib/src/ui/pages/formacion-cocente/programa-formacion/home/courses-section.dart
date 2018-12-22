@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/classes/filters.dart';
-import 'package:innovaciondocente_app/pages/formacion-cocente/programa-formacion/courses-utils.dart';
-import 'package:innovaciondocente_app/pages/formacion-cocente/programa-formacion/curso-detail-page.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/curso.dart';
+import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/programa-formacion/_id/courses-utils.dart';
+import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/programa-formacion/_id/curso-detail-page.dart';
 
 class CourseSection extends StatelessWidget {
   const CourseSection({

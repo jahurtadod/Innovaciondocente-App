@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/classes/noticia.dart';
 import 'package:innovaciondocente_app/classes/tips-innovacion.dart';
 import 'package:innovaciondocente_app/config/colors.dart';
-import 'package:innovaciondocente_app/pages/formacion-cocente/cafe-cientifico/encuentro-detail/encuentro-detail-page.dart';
-import 'package:innovaciondocente_app/pages/share/loader.dart';
-import 'package:innovaciondocente_app/pages/share/main-menu.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/cafe-cientifico/encuentro.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/curso.dart';
+import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/cafe-cientifico/_id/encuentro-detail-page.dart';
+import 'package:innovaciondocente_app/src/ui/widgets/loader.dart';
+import 'package:innovaciondocente_app/src/ui/widgets/main-menu.dart';
+import 'package:innovaciondocente_app/src/ui/widgets/notification-drawer.dart';
 
 class StartPage extends StatefulWidget {
   final List<Stream<List>> stream;
@@ -66,13 +67,9 @@ class _InicioState extends State<StartPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       drawer: MainMenu(),
-      endDrawer: Drawer(
-        child: Center(
-          child: Text('Notifications'),
-        ),
-      ),
+      endDrawer: NotificationDrawer(),
       appBar: AppBar(
         titleSpacing: 0,
         title: Row(

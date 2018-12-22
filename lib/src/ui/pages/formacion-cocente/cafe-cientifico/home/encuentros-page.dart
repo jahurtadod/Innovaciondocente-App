@@ -1,9 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/pages/formacion-cocente/cafe-cientifico/encuentros/encuentros-view.dart';
-import 'package:innovaciondocente_app/pages/share/loader.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/cafe-cientifico/encuentro.dart';
+import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/cafe-cientifico/home/encuentros-view.dart';
+import 'package:innovaciondocente_app/src/ui/widgets/loader.dart';
+import 'package:innovaciondocente_app/src/ui/widgets/main-menu.dart';
 
 class EncuentrosPage extends StatefulWidget {
   final Stream<List<Encuentro>> stream;
@@ -37,6 +38,7 @@ class _EncuentrosPageState extends State<EncuentrosPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: MainMenu(),
       appBar: AppBar(
         title: Text('Café Científico'),
       ),

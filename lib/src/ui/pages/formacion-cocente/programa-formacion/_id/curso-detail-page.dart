@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/classes/filters.dart';
-import 'package:innovaciondocente_app/pages/formacion-cocente/programa-formacion/courses-utils.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/curso.dart';
+
+// TODO: place in correct folder or make a widget
+import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/programa-formacion/_id/courses-utils.dart';
 
 class CursoDetailPage extends StatelessWidget {
   // TODO: add link to postulate

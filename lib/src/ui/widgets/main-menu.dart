@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/config/colors.dart';
 
@@ -9,31 +10,22 @@ class MainMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    bool smallDrawer = size.height > size.width;
+    double width = min(size.height, size.width);
     return Container(
-      width: smallDrawer ? size.width : size.height,
+      width: width,
       height: double.infinity,
       color: Colors.white,
       child: CustomScrollView(
-        slivers: smallDrawer
-            ? [
-                SliverAppBar(
-                  automaticallyImplyLeading: false,
-                  pinned: true,
-                  actions: <Widget>[
-                    CloseButton(),
-                  ],
-                ),
-                _buildSliverMenu(),
-              ]
-            : [
-                SliverSafeArea(
-                  sliver: SliverPadding(
-                    padding: const EdgeInsets.symmetric(vertical: 7.5),
-                    sliver: _buildSliverMenu(),
-                  ),
-                ),
-              ],
+        slivers: [
+          SliverAppBar(
+            automaticallyImplyLeading: false,
+            pinned: true,
+            actions: <Widget>[
+              CloseButton(),
+            ],
+          ),
+          _buildSliverMenu(),
+        ],
       ),
     );
   }
@@ -42,51 +34,51 @@ class MainMenu extends StatelessWidget {
     return SliverList(
       delegate: SliverChildListDelegate(
         [
-          DrawerTile(
+          _DrawerTile(
             label: 'Inicio',
             icon: Icons.home,
             active: true,
             goto: '/',
           ),
           Divider(),
-          DrawerLabelTile(
+          _IndevTitleTile(
             label: 'Innovación Docente',
           ),
-          DrawerTile(
+          _DrawerTile(
             icon: Icons.folder_special,
             label: 'Buenas Prácticas',
             goto: '/',
           ),
           Divider(),
-          DrawerLabelTile(
+          _IndevTitleTile(
             label: 'Formación Docente',
           ),
-          DrawerTile(
+          _DrawerTile(
             icon: Icons.school,
             label: 'Progama de Formación',
             goto: '/formacion-docente/programa-formacion',
           ),
-          DrawerTile(
+          _DrawerTile(
             icon: Icons.chat,
             label: 'Café Científico',
             goto: '/formacion-docente/cafe-cientifico/encuentros',
           ),
           Divider(),
-          DrawerLabelTile(
+          _IndevTitleTile(
             label: 'Observatorio EduTendencias',
           ),
-          DrawerTile(
+          _DrawerTile(
             icon: Icons.new_releases,
             label: 'Noticias',
             goto: '/observatorio-edutendencias/noticias',
           ),
-          DrawerTile(
+          _DrawerTile(
             icon: Icons.wb_incandescent,
             label: 'Tips de Innovacion',
             goto: '/observatorio-edutendencias/tips',
           ),
           Divider(),
-          DrawerTile(
+          _DrawerTile(
             icon: Icons.info,
             label: 'Información',
             goto: '/',
@@ -97,28 +89,8 @@ class MainMenu extends StatelessWidget {
   }
 }
 
-class DrawerLabelTile extends StatelessWidget {
-  const DrawerLabelTile({
-    Key key,
-    @required this.label,
-  }) : super(key: key);
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-      child: Text(
-        label.toUpperCase(),
-        style: Theme.of(context).textTheme.body1.copyWith(color: Colors.grey),
-      ),
-    );
-  }
-}
-
-class DrawerTile extends StatelessWidget {
-  const DrawerTile({
+class _DrawerTile extends StatelessWidget {
+  const _DrawerTile({
     Key key,
     this.active = false,
     @required this.label,
@@ -165,6 +137,26 @@ class DrawerTile extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _IndevTitleTile extends StatelessWidget {
+  const _IndevTitleTile({
+    Key key,
+    @required this.label,
+  }) : super(key: key);
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+      child: Text(
+        label.toUpperCase(),
+        style: Theme.of(context).textTheme.body1.copyWith(color: Colors.grey),
       ),
     );
   }
