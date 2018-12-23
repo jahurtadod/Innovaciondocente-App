@@ -1,133 +1,48 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/config/colors.dart';
+import 'package:innovaciondocente_app/src/blocs/bloc-provider.bloc.dart';
 import 'package:innovaciondocente_app/src/models/navigation.model.dart';
 
-class MainMenu extends StatefulWidget {
+class MainMenu extends StatelessWidget {
   const MainMenu({
     Key key,
   }) : super(key: key);
 
   @override
-  MainMenuState createState() {
-    return MainMenuState();
-  }
-}
-
-class MainMenuState extends State<MainMenu> {
-  List<IndevSection> sections;
-
-  @override
-  void initState() {
-    super.initState();
-    createRoutes('/');
-  }
-
-// TODO: move to bloc pattern
-  void createRoutes(String path) {
-    this.sections = [
-      IndevSection(
-        routes: [
-          IndevRoute(
-            name: 'Inicio',
-            route: '/',
-            path: path,
-            icon: Icons.home,
-          ),
-        ],
-      ),
-      IndevSection(
-        name: 'Innovación Docente',
-        routes: [
-          IndevRoute(
-            name: 'Buenas Prácticas',
-            path: path,
-            route: '/',
-            icon: Icons.folder_special,
-          ),
-          IndevRoute(
-            name: 'Proyectos Actuales',
-            path: path,
-            route: '/',
-            icon: Icons.folder_special,
-          ),
-        ],
-      ),
-      IndevSection(
-        name: 'Formación Docente',
-        routes: [
-          IndevRoute(
-            name: 'Progama de Formación',
-            path: path,
-            route: '/formacion-docente/programa-formacion',
-            icon: Icons.school,
-          ),
-          IndevRoute(
-            name: 'Café Científico',
-            path: path,
-            route: '/formacion-docente/cafe-cientifico/encuentros',
-            icon: Icons.chat,
-          ),
-        ],
-      ),
-      IndevSection(
-        name: 'Observatorio EduTendencias',
-        routes: [
-          IndevRoute(
-            name: 'Noticias',
-            path: path,
-            route: '/observatorio-edutendencias/noticias',
-            icon: Icons.new_releases,
-          ),
-          IndevRoute(
-            name: 'Tips de Innovacion',
-            path: path,
-            route: '/observatorio-edutendencias/tips',
-            icon: Icons.wb_incandescent,
-          ),
-        ],
-      ),
-      IndevSection(
-        routes: [
-          IndevRoute(
-            name: 'Información',
-            path: path,
-            route: '/observatorio-edutendencias/noticias',
-            icon: Icons.info,
-          ),
-        ],
-      )
-    ];
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: ListView(
-        children: sections
-            .map((sec) => Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    sec.name == null
-                        ? Container()
-                        : _IndevTitleTile(
-                            label: sec.name,
-                          ),
-                  ]
-                    ..addAll(sec.routes.map(
-                      (route) => _DrawerTile(
-                          route: route,
-                          onPressed: () {
-                            setState(() {
-                              createRoutes(route.route);
-                            });
-                          }),
+      child: StreamBuilder<List<IndevSection>>(
+        stream: BlocProvider.of(context).blocs.navigation.outNavigation,
+        builder: (BuildContext context, data) {
+          List<IndevSection> sections = data.data;
+          return ListView(
+            children: sections
+                .map((sec) => Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        sec.name == null
+                            ? Container()
+                            : _IndevTitleTile(
+                                label: sec.name,
+                              ),
+                      ]
+                        ..addAll(sec.routes.map((route) => _DrawerTile(
+                              route: route,
+                              onPressed: () {
+                                BlocProvider.of(context)
+                                    .blocs
+                                    .navigation
+                                    .uptateNavigation
+                                    .add(route.route);
+                              },
+                            )))
+                        ..addAll([
+                          Divider(),
+                        ]),
                     ))
-                    ..addAll([
-                      Divider(),
-                    ]),
-                ))
-            .toList(),
+                .toList(),
+          );
+        },
       ),
     );
   }
