@@ -53,7 +53,9 @@ class _ProgramaFormacionPageState extends State<ProgramaFormacionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: MainMenu(),
+      drawer: MainMenu(
+        actualPath: '/formacion-docente/programa-formacion',
+      ),
       body: (this._cursos == null || this._innovaTips == null)
           ? Loader()
           : CustomScrollView(

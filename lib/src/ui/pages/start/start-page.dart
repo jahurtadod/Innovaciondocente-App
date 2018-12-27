@@ -68,7 +68,9 @@ class _InicioState extends State<StartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: MainMenu(),
+      drawer: MainMenu(
+        actualPath: '/',
+      ),
       endDrawer: NotificationDrawer(),
       appBar: AppBar(
         titleSpacing: 0,

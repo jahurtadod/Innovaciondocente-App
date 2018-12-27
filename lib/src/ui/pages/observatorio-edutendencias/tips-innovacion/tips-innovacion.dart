@@ -47,7 +47,9 @@ class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
         : this._tips.where((tip) => tip.tag == this._tag || this._tag == 'todos').toList();
 
     return Scaffold(
-      drawer: MainMenu(),
+      drawer: MainMenu(
+        actualPath: '/observatorio-edutendencias/tips',
+      ),
       body: (this._tips == null)
           ? Loader()
           : CustomScrollView(

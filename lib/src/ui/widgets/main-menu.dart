@@ -1,50 +1,117 @@
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/config/colors.dart';
-import 'package:innovaciondocente_app/src/blocs/bloc-provider.bloc.dart';
-import 'package:innovaciondocente_app/src/models/navigation.model.dart';
 
 class MainMenu extends StatelessWidget {
-  const MainMenu({
+  MainMenu({
     Key key,
-  }) : super(key: key);
+    @required String actualPath,
+  })  : sections = MainMenu._genRoutes(actualPath),
+        super(key: key);
+
+  final List<_Section> sections;
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: StreamBuilder<List<IndevSection>>(
-        stream: BlocProvider.of(context).blocs.navigation.outNavigation,
-        builder: (BuildContext context, data) {
-          List<IndevSection> sections = data.data;
-          return ListView(
-            children: sections
-                .map((sec) => Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        sec.name == null
-                            ? Container()
-                            : _IndevTitleTile(
-                                label: sec.name,
-                              ),
-                      ]
-                        ..addAll(sec.routes.map((route) => _DrawerTile(
-                              route: route,
-                              onPressed: () {
-                                BlocProvider.of(context)
-                                    .blocs
-                                    .navigation
-                                    .uptateNavigation
-                                    .add(route.route);
-                              },
-                            )))
-                        ..addAll([
-                          Divider(),
-                        ]),
-                    ))
-                .toList(),
-          );
-        },
+      child: ListView.builder(
+        itemBuilder: _sectionBuilder,
+        itemCount: sections.length,
       ),
     );
+  }
+
+  Widget _sectionBuilder(BuildContext context, int index) {
+    _Section sec = this.sections[index];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        sec.name == null
+            ? Container()
+            : _IndevTitleTile(
+                label: sec.name,
+              ),
+      ]
+        ..addAll(sec.routes.map((route) => _DrawerTile(
+              route: route,
+            )))
+        ..add(Divider()),
+    );
+  }
+
+  static List<_Section> _genRoutes(String actualPath) {
+    return [
+      _Section(
+        routes: [
+          _Route(
+            name: 'Inicio',
+            path: '/',
+            actualPath: actualPath,
+            icon: Icons.home,
+          ),
+        ],
+      ),
+      _Section(
+        name: 'Innovación Docente',
+        routes: [
+          _Route(
+            name: 'Buenas Prácticas',
+            actualPath: actualPath,
+            path: '/',
+            icon: Icons.folder_special,
+          ),
+          _Route(
+            name: 'Proyectos Actuales',
+            actualPath: actualPath,
+            path: '/',
+            icon: Icons.folder_special,
+          ),
+        ],
+      ),
+      _Section(
+        name: 'Formación Docente',
+        routes: [
+          _Route(
+            name: 'Progama de Formación',
+            actualPath: actualPath,
+            path: '/formacion-docente/programa-formacion',
+            icon: Icons.school,
+          ),
+          _Route(
+            name: 'Café Científico',
+            actualPath: actualPath,
+            path: '/formacion-docente/cafe-cientifico/encuentros',
+            icon: Icons.chat,
+          ),
+        ],
+      ),
+      _Section(
+        name: 'Observatorio EduTendencias',
+        routes: [
+          _Route(
+            name: 'Noticias',
+            actualPath: actualPath,
+            path: '/observatorio-edutendencias/noticias',
+            icon: Icons.new_releases,
+          ),
+          _Route(
+            name: 'Tips de Innovacion',
+            actualPath: actualPath,
+            path: '/observatorio-edutendencias/tips',
+            icon: Icons.wb_incandescent,
+          ),
+        ],
+      ),
+      _Section(
+        routes: [
+          _Route(
+            name: 'Información',
+            actualPath: actualPath,
+            path: '/',
+            icon: Icons.info,
+          ),
+        ],
+      )
+    ];
   }
 }
 
@@ -52,11 +119,9 @@ class _DrawerTile extends StatelessWidget {
   const _DrawerTile({
     Key key,
     @required this.route,
-    @required this.onPressed,
   }) : super(key: key);
 
-  final IndevRoute route;
-  final Function onPressed;
+  final _Route route;
 
   @override
   Widget build(BuildContext context) {
@@ -70,8 +135,7 @@ class _DrawerTile extends StatelessWidget {
           color: route.active ? IndevColors.blue : Colors.transparent,
           child: InkWell(
             onTap: () {
-              if (!route.active) Navigator.pushNamed(context, route.route);
-              onPressed();
+              if (!route.active) Navigator.pushNamed(context, route.path);
             },
             child: Row(
               children: <Widget>[
@@ -119,4 +183,28 @@ class _IndevTitleTile extends StatelessWidget {
       ),
     );
   }
+}
+
+class _Section {
+  final String name;
+  final List<_Route> routes;
+
+  _Section({
+    this.name,
+    this.routes,
+  });
+}
+
+class _Route {
+  final String name;
+  final String path;
+  final bool active;
+  final IconData icon;
+
+  _Route({
+    this.name,
+    this.path,
+    String actualPath,
+    this.icon,
+  }) : active = actualPath == path;
 }

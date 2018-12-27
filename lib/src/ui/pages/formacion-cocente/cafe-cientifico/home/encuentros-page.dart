@@ -38,7 +38,9 @@ class _EncuentrosPageState extends State<EncuentrosPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: MainMenu(),
+      drawer: MainMenu(
+        actualPath: '/formacion-docente/cafe-cientifico/encuentros',
+      ),
       appBar: AppBar(
         title: Text('Café Científico'),
       ),

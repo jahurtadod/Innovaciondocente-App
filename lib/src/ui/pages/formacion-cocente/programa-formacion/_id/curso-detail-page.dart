@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/classes/filters.dart';
 import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/curso.dart';
 
-// TODO: place in correct folder or make a widget
+// TODO: place in correct folder or make a widget this detail page
 import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/programa-formacion/_id/courses-utils.dart';
 
 class CursoDetailPage extends StatelessWidget {
   // TODO: add link to postulate
-  // TODO: fin page
+  // TODO: fin page, check all data has been added to page
   final Curso curso;
 
   const CursoDetailPage({

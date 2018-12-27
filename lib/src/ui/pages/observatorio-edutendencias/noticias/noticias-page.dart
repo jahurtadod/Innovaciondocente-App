@@ -52,7 +52,9 @@ class _NoticiasPageState extends State<NoticiasPage> {
           ),
         ],
       ),
-      drawer: MainMenu(),
+      drawer: MainMenu(
+        actualPath: '/observatorio-edutendencias/noticias',
+      ),
       body: (this._noticias == null)
           ? Loader()
           : ListView.builder(

@@ -52,7 +52,7 @@ class EncuentroDetailPage extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
-          // TODO: MAKE this description global
+          // TODO: MAKE this description global, as expandable description with options
           child: EncuentroDescription(
             description: encuentro.description,
           ),

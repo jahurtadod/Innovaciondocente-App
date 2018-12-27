@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/src/blocs/navigation.bloc.dart';
 
 /// abstrac class that includes`[dispose]`, method to avoid menory leaks
 abstract class BlocBase {
@@ -8,14 +7,13 @@ abstract class BlocBase {
 
 /// manage multiple blocs
 class BlocsData extends StatefulWidget {
-  BlocsData({this.navigation, this.child}) : assert(navigation != null);
+  BlocsData({
+    this.child,
+  });
 
-  final NavigationBloc navigation;
   final Widget child;
 
-  static BlocsData init() => BlocsData(
-        navigation: NavigationBloc(),
-      );
+  static BlocsData init() => BlocsData();
 
   @override
   BlocsDataState createState() {
@@ -26,7 +24,8 @@ class BlocsData extends StatefulWidget {
 class BlocsDataState extends State<BlocsData> {
   @override
   void dispose() {
-    widget.navigation.dispose();
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override
