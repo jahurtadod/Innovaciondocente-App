@@ -42,8 +42,8 @@ class EncuentrosView extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 7.5),
           scrollDirection: Axis.horizontal,
           itemBuilder: (BuildContext context, int index) =>
-              EncuentroCard(encuentro: encuentros[index]),
-          itemCount: encuentros.length,
+              EncuentroCard(encuentro: encuentros[index + 1]),
+          itemCount: encuentros.length - 1,
         ),
       ),
     );
@@ -127,10 +127,13 @@ class EncuentrosView extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      child: FadeInImage(
-        image: NetworkImage(getLastEncuentro().img),
-        placeholder: AssetImage('assets/images/default.png'),
-        fit: BoxFit.cover,
+      child: Hero(
+        tag: getLastEncuentro().id,
+        child: FadeInImage(
+          image: NetworkImage(getLastEncuentro().img),
+          placeholder: AssetImage('assets/images/default.png'),
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }

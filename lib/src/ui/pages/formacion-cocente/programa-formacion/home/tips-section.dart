@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/src/models/innova-tip.dart';
+import 'package:innovaciondocente_app/src/models/innova-tic.dart';
 import 'package:innovaciondocente_app/src/resources/colors.dart';
 import 'package:innovaciondocente_app/src/resources/filters.dart';
 
@@ -8,7 +8,7 @@ class TipsSection extends StatelessWidget {
     Key key,
     this.innovaTips,
   }) : super(key: key);
-  final List<InnovaTip> innovaTips;
+  final List<InnovaTic> innovaTips;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class TipsSection extends StatelessWidget {
           SizedBox(height: 7.5)
         ]..addAll(
             innovaTips.map(
-              (tip) => InnovaTipTile(innovaTip: tip),
+              (innovaTic) => InnovaTipTile(innovaTic: innovaTic),
             ),
           ),
       ),
@@ -61,10 +61,10 @@ class TipsSection extends StatelessWidget {
 class InnovaTipTile extends StatelessWidget {
   const InnovaTipTile({
     Key key,
-    this.innovaTip,
+    this.innovaTic,
   }) : super(key: key);
 
-  final InnovaTip innovaTip;
+  final InnovaTic innovaTic;
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +81,7 @@ class InnovaTipTile extends StatelessWidget {
               child: AspectRatio(
                 aspectRatio: 16 / 9,
                 child: FadeInImage(
-                  image: NetworkImage('https://i.ytimg.com/vi/${innovaTip.id}/maxresdefault.jpg'),
+                  image: NetworkImage('https://i.ytimg.com/vi/${innovaTic.id}/maxresdefault.jpg'),
                   placeholder: AssetImage('assets/images/default.png'),
                   fit: BoxFit.cover,
                 ),
@@ -95,14 +95,14 @@ class InnovaTipTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    innovaTip.name,
+                    innovaTic.name,
                     style: Theme.of(context).textTheme.subtitle,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                   ),
                   SizedBox(height: 4),
                   Text(
-                    Filters.date(innovaTip.added),
+                    Filters.date(innovaTic.added),
                     style: Theme.of(context).textTheme.overline,
                   ),
                 ],
@@ -112,7 +112,7 @@ class InnovaTipTile extends StatelessWidget {
             child: IconButton(
               color: IndevColors.formacion,
               onPressed: () {
-                Filters.launchURL('https://youtu.be/${innovaTip.id}');
+                Filters.launchURL('https://youtu.be/${innovaTic.id}');
               },
               icon: Icon(
                 Icons.play_circle_filled,

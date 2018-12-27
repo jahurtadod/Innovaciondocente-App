@@ -1,7 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:innovaciondocente_app/src/database/cursos.database.dart';
+import 'package:innovaciondocente_app/src/database/encuentros.database.dart';
+import 'package:innovaciondocente_app/src/database/innova-tic.database.dart';
 import 'package:innovaciondocente_app/src/database/noticias-database.dart';
 import 'package:innovaciondocente_app/src/database/tips-innovacion-database.dart';
+import 'package:innovaciondocente_app/src/models/curso.dart';
+import 'package:innovaciondocente_app/src/models/encuentro.dart';
+import 'package:innovaciondocente_app/src/models/innova-tic.dart';
 import 'package:innovaciondocente_app/src/models/noticia.dart';
 import 'package:innovaciondocente_app/src/models/tip-innovacion.dart';
 
@@ -34,6 +40,15 @@ class DBData {
 
   final NoticiasDatabase _noticiasDatabase = NoticiasDatabase();
   Stream<List<Noticia>> get noticiasStream => this._noticiasDatabase.getStream();
+
+  final CursosDatabase _cursosDatabase = CursosDatabase();
+  Stream<List<Curso>> get cursosStream => _cursosDatabase.getStream();
+
+  final InnovaTicsDatabase _innovaTicsDatabase = InnovaTicsDatabase();
+  Stream<List<InnovaTic>> get innovaTicsStream => _innovaTicsDatabase.getStream();
+
+  final EncuentrosDatabase _encuentrosDatabase = EncuentrosDatabase();
+  Stream<List<Encuentro>> get encuentrosStream => _encuentrosDatabase.getStream();
 }
 
 class DBProvider extends InheritedWidget {
@@ -45,7 +60,7 @@ class DBProvider extends InheritedWidget {
           key: key,
         );
 
-  final DBData databaseData = DBData();
+  final DBData dbData = DBData();
 
   static DBProvider of(BuildContext context) =>
       (context.inheritFromWidgetOfExactType(DBProvider) as DBProvider);

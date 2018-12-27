@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:innovaciondocente_app/src/database/database.dart';
-import 'package:innovaciondocente_app/src/models/innova-tip.dart';
+import 'package:innovaciondocente_app/src/models/innova-tic.dart';
 
-class InnovaTipsProgramaFormacionDatabase extends DB<InnovaTip> {
+class InnovaTicsDatabase extends DB<InnovaTic> {
   @override
-  Stream<List<InnovaTip>> getStream({int limit = 6}) {
-    return FirestoreStream<List<InnovaTip>>(
-      parser: _InnovaTipsParser(),
+  Stream<List<InnovaTic>> getStream({int limit = 6}) {
+    return FirestoreStream<List<InnovaTic>>(
+      parser: _InnovaTicsParser(),
       query: Firestore.instance
           .collection('formacion-docente/programa-formacion/tips')
           .orderBy('added', descending: true)
@@ -16,11 +16,11 @@ class InnovaTipsProgramaFormacionDatabase extends DB<InnovaTip> {
   }
 }
 
-class _InnovaTipsParser extends FirestoreNodeParser<List<InnovaTip>> {
+class _InnovaTicsParser extends FirestoreNodeParser<List<InnovaTic>> {
   @override
-  List<InnovaTip> parse(QuerySnapshot querySnapshot) {
+  List<InnovaTic> parse(QuerySnapshot querySnapshot) {
     return querySnapshot.documents
-        .map((snapshot) => InnovaTip.fromJRON(
+        .map((snapshot) => InnovaTic.fromJRON(
               id: snapshot.documentID,
               data: snapshot.data,
             ))

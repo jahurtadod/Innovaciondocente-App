@@ -1,4 +1,4 @@
-class InnovaTip {
+class InnovaTic {
   String id;
   String addBy;
   DateTime added;
@@ -6,7 +6,7 @@ class InnovaTip {
   String name;
   String publishedAt;
 
-  InnovaTip.fromJRON({
+  InnovaTic.fromJRON({
     String id,
     Map<String, dynamic> data,
   }) {

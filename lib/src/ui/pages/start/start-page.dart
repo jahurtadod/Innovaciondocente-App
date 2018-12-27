@@ -12,57 +12,57 @@ import 'package:innovaciondocente_app/src/ui/widgets/main-menu.dart';
 import 'package:innovaciondocente_app/src/ui/widgets/notification-drawer.dart';
 
 class StartPage extends StatefulWidget {
-  final List<Stream<List>> stream;
+  // final List<Stream<List>> stream;
 
-  StartPage({this.stream});
+  // StartPage({this.stream});
 
   @override
   _InicioState createState() => _InicioState();
 }
 
 class _InicioState extends State<StartPage> {
-  List<TipInnovacion> _tips;
-  List<Noticia> _noticias;
-  Encuentro _encuentros;
-  List<Curso> _cursos;
-  StreamSubscription<List<TipInnovacion>> _subsT;
-  StreamSubscription<List<Noticia>> _subsN;
-  StreamSubscription<List<Encuentro>> _subsE;
-  StreamSubscription<List<Curso>> _subsC;
+  List<TipInnovacion> _tips = [];
+  List<Noticia> _noticias = [];
+  Encuentro _encuentros = null;
+  List<Curso> _cursos = [];
+  // StreamSubscription<List<TipInnovacion>> _subsT;
+  // StreamSubscription<List<Noticia>> _subsN;
+  // StreamSubscription<List<Encuentro>> _subsE;
+  // StreamSubscription<List<Curso>> _subsC;
 
   @override
   void initState() {
     super.initState();
 
-    this._subsT = widget.stream[0].listen((tips) {
-      setState(() {
-        this._tips = tips;
-      });
-    });
-    this._subsN = widget.stream[1].listen((noticias) {
-      setState(() {
-        this._noticias = noticias;
-      });
-    });
-    this._subsE = widget.stream[2].listen((encuentros) {
-      setState(() {
-        this._encuentros = encuentros[0];
-      });
-    });
-    this._subsC = widget.stream[3].listen((cursos) {
-      setState(() {
-        this._cursos = cursos;
-      });
-    });
+    // this._subsT = widget.stream[0].listen((tips) {
+    //   setState(() {
+    //     this._tips = tips;
+    //   });
+    // });
+    // this._subsN = widget.stream[1].listen((noticias) {
+    //   setState(() {
+    //     this._noticias = noticias;
+    //   });
+    // });
+    // this._subsE = widget.stream[2].listen((encuentros) {
+    //   setState(() {
+    //     this._encuentros = encuentros[0];
+    //   });
+    // });
+    // this._subsC = widget.stream[3].listen((cursos) {
+    //   setState(() {
+    //     this._cursos = cursos;
+    //   });
+    // });
   }
 
   @override
   void dispose() {
     super.dispose();
-    this._subsT.cancel();
-    this._subsN.cancel();
-    this._subsE.cancel();
-    this._subsC.cancel();
+    // this._subsT.cancel();
+    // this._subsN.cancel();
+    // this._subsE.cancel();
+    // this._subsC.cancel();
   }
 
   @override

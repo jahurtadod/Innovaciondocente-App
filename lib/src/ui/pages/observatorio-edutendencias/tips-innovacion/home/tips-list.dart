@@ -1,103 +1,77 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/src/models/tip-innovacion.dart';
 import 'package:innovaciondocente_app/src/resources/colors.dart';
 import 'package:innovaciondocente_app/src/resources/filters.dart';
-import 'package:innovaciondocente_app/src/ui/pages/observatorio-edutendencias/tips-innovacion/medium-card.dart';
-import 'package:innovaciondocente_app/src/ui/pages/observatorio-edutendencias/tips-innovacion/small-card.dart';
+import 'package:innovaciondocente_app/src/ui/pages/observatorio-edutendencias/tips-innovacion/home/medium-card.dart';
+import 'package:innovaciondocente_app/src/ui/pages/observatorio-edutendencias/tips-innovacion/home/small-card.dart';
 import 'package:innovaciondocente_app/src/ui/pages/observatorio-edutendencias/tips-innovacion/tip-detail.dart';
-import 'package:innovaciondocente_app/src/ui/widgets/loader.dart';
-import 'package:innovaciondocente_app/src/ui/widgets/main-menu.dart';
 
-class TipsInnovacionPage extends StatefulWidget {
-  final Stream<List> stream;
+class TipsList extends StatefulWidget {
+  TipsList({
+    Key key,
+    this.tips,
+  }) : super(key: key);
 
-  TipsInnovacionPage({this.stream});
+  List<TipInnovacion> tips;
 
   @override
-  _TipsInnovacionPageState createState() => _TipsInnovacionPageState();
+  _TipsListState createState() {
+    return new _TipsListState();
+  }
 }
 
-class _TipsInnovacionPageState extends State<TipsInnovacionPage> {
-  List<TipInnovacion> _tips;
-  StreamSubscription<List<TipInnovacion>> _subs;
+class _TipsListState extends State<TipsList> {
   String _tag = 'todos';
 
   @override
-  void initState() {
-    super.initState();
-    this._subs = widget.stream.listen((tips) {
-      setState(() {
-        this._tips = tips;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    this._subs.cancel();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    // filter tips by tag
-    List<TipInnovacion> tips = (this._tips == null)
-        ? null
-        : this._tips.where((tip) => tip.tag == this._tag || this._tag == 'todos').toList();
-
-    return Scaffold(
-      drawer: MainMenu(
-        actualPath: '/observatorio-edutendencias/tips',
-      ),
-      body: (this._tips == null)
-          ? Loader()
-          : CustomScrollView(
-              slivers: <Widget>[
-                SliverAppBar(
-                  title: Text('Tips Innovación'),
-                  pinned: true,
-                  actions: <Widget>[
-                    _buildOptions(context),
-                  ],
-                ),
-                SliverPadding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  sliver: SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) => Container(
-                            decoration: BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(color: IndevColors.observatorio),
+    List<TipInnovacion> tips =
+        this.widget.tips.where((tip) => tip.tag == _tag || _tag == 'todos').toList();
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverAppBar(
+          title: Text('Tips Innovación'),
+          pinned: true,
+          actions: <Widget>[
+            _buildOptions(context),
+          ],
+        ),
+        SliverPadding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          sliver: SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) => Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(color: IndevColors.observatorio),
+                      ),
+                    ),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        child: (index % 4 == 0)
+                            ? MediumCard(
+                                tip: tips[index],
+                              )
+                            : SmallCard(
+                                tip: tips[index],
                               ),
-                            ),
-                            child: Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                child: (index % 4 == 0)
-                                    ? MediumCard(
-                                        tip: tips[index],
-                                      )
-                                    : SmallCard(
-                                        tip: tips[index],
-                                      ),
-                                onTap: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (BuildContext context) {
-                                    return TipDetail(
-                                      tip: tips[index],
-                                    );
-                                  }));
-                                },
-                              ),
-                            ),
-                          ),
-                      childCount: tips.length,
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (BuildContext context) {
+                            return TipDetail(
+                              tip: tips[index],
+                            );
+                          }));
+                        },
+                      ),
                     ),
                   ),
-                )
-              ],
+              childCount: tips.length,
             ),
+          ),
+        )
+      ],
     );
   }
 

@@ -28,7 +28,7 @@ class NoticiasPage extends StatelessWidget {
         actualPath: '/observatorio-edutendencias/noticias',
       ),
       body: StreamBuilder(
-        stream: DBProvider.of(context).databaseData.noticiasStream,
+        stream: DBProvider.of(context).dbData.noticiasStream,
         initialData: null,
         builder: (BuildContext context, AsyncSnapshot<List<Noticia>> noticias) =>
             (noticias == null || noticias.data == null)
