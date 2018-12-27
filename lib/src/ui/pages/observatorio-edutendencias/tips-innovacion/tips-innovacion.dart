@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/classes/filters.dart';
-import 'package:innovaciondocente_app/classes/tips-innovacion.dart';
-import 'package:innovaciondocente_app/config/colors.dart';
+import 'package:innovaciondocente_app/src/models/tip-innovacion.dart';
+import 'package:innovaciondocente_app/src/resources/colors.dart';
+import 'package:innovaciondocente_app/src/resources/filters.dart';
 import 'package:innovaciondocente_app/src/ui/pages/observatorio-edutendencias/tips-innovacion/medium-card.dart';
 import 'package:innovaciondocente_app/src/ui/pages/observatorio-edutendencias/tips-innovacion/small-card.dart';
 import 'package:innovaciondocente_app/src/ui/pages/observatorio-edutendencias/tips-innovacion/tip-detail.dart';

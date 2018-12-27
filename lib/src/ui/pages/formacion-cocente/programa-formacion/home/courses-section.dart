@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/classes/filters.dart';
-import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/curso.dart';
+import 'package:innovaciondocente_app/src/models/curso.dart';
+import 'package:innovaciondocente_app/src/resources/filters.dart';
 import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/programa-formacion/_id/courses-utils.dart';
 import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/programa-formacion/_id/curso-detail-page.dart';
 

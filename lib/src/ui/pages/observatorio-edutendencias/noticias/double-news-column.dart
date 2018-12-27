@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/classes/filters.dart';
-import 'package:innovaciondocente_app/classes/noticia.dart';
+import 'package:innovaciondocente_app/src/models/noticia.dart';
+import 'package:innovaciondocente_app/src/resources/filters.dart';
 
 class DoubleNewsColumn extends StatelessWidget {
   final Noticia top, bottom;

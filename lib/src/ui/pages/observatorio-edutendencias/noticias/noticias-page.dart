@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/classes/filters.dart';
-import 'package:innovaciondocente_app/classes/noticia.dart';
+import 'package:innovaciondocente_app/src/models/noticia.dart';
+import 'package:innovaciondocente_app/src/resources/filters.dart';
 import 'package:innovaciondocente_app/src/ui/pages/observatorio-edutendencias/noticias/double-news-column.dart';
 import 'package:innovaciondocente_app/src/ui/pages/observatorio-edutendencias/noticias/single-news-column.dart';
 import 'package:innovaciondocente_app/src/ui/widgets/loader.dart';

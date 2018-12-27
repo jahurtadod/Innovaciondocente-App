@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/curso.dart';
-import 'package:innovaciondocente_app/services/service.dart';
+import 'package:innovaciondocente_app/src/database/database.dart';
+import 'package:innovaciondocente_app/src/models/curso.dart';
 
 class CursosProgramaFormacionDatabase extends Database<Curso> {
   @override

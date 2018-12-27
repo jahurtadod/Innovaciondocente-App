@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/curso.dart';
-import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/innova-tip.dart';
+import 'package:innovaciondocente_app/src/models/curso.dart';
+import 'package:innovaciondocente_app/src/models/innova-tip.dart';
 import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/programa-formacion/home/courses-section.dart';
 import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/programa-formacion/home/header-section.dart';
 import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/programa-formacion/home/tips-section.dart';

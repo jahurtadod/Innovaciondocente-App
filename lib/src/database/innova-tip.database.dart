@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/innova-tip.dart';
-import 'package:innovaciondocente_app/services/service.dart';
+import 'package:innovaciondocente_app/src/database/database.dart';
+import 'package:innovaciondocente_app/src/models/innova-tip.dart';
 
 class InnovaTipsProgramaFormacionDatabase extends Database<InnovaTip> {
   @override

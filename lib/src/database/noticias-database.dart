@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:innovaciondocente_app/classes/noticia.dart';
-import 'package:innovaciondocente_app/services/service.dart';
+import 'package:innovaciondocente_app/src/database/database.dart';
+import 'package:innovaciondocente_app/src/models/noticia.dart';
 
 class NoticiasDatabase extends Database<Noticia> {
   @override
@@ -23,16 +23,9 @@ class _NoticiasParser extends FirestoreNodeParser<List<Noticia>> {
   List<Noticia> parse(QuerySnapshot querySnapshot) {
     // build list of objs based on snapshots from firebase
     return querySnapshot.documents
-        .map((snapshot) => Noticia(
+        .map((snapshot) => Noticia.fromJSON(
               id: snapshot.documentID,
-              name: snapshot['name'],
-              img: snapshot['img'],
-              created: snapshot['created'],
-              description: snapshot['description'],
-              creator: snapshot['creator'],
-              edited: snapshot['edited'],
-              editor: snapshot['editor'],
-              html: snapshot['html'],
+              data: snapshot.data,
             ))
         .toList();
   }

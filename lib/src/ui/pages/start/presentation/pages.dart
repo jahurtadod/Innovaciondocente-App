@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/config/colors.dart';
+import 'package:innovaciondocente_app/src/resources/colors.dart';
 
 final pages = [
   new PageViewModel(

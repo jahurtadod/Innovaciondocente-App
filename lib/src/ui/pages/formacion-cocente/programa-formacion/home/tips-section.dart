@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/classes/filters.dart';
-import 'package:innovaciondocente_app/config/colors.dart';
-import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/innova-tip.dart';
+import 'package:innovaciondocente_app/src/models/innova-tip.dart';
+import 'package:innovaciondocente_app/src/resources/colors.dart';
+import 'package:innovaciondocente_app/src/resources/filters.dart';
 
 class TipsSection extends StatelessWidget {
   const TipsSection({

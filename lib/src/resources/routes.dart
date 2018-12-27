@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/services/formacion-docente/cafe-cientifico/encuentros-database.dart';
-import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/cursos-database.dart';
-import 'package:innovaciondocente_app/services/formacion-docente/programa-formacion/innova-tip-database.dart';
-import 'package:innovaciondocente_app/services/observatorio-edutendencias/noticias/noticias-database.dart';
-import 'package:innovaciondocente_app/services/observatorio-edutendencias/tips-innovacion/tips-innovacion-database.dart';
+import 'package:innovaciondocente_app/src/database/cursos.database.dart';
+import 'package:innovaciondocente_app/src/database/encuentros.database.dart';
+import 'package:innovaciondocente_app/src/database/innova-tip.database.dart';
+import 'package:innovaciondocente_app/src/database/noticias-database.dart';
+import 'package:innovaciondocente_app/src/database/tips-innovacion-database.dart';
 import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/cafe-cientifico/home/encuentros-page.dart';
 import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/programa-formacion/home/programa-formacion-page.dart';
 import 'package:innovaciondocente_app/src/ui/pages/observatorio-edutendencias/noticias/noticias-page.dart';
