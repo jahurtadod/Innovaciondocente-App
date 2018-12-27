@@ -22,6 +22,7 @@ class CourseSection extends StatelessWidget {
           padding: const EdgeInsets.all(15),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
               Text(
                 "Últimos Cursos",

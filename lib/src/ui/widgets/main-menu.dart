@@ -13,28 +13,31 @@ class MainMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: ListView.builder(
-        itemBuilder: _sectionBuilder,
-        itemCount: sections.length,
+      child: SafeArea(
+        child: ListView.builder(
+          padding: const EdgeInsets.symmetric(vertical: 7.5),
+          itemBuilder: _sectionBuilder,
+          itemCount: sections.length,
+        ),
       ),
     );
   }
 
   Widget _sectionBuilder(BuildContext context, int index) {
     _Section sec = this.sections[index];
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        sec.name == null
-            ? Container()
-            : _IndevTitleTile(
-                label: sec.name,
-              ),
-      ]
-        ..addAll(sec.routes.map((route) => _DrawerTile(
-              route: route,
-            )))
-        ..add(Divider()),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 7.5),
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            sec.name == null
+                ? Container()
+                : _IndevTitleTile(
+                    label: sec.name,
+                  ),
+          ]..addAll(sec.routes.map((route) => _DrawerTile(
+                route: route,
+              )))),
     );
   }
 
@@ -135,6 +138,7 @@ class _DrawerTile extends StatelessWidget {
           color: route.active ? IndevColors.blue : Colors.transparent,
           child: InkWell(
             onTap: () {
+              Navigator.pop(context);
               if (!route.active) Navigator.pushNamed(context, route.path);
             },
             child: Row(
