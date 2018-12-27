@@ -1,5 +1,5 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:innovaciondocente_app/src/database/database.dart';
 import 'package:innovaciondocente_app/src/models/noticia.dart';
 import 'package:innovaciondocente_app/src/resources/filters.dart';
 import 'package:innovaciondocente_app/src/ui/pages/observatorio-edutendencias/noticias/double-news-column.dart';
@@ -7,35 +7,7 @@ import 'package:innovaciondocente_app/src/ui/pages/observatorio-edutendencias/no
 import 'package:innovaciondocente_app/src/ui/widgets/loader.dart';
 import 'package:innovaciondocente_app/src/ui/widgets/main-menu.dart';
 
-class NoticiasPage extends StatefulWidget {
-  final Stream<List> stream;
-
-  NoticiasPage({this.stream});
-
-  @override
-  _NoticiasPageState createState() => _NoticiasPageState();
-}
-
-class _NoticiasPageState extends State<NoticiasPage> {
-  List<Noticia> _noticias;
-  StreamSubscription<List<Noticia>> _subs;
-
-  @override
-  void initState() {
-    super.initState();
-    this._subs = widget.stream.listen((noticias) {
-      setState(() {
-        this._noticias = noticias;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    this._subs.cancel();
-  }
-
+class NoticiasPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,13 +27,34 @@ class _NoticiasPageState extends State<NoticiasPage> {
       drawer: MainMenu(
         actualPath: '/observatorio-edutendencias/noticias',
       ),
-      body: (this._noticias == null)
-          ? Loader()
-          : ListView.builder(
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-              itemBuilder: _itemsBuilder,
-              itemCount: _listItemCount(this._noticias.length),
-            ),
+      body: StreamBuilder(
+        stream: DBProvider.of(context).databaseData.noticiasStream,
+        initialData: null,
+        builder: (BuildContext context, AsyncSnapshot<List<Noticia>> noticias) =>
+            (noticias == null || noticias.data == null)
+                ? Loader()
+                : ListNoticias(
+                    noticias: noticias.data,
+                  ),
+      ),
+    );
+  }
+}
+
+class ListNoticias extends StatelessWidget {
+  final List<Noticia> noticias;
+
+  const ListNoticias({
+    Key key,
+    @required this.noticias,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+      itemBuilder: _itemsBuilder,
+      itemCount: _listItemCount(this.noticias.length),
     );
   }
 
@@ -72,8 +65,8 @@ class _NoticiasPageState extends State<NoticiasPage> {
       return Container(
         padding: const EdgeInsets.symmetric(vertical: 5),
         child: DoubleNewsColumn(
-          top: _noticias[bottom],
-          bottom: _noticias.length - 1 >= bottom + 1 ? _noticias[bottom + 1] : null,
+          top: noticias[bottom],
+          bottom: noticias.length - 1 >= bottom + 1 ? noticias[bottom + 1] : null,
         ),
       );
     }
@@ -82,7 +75,7 @@ class _NoticiasPageState extends State<NoticiasPage> {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: SingleNewsColumn(
-        noticia: _noticias[_oddCasesIndex(index)],
+        noticia: noticias[_oddCasesIndex(index)],
       ),
     );
   }

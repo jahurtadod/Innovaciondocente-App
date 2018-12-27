@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:innovaciondocente_app/src/database/database.dart';
 import 'package:innovaciondocente_app/src/models/encuentro.dart';
 
-class EncuentrosCafeCientificoDatabase extends Database<Encuentro> {
+class EncuentrosCafeCientificoDatabase extends DB<Encuentro> {
   @override
   Stream<List<Encuentro>> getStream({int limit = 20}) {
     return FirestoreStream<List<Encuentro>>(

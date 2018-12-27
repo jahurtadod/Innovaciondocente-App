@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:innovaciondocente_app/src/database/database.dart';
 import 'package:innovaciondocente_app/src/models/innova-tip.dart';
 
-class InnovaTipsProgramaFormacionDatabase extends Database<InnovaTip> {
+class InnovaTipsProgramaFormacionDatabase extends DB<InnovaTip> {
   @override
   Stream<List<InnovaTip>> getStream({int limit = 6}) {
     return FirestoreStream<List<InnovaTip>>(

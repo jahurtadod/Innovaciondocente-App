@@ -18,18 +18,16 @@ class Router {
       '/presentation': (BuildContext context) => PresentationPage(),
       '/': (BuildContext context) => StartPage(
             stream: [
-              TipsDatabase().getStream(),
+              TipsInnovacionDatabase().getStream(),
               NoticiasDatabase().getStream(),
               EncuentrosCafeCientificoDatabase().getStream(),
               CursosProgramaFormacionDatabase().getStream(),
             ],
           ),
       '/observatorio-edutendencias/tips': (BuildContext context) => TipsInnovacionPage(
-            stream: TipsDatabase().getStream(),
+            stream: TipsInnovacionDatabase().getStream(),
           ),
-      '/observatorio-edutendencias/noticias': (BuildContext context) => NoticiasPage(
-            stream: NoticiasDatabase().getStream(),
-          ),
+      '/observatorio-edutendencias/noticias': (BuildContext context) => NoticiasPage(),
       '/formacion-docente/cafe-cientifico/encuentros': (BuildContext context) => EncuentrosPage(
             stream: EncuentrosCafeCientificoDatabase().getStream(),
           ),
@@ -52,7 +50,7 @@ class Router {
     return MaterialPageRoute(builder: (BuildContext context) {
       return StartPage(
         stream: [
-          TipsDatabase().getStream(),
+          TipsInnovacionDatabase().getStream(),
           NoticiasDatabase().getStream(),
           EncuentrosCafeCientificoDatabase().getStream(),
           CursosProgramaFormacionDatabase().getStream(),

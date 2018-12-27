@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:innovaciondocente_app/src/database/database.dart';
 import 'package:innovaciondocente_app/src/models/noticia.dart';
 
-class NoticiasDatabase extends Database<Noticia> {
+class NoticiasDatabase extends DB<Noticia> {
   @override
   Stream<List<Noticia>> getStream({int limit = 20}) {
     // create firebase stream and return stream

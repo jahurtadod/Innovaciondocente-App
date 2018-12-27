@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:innovaciondocente_app/src/database/database.dart';
 import 'package:innovaciondocente_app/src/resources/routes.dart';
 import 'package:innovaciondocente_app/src/resources/theme.dart';
 
@@ -21,13 +22,14 @@ class InnovaciondocenteAppState extends State<InnovaciondocenteApp> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: create inherit widget to store data for all app
-    return MaterialApp(
-      title: 'Innovacion Docente',
-      theme: IndevTheme.theme(),
-      routes: Router.appRoutes(),
-      onGenerateRoute: Router.onGenerateRoute,
-      onUnknownRoute: Router.appOnUnknownRoute,
+    return DBProvider(
+      child: MaterialApp(
+        title: 'Innovacion Docente',
+        theme: IndevTheme.theme(),
+        routes: Router.appRoutes(),
+        onGenerateRoute: Router.onGenerateRoute,
+        onUnknownRoute: Router.appOnUnknownRoute,
+      ),
     );
   }
 }
