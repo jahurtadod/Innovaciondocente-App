@@ -53,23 +53,23 @@ class MainMenu extends StatelessWidget {
           ),
         ],
       ),
-      _Section(
-        name: 'Innovación Docente',
-        routes: [
-          _Route(
-            name: 'Buenas Prácticas',
-            actualPath: actualPath,
-            path: '/',
-            icon: Icons.folder_special,
-          ),
-          _Route(
-            name: 'Proyectos Actuales',
-            actualPath: actualPath,
-            path: '/',
-            icon: Icons.folder_special,
-          ),
-        ],
-      ),
+      // _Section(
+      //   name: 'Innovación Docente',
+      //   routes: [
+      //     _Route(
+      //       name: 'Buenas Prácticas',
+      //       actualPath: actualPath,
+      //       path: '/',
+      //       icon: Icons.folder_special,
+      //     ),
+      //     _Route(
+      //       name: 'Proyectos Actuales',
+      //       actualPath: actualPath,
+      //       path: '/',
+      //       icon: Icons.folder_special,
+      //     ),
+      //   ],
+      // ),
       _Section(
         name: 'Formación Docente',
         routes: [
@@ -104,16 +104,16 @@ class MainMenu extends StatelessWidget {
           ),
         ],
       ),
-      _Section(
-        routes: [
-          _Route(
-            name: 'Información',
-            actualPath: actualPath,
-            path: '/',
-            icon: Icons.info,
-          ),
-        ],
-      )
+      // _Section(
+      //   routes: [
+      //     _Route(
+      //       name: 'Información',
+      //       actualPath: actualPath,
+      //       path: '/',
+      //       icon: Icons.info,
+      //     ),
+      //   ],
+      // )
     ];
   }
 }
