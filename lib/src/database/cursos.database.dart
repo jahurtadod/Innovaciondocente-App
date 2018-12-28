@@ -5,11 +5,25 @@ import 'package:innovaciondocente_app/src/models/curso.dart';
 
 class CursosDatabase extends DB<Curso> {
   @override
+  Stream<List<Curso>> getStream({int limit = 10}) {
+    return FirestoreStream<List<Curso>>(
+      parser: _CursosParser(),
+      query: Firestore.instance
+          .collection('formacion-docente/programa-formacion/cursos')
+          .orderBy('date', descending: true)
+          .limit(limit),
+    ).stream;
+  }
+}
+
+class ProximosCursosDatabase extends DB<Curso> {
+  @override
   Stream<List<Curso>> getStream({int limit = 20}) {
     return FirestoreStream<List<Curso>>(
       parser: _CursosParser(),
       query: Firestore.instance
           .collection('formacion-docente/programa-formacion/cursos')
+          .where('date', isGreaterThanOrEqualTo: DateTime.now())
           .orderBy('date', descending: true)
           .limit(limit),
     ).stream;

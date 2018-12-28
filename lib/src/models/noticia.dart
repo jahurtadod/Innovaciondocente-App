@@ -21,4 +21,6 @@ class Noticia {
         this.description = data['description'],
         this.edited = data['edited'],
         this.editor = data['editor'];
+
+  DateTime get date => created;
 }

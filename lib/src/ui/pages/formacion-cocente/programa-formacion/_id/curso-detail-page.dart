@@ -22,9 +22,7 @@ class CursoDetailPage extends StatelessWidget {
         slivers: <Widget>[
           SliverAppBar(
             title: Text('Curso'),
-            floating: true,
-            snap: true,
-            forceElevated: true,
+            pinned: true,
           ),
           SliverList(
             delegate: SliverChildListDelegate([

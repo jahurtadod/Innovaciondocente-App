@@ -17,6 +17,22 @@ class NoticiasDatabase extends DB<Noticia> {
   }
 }
 
+class UltimasNoticiasDatabase extends DB<Noticia> {
+
+  @override
+  Stream<List<Noticia>> getStream({int limit = 20}) {
+    // create firebase stream and return stream
+    return FirestoreStream<List<Noticia>>(
+      parser: _NoticiasParser(),
+      query: Firestore.instance
+          .collection('observatorio/edutendencias/noticias')
+          .where('created', isGreaterThanOrEqualTo: DateTime(DateTime.now().year, DateTime.now().month))
+          .orderBy('created', descending: true)
+          .limit(limit),
+    ).stream;
+  }
+}
+
 /// class to tranform db data into objects
 class _NoticiasParser extends FirestoreNodeParser<List<Noticia>> {
   @override

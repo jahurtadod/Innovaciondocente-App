@@ -40,15 +40,23 @@ class DBData {
 
   final NoticiasDatabase _noticiasDatabase = NoticiasDatabase();
   Stream<List<Noticia>> get noticiasStream => this._noticiasDatabase.getStream();
+  final UltimasNoticiasDatabase _ultimasNoticiasDatabase = UltimasNoticiasDatabase();
+  Stream<List<Noticia>> get ultimasNoticiasStream => this._ultimasNoticiasDatabase.getStream();
 
   final CursosDatabase _cursosDatabase = CursosDatabase();
   Stream<List<Curso>> get cursosStream => _cursosDatabase.getStream();
+
+  final ProximosCursosDatabase _proximosCursosDatabase = ProximosCursosDatabase();
+  Stream<List<Curso>> get proximosCursosStream => _proximosCursosDatabase.getStream();
 
   final InnovaTicsDatabase _innovaTicsDatabase = InnovaTicsDatabase();
   Stream<List<InnovaTic>> get innovaTicsStream => _innovaTicsDatabase.getStream();
 
   final EncuentrosDatabase _encuentrosDatabase = EncuentrosDatabase();
   Stream<List<Encuentro>> get encuentrosStream => _encuentrosDatabase.getStream();
+
+  final ProximoEncuentrosDatabase _proximoEncuentrosDatabase = ProximoEncuentrosDatabase();
+  Stream<List<Encuentro>> get proximosEncuentrosStream => _proximoEncuentrosDatabase.getStream();
 }
 
 class DBProvider extends InheritedWidget {

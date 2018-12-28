@@ -5,7 +5,7 @@ import 'package:innovaciondocente_app/src/models/innova-tic.dart';
 
 class InnovaTicsDatabase extends DB<InnovaTic> {
   @override
-  Stream<List<InnovaTic>> getStream({int limit = 6}) {
+  Stream<List<InnovaTic>> getStream({int limit = 4}) {
     return FirestoreStream<List<InnovaTic>>(
       parser: _InnovaTicsParser(),
       query: Firestore.instance

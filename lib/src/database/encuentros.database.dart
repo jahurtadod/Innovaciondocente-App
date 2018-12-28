@@ -16,6 +16,20 @@ class EncuentrosDatabase extends DB<Encuentro> {
   }
 }
 
+class ProximoEncuentrosDatabase extends DB<Encuentro> {
+  @override
+  Stream<List<Encuentro>> getStream({int limit = 20}) {
+    return FirestoreStream<List<Encuentro>>(
+      parser: _EncuentrosParser(),
+      query: Firestore.instance
+          .collection('formacion-docente/cafe-cientifico/encuentros')
+          .where('date', isGreaterThanOrEqualTo: DateTime.now())
+          .orderBy('date', descending: true)
+          .limit(limit),
+    ).stream;
+  }
+}
+
 class _EncuentrosParser extends FirestoreNodeParser<List<Encuentro>> {
   @override
   List<Encuentro> parse(QuerySnapshot querySnapshot) {

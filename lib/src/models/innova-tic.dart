@@ -7,14 +7,15 @@ class InnovaTic {
   String publishedAt;
 
   InnovaTic.fromJRON({
-    String id,
+    this.id,
     Map<String, dynamic> data,
   }) {
-    this.id = id;
     this.addBy = data['addBy'];
     this.added = data['added'];
     this.description = data['description'];
     this.name = data['name'];
     this.publishedAt = data['publishedAt'];
   }
+
+  DateTime get date => added;
 }
