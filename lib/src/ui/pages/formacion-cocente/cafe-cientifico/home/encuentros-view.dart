@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/src/models/encuentro.dart';
 import 'package:innovaciondocente_app/src/resources/filters.dart';
 import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/cafe-cientifico/_id/encuentro-detail-page.dart';
-import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/cafe-cientifico/home/encuentro-card.dart';
+import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/cafe-cientifico/home/encuentros-list.dart';
 
 class EncuentrosView extends StatelessWidget {
   const EncuentrosView({
     Key key,
-    @required List<Encuentro> encuentros,
-  })  : encuentros = encuentros,
-        super(key: key);
+    @required this.encuentros,
+  }) : super(key: key);
 
   final List<Encuentro> encuentros;
 
@@ -23,29 +22,15 @@ class EncuentrosView extends StatelessWidget {
 
         /// body
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             _lastEncuentroBody(context),
-            _buildEncuentrosList(),
+            EncuentrosList(
+              encuentros: encuentros.sublist(1),
+            ),
           ],
         ),
       ],
-    );
-  }
-
-  Widget _buildEncuentrosList() {
-    return Flexible(
-      flex: 3,
-      child: Container(
-        height: double.infinity,
-        width: double.infinity,
-        child: ListView.builder(
-          padding: const EdgeInsets.symmetric(horizontal: 7.5),
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (BuildContext context, int index) =>
-              EncuentroCard(encuentro: encuentros[index + 1]),
-          itemCount: encuentros.length - 1,
-        ),
-      ),
     );
   }
 
@@ -53,72 +38,68 @@ class EncuentrosView extends StatelessWidget {
     Encuentro encuentro = getLastEncuentro();
     return Flexible(
       flex: 6,
-      child: Row(
-        children: <Widget>[
-          Container(
-            margin: const EdgeInsets.only(left: 15),
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Text(
-                  encuentro.name,
-                  style: Theme.of(context).textTheme.title.copyWith(color: Colors.white),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                SizedBox(height: 4),
-                RichText(
-                  text: TextSpan(
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: Filters.date(encuentro.date),
-                      ),
-                      TextSpan(
-                        text: ' - ',
-                      ),
-                      TextSpan(
-                        text: '${encuentro.guests.length} Invitados',
-                      ),
-                    ],
+      child: Container(
+        margin: const EdgeInsets.only(left: 15),
+        width: MediaQuery.of(context).size.width * 0.8,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Text(
+              encuentro.name,
+              style: Theme.of(context).textTheme.title.copyWith(color: Colors.white),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+            SizedBox(height: 4),
+            RichText(
+              text: TextSpan(
+                children: <TextSpan>[
+                  TextSpan(
+                    text: Filters.date(encuentro.date),
+                  ),
+                  TextSpan(
+                    text: ' - ',
+                  ),
+                  TextSpan(
+                    text: '${encuentro.guests.length} Invitados',
+                  ),
+                ],
+                style: Theme.of(context).textTheme.overline.copyWith(color: Colors.white),
+              ),
+            ),
+            SizedBox(height: 8),
+            Text(
+              encuentro.description,
+              style: Theme.of(context).textTheme.body1.copyWith(color: Colors.white),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 3,
+            ),
+            SizedBox(height: 3),
+            InkWell(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+                  return EncuentroDetailPage(
+                    encuentro: encuentro,
+                  );
+                }));
+              },
+              child: Row(
+                children: <Widget>[
+                  Text(
+                    'Ver más',
                     style: Theme.of(context).textTheme.overline.copyWith(color: Colors.white),
                   ),
-                ),
-                SizedBox(height: 8),
-                Text(
-                  encuentro.description,
-                  style: Theme.of(context).textTheme.body1.copyWith(color: Colors.white),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 3,
-                ),
-                SizedBox(height: 3),
-                InkWell(
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-                      return EncuentroDetailPage(
-                        encuentro: encuentro,
-                      );
-                    }));
-                  },
-                  child: Row(
-                    children: <Widget>[
-                      Text(
-                        'Ver más',
-                        style: Theme.of(context).textTheme.overline.copyWith(color: Colors.white),
-                      ),
-                      Icon(
-                        Icons.keyboard_arrow_right,
-                        color: Colors.white,
-                        size: 18,
-                      ),
-                    ],
+                  Icon(
+                    Icons.keyboard_arrow_right,
+                    color: Colors.white,
+                    size: 18,
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
