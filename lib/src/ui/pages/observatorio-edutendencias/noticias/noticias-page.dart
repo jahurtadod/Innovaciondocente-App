@@ -4,7 +4,7 @@ import 'package:innovaciondocente_app/src/models/noticia.dart';
 import 'package:innovaciondocente_app/src/resources/filters.dart';
 import 'package:innovaciondocente_app/src/ui/pages/observatorio-edutendencias/noticias/double-news-column.dart';
 import 'package:innovaciondocente_app/src/ui/pages/observatorio-edutendencias/noticias/single-news-column.dart';
-import 'package:innovaciondocente_app/src/ui/widgets/loader.dart';
+import 'package:innovaciondocente_app/src/ui/widgets/indev-loader.dart';
 import 'package:innovaciondocente_app/src/ui/widgets/main-menu.dart';
 
 class NoticiasPage extends StatelessWidget {
@@ -32,7 +32,7 @@ class NoticiasPage extends StatelessWidget {
         initialData: null,
         builder: (BuildContext context, AsyncSnapshot<List<Noticia>> noticias) =>
             (noticias == null || noticias.data == null)
-                ? Loader()
+                ? IndevLoader()
                 : ListNoticias(
                     noticias: noticias.data,
                   ),

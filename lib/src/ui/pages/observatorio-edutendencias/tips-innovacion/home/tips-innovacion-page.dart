@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/src/database/database.dart';
 import 'package:innovaciondocente_app/src/ui/pages/observatorio-edutendencias/tips-innovacion/home/tips-list.dart';
-import 'package:innovaciondocente_app/src/ui/widgets/loader.dart';
+import 'package:innovaciondocente_app/src/ui/widgets/indev-loader.dart';
 import 'package:innovaciondocente_app/src/ui/widgets/main-menu.dart';
 
 class TipsInnovacionPage extends StatelessWidget {
@@ -15,7 +15,7 @@ class TipsInnovacionPage extends StatelessWidget {
           stream: DBProvider.of(context).dbData.tipsStream,
           builder: (BuildContext context, AsyncSnapshot snapshot) =>
               (snapshot == null || snapshot.data == null)
-                  ? Loader()
+                  ? IndevLoader()
                   : TipsList(
                       tips: snapshot.data,
                     ),

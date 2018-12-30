@@ -33,7 +33,6 @@ class FirestoreStream<T> {
 }
 
 /// Class to keep track of all connections to firestore database
-/// TODO: add bloc pattern if necesary
 class DBData {
   final TipsInnovacionDatabase _tipsInnovacionDatabase = TipsInnovacionDatabase();
   Stream<List<TipInnovacion>> get tipsStream => this._tipsInnovacionDatabase.getStream();

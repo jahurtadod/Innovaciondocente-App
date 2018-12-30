@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/src/database/database.dart';
 import 'package:innovaciondocente_app/src/resources/colors.dart';
 import 'package:innovaciondocente_app/src/resources/filters.dart';
+import 'package:innovaciondocente_app/src/ui/widgets/loader.dart';
 
 class NotificationDrawer extends StatelessWidget {
   const NotificationDrawer({
@@ -95,8 +96,7 @@ class _Section extends StatelessWidget {
         StreamBuilder(
             stream: stream,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot == null || snapshot.data == null)
-                return Center(child: CircularProgressIndicator(strokeWidth: 2));
+              if (snapshot == null || snapshot.data == null) return Loader();
               List data = snapshot.data as List;
               if (data.length == 0) return Center(child: Text(errorMessage));
               return Column(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/src/database/database.dart';
 import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/cafe-cientifico/home/encuentros-view.dart';
-import 'package:innovaciondocente_app/src/ui/widgets/loader.dart';
+import 'package:innovaciondocente_app/src/ui/widgets/indev-loader.dart';
 import 'package:innovaciondocente_app/src/ui/widgets/main-menu.dart';
 
 class EncuentrosPage extends StatelessWidget {
@@ -22,7 +22,7 @@ class EncuentrosPage extends StatelessWidget {
           stream: DBProvider.of(context).dbData.encuentrosStream,
           builder: (BuildContext context, AsyncSnapshot snapshot) =>
               snapshot == null || snapshot.data == null
-                  ? Loader()
+                  ? IndevLoader()
                   : EncuentrosView(encuentros: snapshot.data),
         ));
   }

@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/src/models/curso.dart';
 import 'package:innovaciondocente_app/src/models/encuentro.dart';
@@ -7,7 +5,7 @@ import 'package:innovaciondocente_app/src/models/noticia.dart';
 import 'package:innovaciondocente_app/src/models/tip-innovacion.dart';
 import 'package:innovaciondocente_app/src/resources/colors.dart';
 import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/cafe-cientifico/_id/encuentro-detail-page.dart';
-import 'package:innovaciondocente_app/src/ui/widgets/loader.dart';
+import 'package:innovaciondocente_app/src/ui/widgets/indev-loader.dart';
 import 'package:innovaciondocente_app/src/ui/widgets/main-menu.dart';
 import 'package:innovaciondocente_app/src/ui/widgets/notification-drawer.dart';
 
@@ -23,7 +21,7 @@ class StartPage extends StatefulWidget {
 class _InicioState extends State<StartPage> {
   List<TipInnovacion> _tips = [];
   List<Noticia> _noticias = [];
-  Encuentro _encuentros = null;
+  Encuentro _encuentros;
   List<Curso> _cursos = [];
   // StreamSubscription<List<TipInnovacion>> _subsT;
   // StreamSubscription<List<Noticia>> _subsN;
@@ -104,7 +102,7 @@ class _InicioState extends State<StartPage> {
               this._cursos == null ||
               this._encuentros == null ||
               this._noticias == null)
-          ? Loader()
+          ? IndevLoader()
           : ListView(
               children: <Widget>[
                 _subMenu(),

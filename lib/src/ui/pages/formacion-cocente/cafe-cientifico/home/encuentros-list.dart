@@ -17,6 +17,8 @@ class EncuentrosList extends StatefulWidget {
 class _EncuentrosListState extends State<EncuentrosList> {
   bool expanded = false;
 
+  
+
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(

@@ -3,6 +3,7 @@ import 'package:innovaciondocente_app/src/database/database.dart';
 import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/programa-formacion/home/courses-section.dart';
 import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/programa-formacion/home/header-section.dart';
 import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/programa-formacion/home/tips-section.dart';
+import 'package:innovaciondocente_app/src/ui/widgets/loader.dart';
 import 'package:innovaciondocente_app/src/ui/widgets/main-menu.dart';
 
 class ProgramaFormacionPage extends StatelessWidget {
@@ -32,7 +33,7 @@ class ProgramaFormacionPage extends StatelessWidget {
                 initialData: null,
                 builder: (BuildContext context, AsyncSnapshot snapshot) =>
                     (snapshot == null || snapshot.data == null)
-                        ? Center(child: CircularProgressIndicator())
+                        ? Loader()
                         : CourseSection(cursos: snapshot.data),
               ),
               StreamBuilder(
@@ -40,7 +41,7 @@ class ProgramaFormacionPage extends StatelessWidget {
                 initialData: null,
                 builder: (BuildContext context, AsyncSnapshot snapshot) =>
                     (snapshot == null || snapshot.data == null)
-                        ? Center(child: CircularProgressIndicator())
+                        ? Loader()
                         : TipsSection(innovaTips: snapshot.data),
               ),
             ]),

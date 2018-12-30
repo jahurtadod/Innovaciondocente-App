@@ -15,6 +15,12 @@ class _PresentationPageState extends State<PresentationPage> with TickerProvider
   StreamController<SlideUpdate> slideUpdateStream;
   AnimatedPageDragger animatedPageDragger;
 
+  @override
+  void dispose() {
+    if (!slideUpdateStream.isClosed) slideUpdateStream.close();
+    super.dispose();
+  }
+
   int activeIndex = 0;
   int nextPageIndex = 0;
   SlideDirection slideDirection = SlideDirection.none;

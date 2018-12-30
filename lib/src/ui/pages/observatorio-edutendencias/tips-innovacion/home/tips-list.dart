@@ -12,7 +12,7 @@ class TipsList extends StatefulWidget {
     this.tips,
   }) : super(key: key);
 
-  List<TipInnovacion> tips;
+  final List<TipInnovacion> tips;
 
   @override
   _TipsListState createState() {
