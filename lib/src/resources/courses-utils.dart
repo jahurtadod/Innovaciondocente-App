@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class CoursesUtils {
-  // TODO: move to correct folder
   static List<Color> getColors(String txt) {
     if (txt.contains('gestion'))
       return <Color>[
