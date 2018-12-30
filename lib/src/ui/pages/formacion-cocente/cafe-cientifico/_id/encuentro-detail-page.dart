@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/src/models/encuentro.dart';
 import 'package:innovaciondocente_app/src/resources/filters.dart';
-import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/cafe-cientifico/_id/description.dart';
 import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/cafe-cientifico/_id/guests-detail.dart';
 import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/cafe-cientifico/_id/title-encuentro-detail.dart';
+import 'package:innovaciondocente_app/src/ui/widgets/expandable-description.dart';
 
 class EncuentroDetailPage extends StatelessWidget {
   final Encuentro encuentro;
@@ -52,8 +52,7 @@ class EncuentroDetailPage extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
-          // TODO: MAKE this description global, as expandable description with options
-          child: EncuentroDescription(
+          child: ExpandableDescription(
             description: encuentro.description,
           ),
         ),

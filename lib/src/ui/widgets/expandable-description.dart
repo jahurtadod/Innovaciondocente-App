@@ -1,26 +1,33 @@
 import 'package:flutter/material.dart';
 
-class EncuentroDescription extends StatefulWidget {
+class ExpandableDescription extends StatefulWidget {
   final String description;
 
-  const EncuentroDescription({
+  const ExpandableDescription({
     Key key,
     this.description,
   }) : super(key: key);
 
   @override
-  _EncuentroDescriptionState createState() => _EncuentroDescriptionState();
+  _ExpandableDescriptionState createState() => _ExpandableDescriptionState();
 }
 
-class _EncuentroDescriptionState extends State<EncuentroDescription> {
-  bool isExpanded = false;
+class _ExpandableDescriptionState extends State<ExpandableDescription> {
+  bool expanded = false;
 
   @override
   Widget build(BuildContext context) {
+    final DefaultTextStyle defaultTextStyle = DefaultTextStyle.of(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
-        _buildDescription(),
+        Text(
+          widget.description.trim(),
+          maxLines: expanded ? defaultTextStyle.maxLines : 5,
+          textAlign: TextAlign.justify,
+          overflow: expanded ? defaultTextStyle.overflow : TextOverflow.ellipsis,
+        ),
         SizedBox(height: 5),
         _buildbutton(),
       ],
@@ -28,7 +35,7 @@ class _EncuentroDescriptionState extends State<EncuentroDescription> {
   }
 
   Widget _buildbutton() {
-    String opt = isExpanded ? 'menos' : 'más';
+    String opt = expanded ? 'menos' : 'más';
 
     return InkWell(
       child: Row(
@@ -39,30 +46,18 @@ class _EncuentroDescriptionState extends State<EncuentroDescription> {
             style: Theme.of(context).textTheme.overline,
           ),
           Icon(
-            isExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+            expanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
             size: 18,
           ),
         ],
       ),
       onTap: () {
         setState(() {
-          isExpanded = !isExpanded;
+          expanded = !expanded;
         });
       },
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
     );
   }
-
-  Widget _buildDescription() => isExpanded
-      ? Text(
-          widget.description.trim(),
-          textAlign: TextAlign.justify,
-        )
-      : Text(
-          widget.description.trim(),
-          maxLines: 5,
-          textAlign: TextAlign.justify,
-          overflow: TextOverflow.ellipsis,
-        );
 }
