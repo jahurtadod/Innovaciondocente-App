@@ -8,6 +8,7 @@ import 'package:innovaciondocente_app/src/ui/pages/observatorio-edutendencias/ti
 
 class TipsList extends StatefulWidget {
   TipsList({
+    
     Key key,
     this.tips,
   }) : super(key: key);

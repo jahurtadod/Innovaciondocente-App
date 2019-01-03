@@ -28,17 +28,18 @@ class IndevTheme {
     return base
         .copyWith(
           headline: base.headline.copyWith(
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w400,
           ),
           title: base.title.copyWith(
+            fontWeight: FontWeight.w500,
             fontSize: 18.0,
           ),
-          caption: base.caption.copyWith(
-            fontWeight: FontWeight.w400,
-            fontSize: 14.0,
-          ),
+          // caption: base.caption.copyWith(
+          //   fontWeight: FontWeight.w400,
+          //   fontSize: 14.0,
+          // ),
           overline: base.overline.copyWith(
-            fontSize: 12.0,
+            fontSize: 13.0,
           ),
         )
         .apply(
