@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/src/models/encuentro.dart';
+import 'package:innovaciondocente_app/src/resources/colors.dart';
 import 'package:innovaciondocente_app/src/resources/filters.dart';
 import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/cafe-cientifico/_id/guests-detail.dart';
 import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/cafe-cientifico/_id/title-encuentro-detail.dart';
@@ -15,50 +16,51 @@ class EncuentroDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: _buildInscriptionButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: CustomScrollView(
         slivers: <Widget>[
           _buildSliverAppBar(),
-          _buildBody(context),
+          SliverSafeArea(
+            top: false,
+            sliver: _buildBody(context),
+          ),
         ],
       ),
     );
   }
 
-  FloatingActionButton _buildInscriptionButton() {
-    return (isActive())
-        ? FloatingActionButton.extended(
-            icon: Icon(Icons.event_note),
-            label: Text('Inscribete'),
-            onPressed: () {
-              Filters.launchURL(
-                  'https://innovaciondocente-utpl.firebaseapp.com/formacion-docente/cafe-cientifico/inscripcion?id=${encuentro.id}');
-            },
-          )
-        : null;
-  }
-
-  SliverList _buildBody(BuildContext context) {
-    return SliverList(
-      delegate: SliverChildListDelegate([
-        TitleEncuentroDetail(name: encuentro.name),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Text(
+  SliverPadding _buildBody(BuildContext context) {
+    return SliverPadding(
+      padding: const EdgeInsets.all(15),
+      sliver: SliverList(
+        delegate: SliverChildListDelegate([
+          TitleEncuentroDetail(name: encuentro.name),
+          SizedBox(height: 8),
+          Text(
             Filters.date(encuentro.date),
             style: Theme.of(context).textTheme.overline,
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
-          child: ExpandableDescription(
+          (this.isActive()) ? SizedBox(height: 13) : Container(),
+          (this.isActive())
+              ? RaisedButton(
+                  child: Text(
+                    'Inscribete',
+                    style: Theme.of(context).accentTextTheme.button,
+                  ),
+                  onPressed: () {
+                    Filters.launchURL(
+                        'https://innovaciondocente-utpl.firebaseapp.com/formacion-docente/cafe-cientifico/inscripcion?id=${encuentro.id}');
+                  },
+                  color: IndevColors.formacion,
+                )
+              : Container(),
+          SizedBox(height: 13),
+          ExpandableDescription(
             description: encuentro.description,
           ),
-        ),
-        GuestsDetails(guests: encuentro.guests),
-        isActive() ? SizedBox(height: 65) : Container(),
-      ]),
+          GuestsDetails(guests: encuentro.guests),
+        ]),
+      ),
     );
   }
 

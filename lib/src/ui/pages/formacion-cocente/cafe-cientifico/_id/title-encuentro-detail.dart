@@ -10,19 +10,16 @@ class TitleEncuentroDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(15, 15, 15, 10),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Text(
-              name,
-              style: Theme.of(context).textTheme.title,
-            ),
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Text(
+            name,
+            style: Theme.of(context).textTheme.title,
           ),
-          CloseButton(),
-        ],
-      ),
+        ),
+        CloseButton(),
+      ],
     );
   }
 }

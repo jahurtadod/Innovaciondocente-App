@@ -15,6 +15,7 @@ class GuestsDetails extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         ListTile(
+          contentPadding: const EdgeInsets.all(0),
           title: _buildTileTitle(
             title: Text(
               'Invitados',
@@ -29,17 +30,16 @@ class GuestsDetails extends StatelessWidget {
 
   Widget _buildGuestTile(guest) {
     return ExpansionTile(
+
       title: _buildTileTitle(
         title: Text(guest.name),
         icon: Icons.person,
+        
       ),
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
-          child: Text(
-            guest.description,
-            textAlign: TextAlign.justify,
-          ),
+        Text(
+          guest.description,
+          textAlign: TextAlign.justify,
         ),
       ],
     );

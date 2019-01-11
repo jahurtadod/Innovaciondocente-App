@@ -21,14 +21,17 @@ class EncuentrosView extends StatelessWidget {
         _buildGradiente(),
 
         /// body
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            _lastEncuentroBody(context),
-            EncuentrosList(
-              encuentros: encuentros.sublist(1),
-            ),
-          ],
+        SafeArea(
+          top: false,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              _lastEncuentroBody(context),
+              EncuentrosList(
+                encuentros: encuentros.sublist(1),
+              ),
+            ],
+          ),
         ),
       ],
     );
