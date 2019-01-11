@@ -18,7 +18,7 @@ class ProgramaFormacionPage extends StatelessWidget {
         actualPath: '/formacion-docente/programa-formacion',
       ),
 
-      /// TODO: add loading screen
+      /// TODO: add loading screen when accesing firebase
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
