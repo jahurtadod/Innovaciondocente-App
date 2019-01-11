@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/src/models/noticia.dart';
 import 'package:innovaciondocente_app/src/resources/colors.dart';
 import 'package:innovaciondocente_app/src/resources/filters.dart';
+import 'package:innovaciondocente_app/src/ui/pages/observatorio-edutendencias/noticias/_id/noticia-detail-page.dart';
 
 class NoticiaCard extends StatelessWidget {
   const NoticiaCard({
@@ -19,7 +20,14 @@ class NoticiaCard extends StatelessWidget {
         elevation: 2,
         color: Colors.grey.shade100,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => NoticiaDetailPage(
+                          noticia: noticia,
+                        )));
+          },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -32,7 +40,7 @@ class NoticiaCard extends StatelessWidget {
                     Text(
                       noticia.name,
                       style: Theme.of(context).textTheme.headline,
-                      maxLines: 2,
+                      maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                     SizedBox(height: 10),
@@ -55,59 +63,15 @@ class NoticiaCard extends StatelessWidget {
       borderRadius: BorderRadius.vertical(top: Radius.circular(5)),
       child: AspectRatio(
         aspectRatio: 16 / 9,
-        child: Stack(
-          children: <Widget>[
-            FadeInImage(
-              image: NetworkImage(noticia.img),
-              placeholder: AssetImage('assets/images/default.png'),
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: double.infinity,
-            ),
-            Container(
-              width: double.infinity,
-              height: double.infinity,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: <Color>[
-                    Colors.black87,
-                    Colors.transparent,
-                    Colors.transparent,
-                    Colors.transparent,
-                  ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
-              ),
-            ),
-            Positioned(
-              top: 15,
-              left: 15,
-              child: Row(
-                children: <Widget>[
-                  Icon(
-                    Icons.bookmark_border,
-                    color: IndevColors.observatorio,
-                    size: 18,
-                  ),
-                  SizedBox(width: 3),
-                  Container(
-                    padding: const EdgeInsets.only(left: 3, bottom: 1),
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(color: IndevColors.observatorio),
-                        left: BorderSide(color: IndevColors.observatorio),
-                      ),
-                    ),
-                    child: Text(
-                      "Noticia",
-                      style: Theme.of(context).accentTextTheme.subhead,
-                    ),
-                  ),
-                ],
-              ),
-            )
-          ],
+        child: Hero(
+          tag: noticia.id,
+          child: FadeInImage(
+            image: NetworkImage(noticia.img),
+            placeholder: AssetImage('assets/images/default.png'),
+            fit: BoxFit.cover,
+            width: double.infinity,
+            height: double.infinity,
+          ),
         ),
       ),
     );

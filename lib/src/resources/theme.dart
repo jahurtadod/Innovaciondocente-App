@@ -29,6 +29,7 @@ class IndevTheme {
         .copyWith(
           headline: base.headline.copyWith(
             fontWeight: FontWeight.w400,
+            fontSize: 21,
           ),
           title: base.title.copyWith(
             fontWeight: FontWeight.w500,
