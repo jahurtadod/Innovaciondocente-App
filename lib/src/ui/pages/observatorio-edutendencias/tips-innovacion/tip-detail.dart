@@ -14,77 +14,65 @@ class TipDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _buildBody(context),
-      floatingActionButton: _buildFloatingActionButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-    );
-  }
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            title: Text('Tip Innovación'),
+            pinned: true,
+          ),
+          SliverSafeArea(
+            top: false,
+            sliver: SliverPadding(
+              padding: EdgeInsets.all(15.0),
+              sliver: SliverList(
+                delegate: SliverChildListDelegate(
+                  [
+                    // image
+                    _buildImage(),
+                    SizedBox(height: 10),
+                    Text(
+                      tip.name,
+                      style: Theme.of(context).textTheme.title,
+                    ),
+                    SizedBox(height: 8),
+                    // date
+                    Text(Filters.date(tip.created)),
+                    SizedBox(height: 10),
 
-  CustomScrollView _buildBody(BuildContext context) {
-    return CustomScrollView(
-      slivers: <Widget>[
-        SliverAppBar(
-          title: Text('Tip Innovación'),
-          forceElevated: true,
-          floating: true,
-          snap: true,
-        ),
-        SliverPadding(
-          padding: EdgeInsets.all(15.0),
-          sliver: SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                Text(
-                  tip.name,
-                  style: Theme.of(context).textTheme.title,
+                    tip.tag == 'videos'
+                        ? RaisedButton(
+                            color: IndevColors.observatorio,
+                            child: Text(
+                              "Abrir Video",
+                              style: Theme.of(context).accentTextTheme.button,
+                            ),
+                            onPressed: () {
+                              Filters.launchURL(tip.link);
+                            },
+                          )
+                        : RaisedButton(
+                            color: IndevColors.observatorio,
+                            child: Text(
+                              "Abrir Enlace",
+                              style: Theme.of(context).accentTextTheme.button,
+                            ),
+                            onPressed: () {
+                              Filters.launchURL(tip.link);
+                            },
+                          ),
+                    SizedBox(height: 10),
+                    //description
+                    Text(
+                      tip.description,
+                      textAlign: TextAlign.justify,
+                    ),
+                  ],
                 ),
-                SizedBox(height: 10),
-                // image
-                _buildImage(),
-                SizedBox(height: 10),
-                // chip category
-                _buildChip(context),
-                SizedBox(height: 10),
-                // date
-                Text(Filters.date(tip.created)),
-                SizedBox(height: 10),
-                //description
-                Text(
-                  tip.description,
-                  textAlign: TextAlign.justify,
-                ),
-              ],
+              ),
             ),
-          ),
-        )
-      ],
-    );
-  }
-
-  Widget _buildChip(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Container(
-          padding: const EdgeInsets.symmetric(
-            vertical: 2.5,
-            horizontal: 5.0,
-          ),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: IndevColors.observatorio,
-            ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(3.0),
-            ),
-          ),
-          child: Text(
-            tip.tag.toUpperCase(),
-            style: Theme.of(context).textTheme.overline,
-          ),
-        ),
-      ],
+          )
+        ],
+      ),
     );
   }
 
@@ -102,25 +90,5 @@ class TipDetail extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  FloatingActionButton _buildFloatingActionButton() {
-    Function goto = () {
-      Filters.launchURL(tip.link);
-    };
-
-    return tip.tag == 'videos'
-        ? FloatingActionButton.extended(
-            backgroundColor: IndevColors.observatorio,
-            icon: Icon(Icons.play_arrow),
-            label: Text("Abrir Video"),
-            onPressed: goto,
-          )
-        : FloatingActionButton.extended(
-            backgroundColor: IndevColors.observatorio,
-            icon: Icon(Icons.link),
-            label: Text("Abrir Enlace"),
-            onPressed: goto,
-          );
   }
 }

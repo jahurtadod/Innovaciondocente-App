@@ -8,7 +8,6 @@ import 'package:innovaciondocente_app/src/ui/pages/observatorio-edutendencias/ti
 
 class TipsList extends StatefulWidget {
   TipsList({
-    
     Key key,
     this.tips,
   }) : super(key: key);
@@ -37,38 +36,41 @@ class _TipsListState extends State<TipsList> {
             _buildOptions(context),
           ],
         ),
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          sliver: SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) => Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(color: IndevColors.observatorio),
+        SliverSafeArea(
+          top: false,
+          sliver: SliverPadding(
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            sliver: SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) => Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(color: IndevColors.observatorio),
+                        ),
+                      ),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          child: (index % 4 == 0)
+                              ? MediumCard(
+                                  tip: tips[index],
+                                )
+                              : SmallCard(
+                                  tip: tips[index],
+                                ),
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (BuildContext context) {
+                              return TipDetail(
+                                tip: tips[index],
+                              );
+                            }));
+                          },
+                        ),
                       ),
                     ),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        child: (index % 4 == 0)
-                            ? MediumCard(
-                                tip: tips[index],
-                              )
-                            : SmallCard(
-                                tip: tips[index],
-                              ),
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (BuildContext context) {
-                            return TipDetail(
-                              tip: tips[index],
-                            );
-                          }));
-                        },
-                      ),
-                    ),
-                  ),
-              childCount: tips.length,
+                childCount: tips.length,
+              ),
             ),
           ),
         )
