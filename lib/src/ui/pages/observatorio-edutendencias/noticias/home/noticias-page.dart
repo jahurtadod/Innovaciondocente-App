@@ -22,10 +22,13 @@ class NoticiasPage extends StatelessWidget {
                 : CustomScrollView(
                     slivers: <Widget>[
                       _buildSliverAppBar(),
-                      SliverPadding(
-                        padding: const EdgeInsets.all(7.5),
-                        sliver: SliverList(
-                          delegate: NoticiasList(noticias: snap.data),
+                      SliverSafeArea(
+                        top: false,
+                        sliver: SliverPadding(
+                          padding: const EdgeInsets.all(7.5),
+                          sliver: SliverList(
+                            delegate: NoticiasList(noticias: snap.data),
+                          ),
                         ),
                       )
                     ],

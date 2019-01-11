@@ -30,41 +30,44 @@ class NoticiaDetailPage extends StatelessWidget {
           ),
 
           /// body
-          SliverPadding(
-            padding: const EdgeInsets.all(15.0),
-            sliver: SliverList(
-              delegate: SliverChildListDelegate([
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        noticia.name,
-                        style: Theme.of(context).textTheme.headline,
+          SliverSafeArea(
+            top: false,
+            sliver: SliverPadding(
+              padding: const EdgeInsets.all(15.0),
+              sliver: SliverList(
+                delegate: SliverChildListDelegate([
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Text(
+                          noticia.name,
+                          style: Theme.of(context).textTheme.headline,
+                        ),
                       ),
-                    ),
-                    CloseButton()
-                  ],
-                ),
-                SizedBox(height: 5),
-                Text(
-                  Filters.date(noticia.date),
-                  style: Theme.of(context).textTheme.overline,
-                ),
-                Divider(),
-                RaisedButton(
-                  child: Text(
-                    'Ver Noticia',
-                    style: Theme.of(context).accentTextTheme.button,
+                      CloseButton()
+                    ],
                   ),
-                  onPressed: () {
-                    Filters.launchURL(
-                        'https://innovaciondocente-utpl.firebaseapp.com/observatorio-edutendencias/noticias/${noticia.id}');
-                  },
-                  color: IndevColors.observatorio,
-                ),
-                SizedBox(height: 10),
-                Text(noticia.description),
-              ]),
+                  SizedBox(height: 5),
+                  Text(
+                    Filters.date(noticia.date),
+                    style: Theme.of(context).textTheme.overline,
+                  ),
+                  Divider(),
+                  RaisedButton(
+                    child: Text(
+                      'Ver Noticia',
+                      style: Theme.of(context).accentTextTheme.button,
+                    ),
+                    onPressed: () {
+                      Filters.launchURL(
+                          'https://innovaciondocente-utpl.firebaseapp.com/observatorio-edutendencias/noticias/${noticia.id}');
+                    },
+                    color: IndevColors.observatorio,
+                  ),
+                  SizedBox(height: 10),
+                  Text(noticia.description),
+                ]),
+              ),
             ),
           )
         ],
