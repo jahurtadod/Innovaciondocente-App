@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/src/models/curso.dart';
+import 'package:innovaciondocente_app/src/resources/colors.dart';
 import 'package:innovaciondocente_app/src/resources/courses-utils.dart';
 import 'package:innovaciondocente_app/src/resources/filters.dart';
 
-// TODO: place in correct folder or make a widget this detail page
-
 class CursoDetailPage extends StatelessWidget {
-  // TODO: add link to postulate
-  // TODO: fin page, check all data has been added to page
   final Curso curso;
 
   const CursoDetailPage({
@@ -24,11 +21,14 @@ class CursoDetailPage extends StatelessWidget {
             title: Text('Curso'),
             pinned: true,
           ),
-          SliverList(
-            delegate: SliverChildListDelegate([
-              _buildHeader(context),
-              _buildBody(context),
-            ]),
+          SliverSafeArea(
+            top: false,
+            sliver: SliverList(
+              delegate: SliverChildListDelegate([
+                _buildHeader(context),
+                _buildBody(context),
+              ]),
+            ),
           )
         ],
       ),
@@ -39,8 +39,23 @@ class CursoDetailPage extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 7.5),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
+          (!this.isActive())
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: RaisedButton(
+                    onPressed: () {
+                      Filters.launchURL(curso.postulation.link);
+                    },
+                    child: Text(
+                      'Postulaciones',
+                      style: Theme.of(context).accentTextTheme.button,
+                    ),
+                    color: IndevColors.formacion,
+                  ),
+                )
+              : Container(),
           BuildListTile(
             title: 'Descripción',
             content: curso.description,
@@ -115,6 +130,12 @@ class CursoDetailPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  bool isActive() {
+    if (curso.postulation.date == null) return false;
+    DateTime today = DateTime.now();
+    return today.difference(curso.postulation.date).inDays <= 0;
   }
 }
 

@@ -30,7 +30,7 @@ class TipsSection extends StatelessWidget {
                 highlightColor: Colors.transparent,
                 onTap: () {
                   Filters.launchURL(
-                      'https://innovaciondocente-utpl.firebaseapp.com/formacion-docente/programa-formacion/potencia-formacion');
+                      'https://innovaciondocente-utpl.firebaseapp.com/formacion-docente/programa-formacion/InnovaTips');
                 },
                 child: Row(
                   children: <Widget>[
@@ -70,56 +70,56 @@ class InnovaTipTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 5),
-      child: Row(
-        children: <Widget>[
-          Flexible(
-            flex: 3,
-            child: ClipRRect(
-              borderRadius: BorderRadius.all(
-                Radius.circular(5),
-              ),
-              child: AspectRatio(
-                aspectRatio: 16 / 9,
-                child: FadeInImage(
-                  image: NetworkImage('https://i.ytimg.com/vi/${innovaTic.id}/maxresdefault.jpg'),
-                  placeholder: AssetImage('assets/images/default.png'),
-                  fit: BoxFit.cover,
+      child: Material(
+        color: Colors.white,
+        child: InkWell(
+          onTap: () {
+            Filters.launchURL('https://youtu.be/${innovaTic.id}');
+          },
+          child: Row(
+            children: <Widget>[
+              Flexible(
+                flex: 3,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                  child: AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: FadeInImage(
+                      image:
+                          NetworkImage('https://i.ytimg.com/vi/${innovaTic.id}/maxresdefault.jpg'),
+                      placeholder: AssetImage('assets/images/default.png'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-          SizedBox(width: 10),
-          Flexible(
-              flex: 4,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    innovaTic.name,
-                    style: Theme.of(context).textTheme.subtitle,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                  ),
-                  SizedBox(height: 4),
-                  Text(
-                    Filters.date(innovaTic.added),
-                    style: Theme.of(context).textTheme.overline,
-                  ),
-                ],
-              )),
-          SizedBox(width: 8),
-          Flexible(
-            child: IconButton(
-              color: IndevColors.formacion,
-              onPressed: () {
-                Filters.launchURL('https://youtu.be/${innovaTic.id}');
-              },
-              icon: Icon(
+              SizedBox(width: 10),
+              Flexible(
+                  flex: 4,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        innovaTic.name,
+                        style: Theme.of(context).textTheme.subtitle,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                      ),
+                      SizedBox(height: 4),
+                      Text(
+                        Filters.date(innovaTic.added),
+                        style: Theme.of(context).textTheme.overline,
+                      ),
+                    ],
+                  )),
+              SizedBox(width: 10),
+              Icon(
                 Icons.play_circle_filled,
+                color: IndevColors.formacion,
               ),
-            ),
-          )
-        ],
+            ],
+          ),
+        ),
       ),
     );
   }

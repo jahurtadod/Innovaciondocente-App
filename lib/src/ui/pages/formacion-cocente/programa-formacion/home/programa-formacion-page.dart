@@ -25,26 +25,27 @@ class ProgramaFormacionPage extends StatelessWidget {
             pinned: true,
             title: Text("Formación Docente"),
           ),
-          SliverList(
-            delegate: SliverChildListDelegate([
-              HeaderSection(),
-              StreamBuilder(
-                stream: DBProvider.of(context).dbData.cursosStream,
-                initialData: null,
-                builder: (BuildContext context, AsyncSnapshot snapshot) =>
-                    (snapshot == null || snapshot.data == null)
-                        ? Loader()
-                        : CourseSection(cursos: snapshot.data),
-              ),
-              StreamBuilder(
-                stream: DBProvider.of(context).dbData.innovaTicsStream,
-                initialData: null,
-                builder: (BuildContext context, AsyncSnapshot snapshot) =>
-                    (snapshot == null || snapshot.data == null)
-                        ? Loader()
-                        : TipsSection(innovaTips: snapshot.data),
-              ),
-            ]),
+          SliverSafeArea(
+            top: false,
+            sliver: SliverList(
+              delegate: SliverChildListDelegate([
+                HeaderSection(),
+                StreamBuilder(
+                  stream: DBProvider.of(context).dbData.cursosStream,
+                  builder: (BuildContext context, AsyncSnapshot snapshot) =>
+                      (snapshot == null || snapshot.data == null)
+                          ? Loader()
+                          : CourseSection(cursos: snapshot.data),
+                ),
+                StreamBuilder(
+                  stream: DBProvider.of(context).dbData.innovaTicsStream,
+                  builder: (BuildContext context, AsyncSnapshot snapshot) =>
+                      (snapshot == null || snapshot.data == null)
+                          ? Loader()
+                          : TipsSection(innovaTips: snapshot.data),
+                ),
+              ]),
+            ),
           )
         ],
       ),

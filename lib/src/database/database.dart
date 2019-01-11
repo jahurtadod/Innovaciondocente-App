@@ -43,13 +43,13 @@ class DBData {
   Stream<List<Noticia>> get ultimasNoticiasStream => this._ultimasNoticiasDatabase.getStream();
 
   final CursosDatabase _cursosDatabase = CursosDatabase();
-  Stream<List<Curso>> get cursosStream => _cursosDatabase.getStream();
+  Stream<List<Curso>> get cursosStream => _cursosDatabase.getStream(limit: 5);
 
   final ProximosCursosDatabase _proximosCursosDatabase = ProximosCursosDatabase();
   Stream<List<Curso>> get proximosCursosStream => _proximosCursosDatabase.getStream();
 
   final InnovaTicsDatabase _innovaTicsDatabase = InnovaTicsDatabase();
-  Stream<List<InnovaTic>> get innovaTicsStream => _innovaTicsDatabase.getStream();
+  Stream<List<InnovaTic>> get innovaTicsStream => _innovaTicsDatabase.getStream(limit: 6);
 
   final EncuentrosDatabase _encuentrosDatabase = EncuentrosDatabase();
   Stream<List<Encuentro>> get encuentrosStream => _encuentrosDatabase.getStream();
