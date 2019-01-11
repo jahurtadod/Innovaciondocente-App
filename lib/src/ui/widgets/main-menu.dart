@@ -50,6 +50,7 @@ class MainMenu extends StatelessWidget {
             path: '/',
             actualPath: actualPath,
             icon: Icons.home,
+            color: IndevColors.blue,
           ),
         ],
       ),
@@ -78,12 +79,14 @@ class MainMenu extends StatelessWidget {
             actualPath: actualPath,
             path: '/formacion-docente/programa-formacion',
             icon: Icons.school,
+            color: IndevColors.formacion,
           ),
           _Route(
             name: 'Café Científico',
             actualPath: actualPath,
             path: '/formacion-docente/cafe-cientifico/encuentros',
             icon: Icons.chat,
+            color: IndevColors.formacion,
           ),
         ],
       ),
@@ -95,12 +98,14 @@ class MainMenu extends StatelessWidget {
             actualPath: actualPath,
             path: '/observatorio-edutendencias/noticias',
             icon: Icons.new_releases,
+            color: IndevColors.observatorio,
           ),
           _Route(
             name: 'Tips de Innovacion',
             actualPath: actualPath,
             path: '/observatorio-edutendencias/tips',
             icon: Icons.wb_incandescent,
+            color: IndevColors.observatorio,
           ),
         ],
       ),
@@ -135,7 +140,7 @@ class _DrawerTile extends StatelessWidget {
           right: Radius.circular(50),
         ),
         child: Material(
-          color: route.active ? IndevColors.blue : Colors.transparent,
+          color: route.active ? route.color : Colors.transparent,
           child: InkWell(
             onTap: () {
               Navigator.pop(context);
@@ -204,11 +209,13 @@ class _Route {
   final String path;
   final bool active;
   final IconData icon;
+  final Color color;
 
   _Route({
     this.name,
     this.path,
     String actualPath,
     this.icon,
+    this.color,
   }) : active = actualPath == path;
 }
