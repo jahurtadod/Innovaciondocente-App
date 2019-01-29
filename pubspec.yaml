@@ -15,11 +15,18 @@ dependencies:
   intl: ^0.15.7
   firebase_messaging: ^2.1.0
   shared_preferences: ^0.5.0
+  flutter_launcher_icons: "^0.7.0"
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+flutter_icons:   
+  image_path_android: "assets/images/icon.png"
+  image_path_ios: "assets/app-icon.png"
+  android: true
+  ios: true
 
 flutter:
 
