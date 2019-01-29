@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/src/ui/pages/start/presentation/pages.dart';
+import 'package:Ascendere_UTPL/src/ui/pages/start/presentation/pages.dart';
 
 class PagerIndicator extends StatelessWidget {
 

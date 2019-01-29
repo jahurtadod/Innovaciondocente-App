@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:innovaciondocente_app/src/database/database.dart';
-import 'package:innovaciondocente_app/src/models/innova-tic.dart';
+import 'package:Ascendere_UTPL/src/database/database.dart';
+import 'package:Ascendere_UTPL/src/models/innova-tic.dart';
 
 class InnovaTicsDatabase extends DB<InnovaTic> {
   @override

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/src/models/encuentro.dart';
+import 'package:Ascendere_UTPL/src/models/encuentro.dart';
 
 class GuestsDetails extends StatelessWidget {
   const GuestsDetails({

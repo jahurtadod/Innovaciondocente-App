@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/src/models/tip-innovacion.dart';
-import 'package:innovaciondocente_app/src/resources/colors.dart';
-import 'package:innovaciondocente_app/src/resources/filters.dart';
-import 'package:innovaciondocente_app/src/ui/pages/observatorio-edutendencias/tips-innovacion/home/medium-card.dart';
-import 'package:innovaciondocente_app/src/ui/pages/observatorio-edutendencias/tips-innovacion/home/small-card.dart';
-import 'package:innovaciondocente_app/src/ui/pages/observatorio-edutendencias/tips-innovacion/tip-detail.dart';
+import 'package:Ascendere_UTPL/src/models/tip-innovacion.dart';
+import 'package:Ascendere_UTPL/src/resources/colors.dart';
+import 'package:Ascendere_UTPL/src/resources/filters.dart';
+import 'package:Ascendere_UTPL/src/ui/pages/observatorio-edutendencias/tips-innovacion/home/medium-card.dart';
+import 'package:Ascendere_UTPL/src/ui/pages/observatorio-edutendencias/tips-innovacion/home/small-card.dart';
+import 'package:Ascendere_UTPL/src/ui/pages/observatorio-edutendencias/tips-innovacion/tip-detail.dart';
 
 class TipsList extends StatefulWidget {
   TipsList({

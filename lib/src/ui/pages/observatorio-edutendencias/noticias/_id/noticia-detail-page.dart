@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/src/models/noticia.dart';
-import 'package:innovaciondocente_app/src/resources/colors.dart';
-import 'package:innovaciondocente_app/src/resources/filters.dart';
+import 'package:Ascendere_UTPL/src/models/noticia.dart';
+import 'package:Ascendere_UTPL/src/resources/colors.dart';
+import 'package:Ascendere_UTPL/src/resources/filters.dart';
 
 class NoticiaDetailPage extends StatelessWidget {
   final Noticia noticia;

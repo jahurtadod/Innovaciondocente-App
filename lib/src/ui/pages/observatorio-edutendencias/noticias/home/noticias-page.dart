@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/src/database/database.dart';
-import 'package:innovaciondocente_app/src/models/noticia.dart';
-import 'package:innovaciondocente_app/src/resources/filters.dart';
-import 'package:innovaciondocente_app/src/ui/pages/observatorio-edutendencias/noticias/home/noticias-list.dart';
-import 'package:innovaciondocente_app/src/ui/widgets/indev-loader.dart';
-import 'package:innovaciondocente_app/src/ui/widgets/main-menu.dart';
+import 'package:Ascendere_UTPL/src/database/database.dart';
+import 'package:Ascendere_UTPL/src/models/noticia.dart';
+import 'package:Ascendere_UTPL/src/resources/filters.dart';
+import 'package:Ascendere_UTPL/src/ui/pages/observatorio-edutendencias/noticias/home/noticias-list.dart';
+import 'package:Ascendere_UTPL/src/ui/widgets/indev-loader.dart';
+import 'package:Ascendere_UTPL/src/ui/widgets/main-menu.dart';
 
 class NoticiasPage extends StatelessWidget {
   @override

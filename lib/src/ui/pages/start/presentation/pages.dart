@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/src/resources/colors.dart';
+import 'package:Ascendere_UTPL/src/resources/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final pages = [

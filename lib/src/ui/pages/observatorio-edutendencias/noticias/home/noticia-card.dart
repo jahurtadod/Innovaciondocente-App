@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/src/models/noticia.dart';
-import 'package:innovaciondocente_app/src/resources/filters.dart';
-import 'package:innovaciondocente_app/src/ui/pages/observatorio-edutendencias/noticias/_id/noticia-detail-page.dart';
+import 'package:Ascendere_UTPL/src/models/noticia.dart';
+import 'package:Ascendere_UTPL/src/resources/filters.dart';
+import 'package:Ascendere_UTPL/src/ui/pages/observatorio-edutendencias/noticias/_id/noticia-detail-page.dart';
 
 class NoticiaCard extends StatelessWidget {
   const NoticiaCard({

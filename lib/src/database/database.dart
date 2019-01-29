@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/src/database/cursos.database.dart';
-import 'package:innovaciondocente_app/src/database/encuentros.database.dart';
-import 'package:innovaciondocente_app/src/database/innova-tic.database.dart';
-import 'package:innovaciondocente_app/src/database/noticias-database.dart';
-import 'package:innovaciondocente_app/src/database/tips-innovacion-database.dart';
-import 'package:innovaciondocente_app/src/models/curso.dart';
-import 'package:innovaciondocente_app/src/models/encuentro.dart';
-import 'package:innovaciondocente_app/src/models/innova-tic.dart';
-import 'package:innovaciondocente_app/src/models/noticia.dart';
-import 'package:innovaciondocente_app/src/models/tip-innovacion.dart';
+import 'package:Ascendere_UTPL/src/database/cursos.database.dart';
+import 'package:Ascendere_UTPL/src/database/encuentros.database.dart';
+import 'package:Ascendere_UTPL/src/database/innova-tic.database.dart';
+import 'package:Ascendere_UTPL/src/database/noticias-database.dart';
+import 'package:Ascendere_UTPL/src/database/tips-innovacion-database.dart';
+import 'package:Ascendere_UTPL/src/models/curso.dart';
+import 'package:Ascendere_UTPL/src/models/encuentro.dart';
+import 'package:Ascendere_UTPL/src/models/innova-tic.dart';
+import 'package:Ascendere_UTPL/src/models/noticia.dart';
+import 'package:Ascendere_UTPL/src/models/tip-innovacion.dart';
 
 /// abstract class to create instances of databases
 abstract class DB<T> {

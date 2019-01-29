@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/src/models/encuentro.dart';
-import 'package:innovaciondocente_app/src/resources/filters.dart';
-import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/cafe-cientifico/_id/encuentro-detail-page.dart';
-import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/cafe-cientifico/home/encuentros-list.dart';
+import 'package:Ascendere_UTPL/src/models/encuentro.dart';
+import 'package:Ascendere_UTPL/src/resources/filters.dart';
+import 'package:Ascendere_UTPL/src/ui/pages/formacion-cocente/cafe-cientifico/_id/encuentro-detail-page.dart';
+import 'package:Ascendere_UTPL/src/ui/pages/formacion-cocente/cafe-cientifico/home/encuentros-list.dart';
 
 class EncuentrosView extends StatelessWidget {
   const EncuentrosView({

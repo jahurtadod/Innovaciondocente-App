@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/src/models/curso.dart';
-import 'package:innovaciondocente_app/src/resources/colors.dart';
-import 'package:innovaciondocente_app/src/resources/courses-utils.dart';
-import 'package:innovaciondocente_app/src/resources/filters.dart';
+import 'package:Ascendere_UTPL/src/models/curso.dart';
+import 'package:Ascendere_UTPL/src/resources/colors.dart';
+import 'package:Ascendere_UTPL/src/resources/courses-utils.dart';
+import 'package:Ascendere_UTPL/src/resources/filters.dart';
 
 class CursoDetailPage extends StatelessWidget {
   final Curso curso;

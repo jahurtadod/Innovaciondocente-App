@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:innovaciondocente_app/src/database/database.dart';
-import 'package:innovaciondocente_app/src/models/tip-innovacion.dart';
+import 'package:Ascendere_UTPL/src/database/database.dart';
+import 'package:Ascendere_UTPL/src/models/tip-innovacion.dart';
 
 class TipsInnovacionDatabase implements DB<TipInnovacion> {
   Stream<List<TipInnovacion>> getStream({int limit = 20}) {

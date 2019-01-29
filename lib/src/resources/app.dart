@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:innovaciondocente_app/src/database/database.dart';
-import 'package:innovaciondocente_app/src/resources/routes.dart';
-import 'package:innovaciondocente_app/src/resources/theme.dart';
+import 'package:Ascendere_UTPL/src/database/database.dart';
+import 'package:Ascendere_UTPL/src/resources/routes.dart';
+import 'package:Ascendere_UTPL/src/resources/theme.dart';
 
 class InnovaciondocenteApp extends StatefulWidget {
   @override

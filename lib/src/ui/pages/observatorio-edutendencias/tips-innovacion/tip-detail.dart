@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:innovaciondocente_app/src/models/tip-innovacion.dart';
-import 'package:innovaciondocente_app/src/resources/colors.dart';
-import 'package:innovaciondocente_app/src/resources/filters.dart';
+import 'package:Ascendere_UTPL/src/models/tip-innovacion.dart';
+import 'package:Ascendere_UTPL/src/resources/colors.dart';
+import 'package:Ascendere_UTPL/src/resources/filters.dart';
 
 class TipDetail extends StatelessWidget {
   const TipDetail({
