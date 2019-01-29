@@ -41,7 +41,7 @@ class CursoDetailPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          (!this.isActive())
+          (this.isActive())
               ? Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: RaisedButton(
@@ -135,7 +135,10 @@ class CursoDetailPage extends StatelessWidget {
   bool isActive() {
     if (curso.postulation.date == null) return false;
     DateTime today = DateTime.now();
-    return today.difference(curso.postulation.date).inDays <= 0;
+    print(curso.postulation.date);
+    print(today);
+    print(today.difference(curso.postulation.date).inDays);
+    return today.difference(curso.postulation.date).inDays < 0;
   }
 }
 
