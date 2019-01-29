@@ -59,33 +59,37 @@ class StartPageState extends State<StartPage> {
             ),
             pinned: true,
           ),
-          SliverList(
-            delegate: SliverChildListDelegate([
-              _Section(
-                label: "Próximos Cursos",
-                stream: DBProvider.of(context).dbData.proximosCursosStream,
-                errorMessage: 'No se encontraron cursos Próximos',
-                color: IndevColors.formacion,
-              ),
-              _Section(
-                label: "Ultimos InnovaTip's",
-                stream: DBProvider.of(context).dbData.innovaTicsStream,
-                errorMessage: "No se encontraron InnovaTic's",
-                color: IndevColors.formacion,
-              ),
-              _Section(
-                label: "Próximos Encuentros",
-                stream: DBProvider.of(context).dbData.proximosEncuentrosStream,
-                errorMessage: "No hay encuentros Próximos",
-                color: IndevColors.formacion,
-              ),
-              _Section(
-                label: "Noticias del Mes",
-                stream: DBProvider.of(context).dbData.ultimasNoticiasStream,
-                errorMessage: "No se encontraron Noticas",
-                color: IndevColors.observatorio,
-              ),
-            ]),
+          SliverSafeArea(
+            top: false,
+            sliver: SliverList(
+              delegate: SliverChildListDelegate([
+                _Section(
+                  label: "Próximos Cursos",
+                  stream: DBProvider.of(context).dbData.proximosCursosStream,
+                  errorMessage: 'No se encontraron próximos cursos.',
+                  color: IndevColors.formacion,
+                ),
+                _Section(
+                  label: "Próximos Encuentros",
+                  stream:
+                      DBProvider.of(context).dbData.proximosEncuentrosStream,
+                  errorMessage: "No hay encuentros próximos",
+                  color: IndevColors.formacion,
+                ),
+                _Section(
+                  label: "Noticias del Mes",
+                  stream: DBProvider.of(context).dbData.ultimasNoticiasStream,
+                  errorMessage: "No se encontraron noticas",
+                  color: IndevColors.observatorio,
+                ),
+                _Section(
+                  label: "Ultimos InnovaTip's",
+                  stream: DBProvider.of(context).dbData.innovaTicsStream,
+                  errorMessage: "No se encontraron InnovaTic's",
+                  color: IndevColors.formacion,
+                ),
+              ]),
+            ),
           )
         ],
       ),
@@ -137,7 +141,8 @@ class _Section extends StatelessWidget {
                     };
                   } else if (d.runtimeType == Curso) {
                     onTap = () {
-                      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (BuildContext context) {
                         return CursoDetailPage(
                           curso: d,
                         );
@@ -145,7 +150,8 @@ class _Section extends StatelessWidget {
                     };
                   } else if (d.runtimeType == Encuentro) {
                     onTap = () {
-                      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (BuildContext context) {
                         return EncuentroDetailPage(
                           encuentro: d,
                         );
@@ -153,7 +159,8 @@ class _Section extends StatelessWidget {
                     };
                   } else if (d.runtimeType == Noticia) {
                     onTap = () {
-                      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (BuildContext context) {
                         return NoticiaDetailPage(
                           noticia: d,
                         );

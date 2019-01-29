@@ -8,11 +8,14 @@ class IndevTheme {
       primaryColor: Colors.white,
       scaffoldBackgroundColor: Colors.white,
       accentColor: IndevColors.blue,
+      backgroundColor: Colors.white,
 
       // text theme
       textTheme: _buildTextTheme(base: base.textTheme),
-      primaryTextTheme: _buildTextTheme(base: base.primaryTextTheme, color: Colors.black),
-      accentTextTheme: _buildTextTheme(base: base.accentTextTheme, color: Colors.white),
+      primaryTextTheme:
+          _buildTextTheme(base: base.primaryTextTheme, color: Colors.black),
+      accentTextTheme:
+          _buildTextTheme(base: base.accentTextTheme, color: Colors.white),
 
       // icon theme
       iconTheme: base.iconTheme.copyWith(color: Colors.black),
