@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:innovaciondocente_app/src/resources/colors.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final pages = [
   new PageViewModel(
@@ -94,6 +95,11 @@ class Page extends StatelessWidget {
                         )
                       : new OutlineButton(
                           onPressed: () {
+                            SharedPreferences.getInstance().then((prefs) {
+                              prefs.setBool('wellcome', true);
+                            }).catchError((e) {
+                              Navigator.pushNamed(context, '/presentation');
+                            });
                             Navigator.pushReplacementNamed(context, '/start');
                           },
                           textColor: Colors.white,

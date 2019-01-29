@@ -11,21 +11,27 @@ import 'package:innovaciondocente_app/src/ui/pages/formacion-cocente/programa-fo
 import 'package:innovaciondocente_app/src/ui/pages/observatorio-edutendencias/noticias/_id/noticia-detail-page.dart';
 import 'package:innovaciondocente_app/src/ui/widgets/loader.dart';
 import 'package:innovaciondocente_app/src/ui/widgets/main-menu.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class StartPage extends StatefulWidget {
   @override
-  _InicioState createState() => _InicioState();
+  StartPageState createState() {
+    return new StartPageState();
+  }
 }
 
-class _InicioState extends State<StartPage> {
+class StartPageState extends State<StartPage> {
   @override
   void initState() {
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
+    SharedPreferences.getInstance().then((prefs) {
+      if (prefs.getBool('wellcome') == null || !prefs.getBool('wellcome')) {
+        Navigator.pushNamed(context, '/presentation');
+        prefs.setBool('wellcome', false);
+      }
+    }).catchError((e) {
+      Navigator.pushNamed(context, '/presentation');
+    });
   }
 
   @override

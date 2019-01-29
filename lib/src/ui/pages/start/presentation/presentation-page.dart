@@ -5,6 +5,7 @@ import 'package:innovaciondocente_app/src/ui/pages/start/presentation/page-dragg
 import 'package:innovaciondocente_app/src/ui/pages/start/presentation/page-reveal.dart';
 import 'package:innovaciondocente_app/src/ui/pages/start/presentation/pager-indicator.dart';
 import 'package:innovaciondocente_app/src/ui/pages/start/presentation/pages.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PresentationPage extends StatefulWidget {
   @override
